@@ -1,7 +1,15 @@
-# poestk
-*0.1.0 build not so much to see yet...*
-
-**P**ath **o**f **E**xile **S**kill **T**ree **K**it is a collection of projects that together builds up the site https://www.poestk.com
+<div align="center">
+  <a href="https://www.poestk.com">
+    <img width="200" heigth="200" src="http://www.emilnordling.com/logo.svg">
+  </a>
+  <br>
+  
+  <h1>poestk</h1>
+  <p>
+  *0.1.0 build not so much to see yet...*
+  **P**ath **o**f **E**xile **S**kill **T**ree **K**it is a collection of projects that together builds up the site https://www.poestk.com
+  <p>
+</div>
 
 ## Goals with poestk
 - [ ] Mobile friendly, both UI and performance wise
