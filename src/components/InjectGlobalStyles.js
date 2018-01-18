@@ -1,4 +1,3 @@
-import preval from 'preval.macro'
 import { injectGlobal } from 'styled-components'
 import { fontFamily, colors } from '../constants'
 

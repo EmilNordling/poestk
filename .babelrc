@@ -2,18 +2,31 @@
   "presets": [
     ["env", {
       "modules": false,
-      "useBuiltIns": true
+      "useBuiltIns": true,
+      "loose": true,
+      "targets": {
+        "browsers": [
+          "chrome >= 60",
+          "safari >= 10.1",
+          "iOS >= 10.3",
+          "Firefox >= 54",
+          "Edge >= 15"
+        ]
+      }
     }],
     "react"
   ],
   "plugins": [
-    "babel-macros",
+    "preval",
+    ["transform-decorators-legacy"],
     "react-hot-loader/babel",
-    "transform-decorators-legacy",
     "transform-class-properties",
     "transform-object-rest-spread",
+    "transform-runtime",
+    "syntax-dynamic-import",
     "styled-components",
-    "polished"
+    "polished",
+    "babel-plugin-styled-components"
   ],
   "env": {
     "production": {

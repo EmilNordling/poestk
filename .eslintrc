@@ -13,5 +13,8 @@
     "react/prop-types": 0,
     "linebreak-style": 0,
     "newline-before-return": "error"
+  },
+  "globals": {
+    "preval": true
   }
 }

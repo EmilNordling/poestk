@@ -10,17 +10,17 @@ const port = process.env.PORT || 3000
 server.use(compression())
 
 // Cache
-server.use(express.static(resolve(__dirname, 'public'), {
+server.use(express.static(resolve(__dirname, 'dist'), {
   maxAge: '7d',
   setHeaders: (res, filePath) => {
     if (filePath.match(/(sw.js|index.html)$/)) {
-      res.setHeader('Cache-Control', 'public, max-age=0')
+      res.setHeader('Cache-Control', 'dist, max-age=0')
     }
   },
 }))
 
 // Index route
-server.use((req, res) => res.sendFile(join(__dirname, 'public', 'index.html')))
+server.use((req, res) => res.sendFile(join(__dirname, 'dist', 'index.html')))
 
 // Listen
 server.listen(port, () => {

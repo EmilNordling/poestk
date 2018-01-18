@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import Nav from './Nav'
+import Icon from './common/Icon'
 import { colors } from '../constants'
 
 const Header = styled.header`
@@ -13,13 +15,15 @@ const Header = styled.header`
   border-bottom: 2px solid ${colors.gray300};
 `
 
-const Logo = styled.div`
+const Logo = styled(Link)`
   font-size: 2rem;
 `
 
 export default () => (
   <Header>
-    <Logo />
+    <Logo to="/">
+      <Icon name="logo" />
+    </Logo>
     <Nav />
   </Header>
 )

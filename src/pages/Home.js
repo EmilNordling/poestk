@@ -1,12 +1,9 @@
 import React from 'react'
 import Title from '../components/common/Title'
+import Pst from '../components/Pst'
 
 const Home = () => (
-  <div>
-    <Title.H1>
-      here is where Pst goes
-    </Title.H1>
-  </div>
+  <Pst />
 )
 
 export default Home

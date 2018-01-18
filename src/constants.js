@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-export const API = 'https://api.poesk.com/'
+export const API = 'https://api.poestk.com/'
 
 export const breakpoints = {
   large: '960px',
@@ -9,11 +9,19 @@ export const breakpoints = {
 }
 
 export const colors = {
-  gray: '#212121',
-  gray400: '#212121',
-  gray300: '#121212',
+  gray: '#323640',
+  gray400: '#323640',
+  gray300: '#20232a',
   blue400: '#3fa6ff',
+  '--test': '#ffffff',
 }
+
+// export const colors = {
+//   gray: '#2d323e',
+//   gray400: '#2d323e',
+//   gray300: '#181825',
+//   blue400: '#3fa6ff',
+// }
 
 export const fontFamily = `-apple-system, BlinkMacSystemFont, "Segoe UI",
   Roboto, Helvetica, Arial, sans-serif,
