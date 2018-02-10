@@ -14,11 +14,6 @@ const PstContainer = styled.div`
 @observer
 
 class Pst extends React.Component {
-  state = {
-    isLoading: true,
-    error: false,
-  }
-
   async componentDidMount() {
     if (!Wrapper.loaded) {
       await this.props.nodeDataStore.getPassiveData()

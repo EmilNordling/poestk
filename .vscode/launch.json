@@ -5,7 +5,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Node",
-      "url": "http://localhost:7000",
+      "url": "http://localhost:5001",
       "webRoot": "${workspaceRoot}/src",
       "skipFiles": [
         "node_modules/**/*.js"
