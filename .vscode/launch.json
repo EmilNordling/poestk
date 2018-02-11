@@ -6,7 +6,17 @@
       "request": "launch",
       "name": "Node",
       "url": "http://localhost:5001",
-      "webRoot": "${workspaceRoot}/src",
+      "webRoot": "${workspaceRoot}/client/src",
+      "skipFiles": [
+        "node_modules/**/*.js"
+      ]
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Node",
+      "url": "http://localhost:5002",
+      "webRoot": "${workspaceRoot}/pst/src",
       "skipFiles": [
         "node_modules/**/*.js"
       ]

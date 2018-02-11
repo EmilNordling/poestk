@@ -7,27 +7,33 @@
   
   <h1>poestk</h1>
   <p>
-  0.1.0 build not so much to see yet...
-  <br>
   Path of Exile Skill Tree Kit is a collection of projects that together builds up the site https://www.poestk.com
   <p>
 </div>
 
+## Projects
+The collection of projects that make poestk
+
+|Name|Status|Description|
+|:--:|:----:|:----------|
+|<a href="https://github.com/EmilNordling/poestk/client">poestk|![poestk-npm]|The client
+|<a href="https://github.com/EmilNordling/poestk/pst">poestk-pst|![poestk-npm]|Passive Skill Tree
+|<a href="https://github.com/EmilNordling/poestk/filter">poestk-filter|![poestk-npm]|Reduces and adapts Tree Data
+
+[poestk-npm]: https://github.com/EmilNordling/poestk
+
 ## Goals with poestk
-- [ ] Mobile friendly, both UI and performance wise
-- [ ] Exposed a nice API for poesk's Passive Skill Tree
+The current schedule of versions with tasks to reach for each one.
+
+#### V1.0.0
 - [ ] Released as an Progressive Web Application
-  
-## Build
-Development
-```sh
-$ yarn dev
-```
+- [ ] Exposed a nice API for poestk's Passive Skill Tree
+- [ ] Mobile friendly, both UI and performance wise
 
-Production
-```sh
-$ yarn build && yarn start
-```
+#### V2.0.0
+- [ ] User profile
+- [ ] ServerLess architecture
+- [ ] Character profile with item & skill gems
 
-## Credits:
-[Alexander Nanberg](https://github.com/alexandernanberg/) with his [React boilerplate](https://github.com/alexandernanberg/react-boilerplate) :v:
+#### V3.0.0
+- [ ] Damage calculation
