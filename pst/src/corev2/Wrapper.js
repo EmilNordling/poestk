@@ -87,6 +87,27 @@ class Wrapper {
             outNode.connection[out] = NodeData.nodes[out];
           });
         }
+
+        // TEMP: COLOR, SIZE I DO NOT WANT THESE IN A LONG IF IF IF IF
+        if (outNode.dn === 'Dexterity') {
+          outNode.color = '#4da73d';
+        } else if (outNode.dn === 'Intelligence') {
+          outNode.color = '#00b6ff';
+        } else if (outNode.dn === 'Strength') {
+          outNode.color = '#d85555';
+        } else {
+          outNode.color = '#5d482a';
+        }
+
+        if (outNode.ks === true) {
+          outNode.size = 80;
+          outNode.color = '#c200ff';
+        } else if (outNode.not) {
+          outNode.size = 50;
+          outNode.color = '#fdc163';
+        } else {
+          outNode.size = 30;
+        }
       }
     }));
 

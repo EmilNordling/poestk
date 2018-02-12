@@ -6,7 +6,10 @@ class Emitter extends EventEmitter {
 
     if (!Array.isArray(events)) events = [events];
 
-    events.map(listen => element.addEventListener(listen, event => this.emit(emit, event)));
+    events.map(listen => element.addEventListener(
+      listen,
+      event => this.emit(emit, event),
+    ));
   }
 }
 

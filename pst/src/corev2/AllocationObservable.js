@@ -24,6 +24,7 @@ class Allocate {
    * @param {object} Passive object
    */
   allocate(node) {
+    console.log(node);
     const targetedNode = node;
     const connections = Object.keys(targetedNode.connection);
     const tab = ClientStore.viewTab;

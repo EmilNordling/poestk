@@ -43,8 +43,7 @@ class View {
 
       context.translate(-x, -y);
 
-      context.fillStyle = '#FF0000';
-      context.strokeStyle = '#FF0000';
+      context.strokeStyle = '#4455ad';
       context.lineWidth = Camera.scale(12);
 
       View.drawNode(node.id, context);
@@ -138,7 +137,6 @@ class View {
       //   );
       // });
 
-      chunkContext.fillStyle = '#5d482a';
       chunkContext.strokeStyle = '#A38D6D';
       chunkContext.lineWidth = Camera.scale(10);
 
@@ -177,9 +175,13 @@ class View {
   // TODO: make so draw node doesn't need id
   static drawNode(n, context) {
     const node = NodeData.nodes[n];
+
+    if (node.m === true || node.ascendancyName) return;
+
     context.beginPath();
     node.foreachConnection((outNodeID) => {
-      if (node.isAscendancy && !NodeData.nodes[outNodeID].isAscendancy) return;
+      const outNode = NodeData.nodes[outNodeID];
+      if (outNode.ascendancyName) return;
 
       if (
         'startPositionClasses' in NodeData.nodes[outNodeID] &&
@@ -187,8 +189,6 @@ class View {
       ) return;
 
       if (NodeData.nodes[outNodeID].isAscendancyStartNode) return;
-
-      const outNode = NodeData.nodes[outNodeID];
 
       if (node.groupID !== outNode.groupID || node.orbit !== outNode.orbit) {
         context.moveTo(
@@ -218,10 +218,13 @@ class View {
     context.arc(
       Camera.scale(node.x),
       Camera.scale(node.y),
-      Camera.scale(30),
+      Camera.scale(node.size),
       0,
       2 * Math.PI,
     );
+
+    context.fillStyle = node.color;
+    context.fill();
     context.stroke();
   }
 }

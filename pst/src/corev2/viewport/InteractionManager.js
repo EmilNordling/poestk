@@ -25,7 +25,6 @@ class InteractionManager {
     clientX = event.changedTouches[0].pageX;
     clientY = event.changedTouches[0].pageY;
 
-    if (devicePixelRatio === 1) return;
     // TODO: make it into one function it's used below
     let chunkData;
     const relativeX = Camera.position.x + clientX;
@@ -106,7 +105,7 @@ class InteractionManager {
         relativeY,
         Camera.scale(ClientStore.isHovering.x),
         Camera.scale(ClientStore.isHovering.y),
-        Camera.scale(30),
+        Camera.scale(ClientStore.isHovering.size),
       );
 
       if (!stillHovering) {
@@ -141,7 +140,7 @@ class InteractionManager {
         relativeY,
         Camera.scale(node.x),
         Camera.scale(node.y),
-        Camera.scale(30),
+        Camera.scale(node.size),
       );
 
       if (isHovering) {
