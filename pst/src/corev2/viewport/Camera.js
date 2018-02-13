@@ -60,8 +60,8 @@ class Camera {
       const deltaX = touchPointX - this.pastData.x;
       const deltaY = touchPointY - this.pastData.y;
 
-      this.position.x -= Math.floor(deltaX);
-      this.position.y -= Math.floor(deltaY);
+      this.position.x -= deltaX;
+      this.position.y -= deltaY;
     }
 
     ClientStore.isMoving = true;
