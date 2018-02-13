@@ -7,6 +7,7 @@ import { Canvas, ChunkHTML5 } from '../renderers';
 import InteractionManager from './InteractionManager';
 import Emitter from '../Emitter';
 import ClientStore from '../ClientStore';
+import { strokeSize } from '../utils/constants';
 
 // TODO: make better draw logic, shit's not really knice
 class View {
@@ -44,7 +45,7 @@ class View {
       context.translate(-x, -y);
 
       context.strokeStyle = '#4455ad';
-      context.lineWidth = Camera.scale(12);
+      context.lineWidth = Camera.scale(strokeSize);
 
       View.drawNode(node.id, context);
 
@@ -138,7 +139,7 @@ class View {
       // });
 
       chunkContext.strokeStyle = '#A38D6D';
-      chunkContext.lineWidth = Camera.scale(10);
+      chunkContext.lineWidth = Camera.scale(strokeSize);
 
       chunkData.nodes.forEach((n) => {
         View.drawNode(n, chunkContext);

@@ -1,6 +1,6 @@
 import $ from 'domtastic';
 import TreeData from './TreeData';
-import { orbitRadius, skillsPerOrbit } from './utils/constants';
+import { orbitRadius, skillsPerOrbit, nodeSize, notableSize, keystoneSize, strokeSize } from './utils/constants';
 import { getOrbitAngle } from './utils/math';
 import FrameProvider from './renderers/FrameProvider';
 import View from './viewport/View';
@@ -10,7 +10,7 @@ import ClientStore from './ClientStore';
 import AllocationObservable from './AllocationObservable';
 
 class Wrapper {
-  // TODO: rewrite
+  // TODO: rewrite like really rewrite...
   constructor() {
     this.loaded = false;
     this.FrameProvider = new FrameProvider();
@@ -74,9 +74,10 @@ class Wrapper {
 
       const column = Math.floor(baseNodePosition.x / TreeData.tileSize);
       const row = Math.floor(baseNodePosition.y / TreeData.tileSize);
+      let matrixID;
 
       if (column >= 0 && row >= 0 && column <= TreeData.maxTileX && row <= TreeData.maxTileY) {
-        const matrixID = `${column}/${row}`;
+        matrixID = `${column}/${row}`;
         TreeData.matrix[matrixID].nodes.push(outNode.id);
 
         // should it be here?
@@ -100,22 +101,50 @@ class Wrapper {
         }
 
         if (outNode.ks === true) {
-          outNode.size = 80;
+          outNode.size = keystoneSize;
           outNode.color = '#c200ff';
         } else if (outNode.not) {
-          outNode.size = 50;
+          outNode.size = notableSize;
           outNode.color = '#fdc163';
         } else {
-          outNode.size = 30;
+          outNode.size = nodeSize;
+        }
+
+        const halfSize = (outNode.size / 2) + strokeSize;
+        const topX = Math.floor((baseNodePosition.x + halfSize) / TreeData.tileSize);
+        const topY = Math.floor((baseNodePosition.y + halfSize) / TreeData.tileSize);
+        const bottomX = Math.floor((baseNodePosition.x - halfSize) / TreeData.tileSize);
+        const bottomY = Math.floor((baseNodePosition.y - halfSize) / TreeData.tileSize);
+
+        if (topX !== column) {
+          TreeData.matrix[`${topX}/${row}`].nodes.push(outNode.id);
+          outNode.color = 'red';
+        }
+
+        if (bottomX !== column) {
+          TreeData.matrix[`${bottomX}/${row}`].nodes.push(outNode.id);
+          outNode.color = 'red';
+        }
+
+        if (topY !== row) {
+          TreeData.matrix[`${column}/${topY}`].nodes.push(outNode.id);
+          outNode.color = 'red';
+        }
+
+        if (bottomY !== row) {
+          TreeData.matrix[`${column}/${bottomY}`].nodes.push(outNode.id);
+          outNode.color = 'red';
         }
       }
+
+      // TEMP: bad code alert, rewrite pls
     }));
 
     // TEMP: witch as start on tab 0
     ClientStore.treeState[ClientStore.viewTab].allocated[54447] = NodeData.nodes[54447];
 
     this.loaded = true;
-    // this module is bad ¯\_(ツ)_/¯ one day it might not be
+    // this module is bad ¯\_(ツ)_/¯ one day it WILL not be
   }
 }
 

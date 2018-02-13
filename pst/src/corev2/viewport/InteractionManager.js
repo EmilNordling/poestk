@@ -4,6 +4,7 @@ import TreeData from '../TreeData';
 import NodeData from '../NodeData';
 import Logger from '../utils/Logger';
 import Emitter from '../Emitter';
+import { strokeSize } from '../utils/constants';
 
 Logger.register('coords');
 Logger.register('hover');
@@ -105,7 +106,7 @@ class InteractionManager {
         relativeY,
         Camera.scale(ClientStore.isHovering.x),
         Camera.scale(ClientStore.isHovering.y),
-        Camera.scale(ClientStore.isHovering.size),
+        Camera.scale(ClientStore.isHovering.size + strokeSize),
       );
 
       if (!stillHovering) {
@@ -140,7 +141,7 @@ class InteractionManager {
         relativeY,
         Camera.scale(node.x),
         Camera.scale(node.y),
-        Camera.scale(node.size),
+        Camera.scale(node.size + strokeSize),
       );
 
       if (isHovering) {

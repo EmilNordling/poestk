@@ -16,6 +16,8 @@ class TreeData {
 
         this.matrix[matrixID] = {
           nodes: [],
+          overlap: [],
+          connections: [],
         };
       }
     }
