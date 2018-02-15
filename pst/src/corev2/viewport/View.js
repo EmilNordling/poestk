@@ -141,9 +141,11 @@ class View {
       chunkContext.strokeStyle = '#A38D6D';
       chunkContext.lineWidth = Camera.scale(strokeSize);
 
-      chunkData.nodes.forEach((n) => {
-        View.drawNode(n, chunkContext);
-      });
+      chunkContext.beginPath();
+      chunkData.connections.forEach(c => View.drawConnection(c, chunkContext));
+      chunkContext.stroke();
+
+      chunkData.nodes.forEach(n => View.drawNode(n, chunkContext));
 
       chunkContext.setTransform(1, 0, 0, 1, 0, 0);
 
@@ -180,42 +182,6 @@ class View {
     if (node.m === true || node.ascendancyName) return;
 
     context.beginPath();
-    node.foreachConnection((outNodeID) => {
-      const outNode = NodeData.nodes[outNodeID];
-      if (outNode.ascendancyName) return;
-
-      if (
-        'startPositionClasses' in NodeData.nodes[outNodeID] &&
-        NodeData.nodes[outNodeID].startPositionClasses.length > 0
-      ) return;
-
-      if (NodeData.nodes[outNodeID].isAscendancyStartNode) return;
-
-      if (node.groupID !== outNode.groupID || node.orbit !== outNode.orbit) {
-        context.moveTo(
-          Camera.scale(node.x),
-          Camera.scale(node.y),
-        );
-        context.lineTo(
-          Camera.scale(outNode.x),
-          Camera.scale(outNode.y),
-        );
-        context.closePath();
-      } else {
-        context.moveTo(
-          Camera.scale(node.x),
-          Camera.scale(node.y),
-        );
-        context.lineTo(
-          Camera.scale(outNode.x),
-          Camera.scale(outNode.y),
-        );
-        context.closePath();
-      }
-    });
-    context.stroke();
-
-    context.beginPath();
     context.arc(
       Camera.scale(node.x),
       Camera.scale(node.y),
@@ -227,6 +193,28 @@ class View {
     context.fillStyle = node.color;
     context.fill();
     context.stroke();
+  }
+
+  static drawConnection(c, context) {
+    const outNode = c.points.b;
+    if (outNode.ascendancyName) return;
+
+    if (
+      'startPositionClasses' in outNode &&
+      outNode.startPositionClasses.length > 0
+    ) return;
+
+    if (outNode.isAscendancyStartNode) return;
+
+    context.moveTo(
+      Camera.scale(c.points.a.x),
+      Camera.scale(c.points.a.y),
+    );
+    context.lineTo(
+      Camera.scale(c.points.b.x),
+      Camera.scale(c.points.b.y),
+    );
+    context.closePath();
   }
 }
 

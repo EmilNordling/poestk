@@ -8,6 +8,7 @@ import NodeData from './NodeData';
 import Emitter from './Emitter';
 import ClientStore from './ClientStore';
 import AllocationObservable from './AllocationObservable';
+import Connection from './Connection';
 
 class Wrapper {
   // TODO: rewrite like really rewrite...
@@ -21,7 +22,7 @@ class Wrapper {
       Emitter.emit('draw');
     });
 
-    Emitter.on('draw', () => this.FrameProvider.requestTick())
+    Emitter.on('draw', () => this.FrameProvider.requestTick());
 
     this.FrameProvider.mountTabs(
       this.View,
@@ -80,15 +81,6 @@ class Wrapper {
         matrixID = `${column}/${row}`;
         TreeData.matrix[matrixID].nodes.push(outNode.id);
 
-        // should it be here?
-        // create connections
-        if (outNode.out !== undefined) {
-          outNode.out.forEach((out) => {
-            NodeData.nodes[out].connection[outNode.id] = outNode;
-            outNode.connection[out] = NodeData.nodes[out];
-          });
-        }
-
         // TEMP: COLOR, SIZE I DO NOT WANT THESE IN A LONG IF IF IF IF
         if (outNode.dn === 'Dexterity') {
           outNode.color = '#4da73d';
@@ -135,13 +127,38 @@ class Wrapper {
           TreeData.matrix[`${column}/${bottomY}`].nodes.push(outNode.id);
           outNode.color = 'red';
         }
+
+        // should it be here?
+        // create connections
+        // TODO: rewrite
+        if (outNode.out !== undefined) {
+          outNode.out.forEach((out) => {
+            NodeData.nodes[out].connection[outNode.id] = outNode;
+            outNode.connection[out] = NodeData.nodes[out];
+
+            if (NodeData.nodes[out].ascendancyName) return;
+            const newConnection = new Connection(outNode, NodeData.nodes[out]);
+            TreeData.matrix[matrixID].connections.push(newConnection);
+
+            const outNodeColumn = Math.floor(nodePosition(NodeData.nodes[out], NodeData.nodes[out].g).x / TreeData.tileSize);
+            const outNodeRow = Math.floor(nodePosition(NodeData.nodes[out], NodeData.nodes[out].g).y / TreeData.tileSize);
+
+            if (outNodeColumn !== column) {
+              TreeData.matrix[`${outNodeColumn}/${row}`].connections.push(newConnection);
+            }
+
+            if (outNodeRow !== row) {
+              TreeData.matrix[`${column}/${outNodeRow}`].connections.push(newConnection);
+            }
+          });
+        }
       }
 
       // TEMP: bad code alert, rewrite pls
     }));
 
     // TEMP: witch as start on tab 0
-    ClientStore.treeState[ClientStore.viewTab].allocated[54447] = NodeData.nodes[54447];
+    ClientStore.treeState[ClientStore.viewTab].allocated[58833] = NodeData.nodes[58833];
 
     this.loaded = true;
     // this module is bad ¯\_(ツ)_/¯ one day it WILL not be

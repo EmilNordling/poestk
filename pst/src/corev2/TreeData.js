@@ -16,7 +16,6 @@ class TreeData {
 
         this.matrix[matrixID] = {
           nodes: [],
-          overlap: [],
           connections: [],
         };
       }
@@ -30,6 +29,7 @@ class TreeData {
   getTiles(startX, startY, endX, endY) {
     let returnedData = {
       nodes: [],
+      connections: [],
     };
 
     if (endX && endY) {
@@ -37,6 +37,7 @@ class TreeData {
         for (let y = startY; y < endY; y += 1) {
           if (`${x}/${y}` in this.matrix) {
             returnedData.nodes.push(...this.matrix[`${x}/${y}`].nodes);
+            returnedData.connections.push(...this.matrix[`${x}/${y}`].connections);
           }
         }
       }
