@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://www.poestk.com">
-    <img width="200" heigth="200" src="http://www.emilnordling.com/logo.svg">
+    <img width="200" heigth="200" src="https://github.com/EmilNordling/poestk/blob/master/client/public/icons/logo.svg">
   </a>
   <br>
   <br>
@@ -17,15 +17,14 @@ The collection of projects that make poestk
 |Name|Status|Description|
 |:--:|:----:|:----------|
 |<a href="https://github.com/EmilNordling/poestk/tree/master/client">poestk|**v0.1.1**|The client
-|<a href="https://github.com/EmilNordling/poestk/tree/master/pst">poestk-pst|**v0.3.8**|Passive Skill Tree
+|<a href="https://github.com/EmilNordling/poestk/tree/master/pst">poestk-pst|**v0.3.9**|Passive Skill Tree
 |<a href="https://github.com/EmilNordling/poestk/tree/master/filter">poestk-filter|**v1.2.2**|Reduces and adapts Tree Data
 
 ## Goals with poestk
-The current schedule of versions with tasks to reach for each one.
+The current schedule of planned versions with goals to reach for each one.
 
 #### V1.0.0
 - [ ] Released as an Progressive Web Application
-- [ ] Exposed a nice API for poestk's Passive Skill Tree
 - [ ] Mobile friendly, both UI and performance wise
 
 #### V2.0.0
@@ -35,3 +34,10 @@ The current schedule of versions with tasks to reach for each one.
 
 #### V3.0.0
 - [ ] Damage calculation
+
+#### Other golas
+- [ ] Switch to WebGL
+- [ ] Exposed a nice API for poestk's Passive Skill Tree
+
+## License
+MIT
