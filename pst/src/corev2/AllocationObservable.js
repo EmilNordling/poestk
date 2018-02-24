@@ -61,7 +61,7 @@ class Allocate {
         delete PassiveInstance.tab[tab].locked[targetedNode.id];
       });
 
-      Emitter.emit('redrawNode', targetedNode);
+      Emitter.emit('redrawNode', targetedNode, true);
     } else {
       // TODO: add branch crawling
       console.log('is locked');

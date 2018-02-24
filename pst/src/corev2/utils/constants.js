@@ -7,6 +7,16 @@ const notableSize = 50;
 const keystoneSize = 80;
 const strokeSize = 10;
 
+const theme = {
+  dark: {
+    path: '#545662',
+    allocated: '#f43a46',
+    nodeDefault: '#20232a',
+    notableDefault: '#fdc163',
+    keyStoneDefault: '#c200ff',
+  },
+};
+
 export {
   orbitRadius,
   skillsPerOrbit,
@@ -15,4 +25,5 @@ export {
   notableSize,
   keystoneSize,
   strokeSize,
+  theme,
 };

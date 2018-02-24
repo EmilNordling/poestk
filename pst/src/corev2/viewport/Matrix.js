@@ -53,11 +53,11 @@ export default class Matrix {
 
     let visableTiles = 0;
 
-    for (column = startCol; column <= endCol; column += (1 )) {
-      for (row = startRow; row <= endRow; row += (1)) {
+    for (column = startCol; column <= endCol; column++) {
+      for (row = startRow; row <= endRow; row++) {
         // TODO: use bounds insted of block statment
         if (column >= 0 && row >= 0 && column <= this.maxTileX && row <= this.maxTileY) {
-          visableTiles += 1;
+          visableTiles++;
 
           const coords = Tile.coords({
             x: column,
@@ -85,5 +85,36 @@ export default class Matrix {
     const tileY = Math.floor(Camera.scale(position.y) / ClientStore.tileSize);
 
     callback.call(this, this.tiles[`${tileX}/${tileY}/${this.zoomLevel}`]);
+  }
+
+  /**
+   * @param {object<x, y>} start
+   * @param {object<x, y>} end
+   * @return {object} node from NodeData
+   */
+  getTiles(start, end, tileBufferCallback) {
+    const startCol = Math.floor(Camera.scale(start.x) / ClientStore.tileSize);
+    const startRow = Math.floor(Camera.scale(start.y) / ClientStore.tileSize);
+    const endCol = Math.floor(Camera.scale(end.x) / ClientStore.tileSize);
+    const endRow = Math.floor(Camera.scale(end.y) / ClientStore.tileSize);
+    let column = 0;
+    let row = 0;
+    const tileBuffer = [];
+
+    for (column = startCol; column <= endCol; column++) {
+      for (row = startRow; row <= endRow; row++) {
+        const coords = Tile.coords({
+          x: column,
+          y: row,
+          z: this.zoomLevel,
+        });
+
+        if (this.tiles[coords.key]) {
+          tileBuffer.push(this.tiles[coords.key]);
+        }
+      }
+    }
+
+    tileBufferCallback.call(this, tileBuffer);
   }
 }

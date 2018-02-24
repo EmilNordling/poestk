@@ -54,7 +54,7 @@ class InteractionManager {
         relativeY,
         Camera.scale(node.x),
         Camera.scale(node.y),
-        Camera.scale(120),
+        Camera.scale(node.size * devicePixelRatio),
       );
 
       if (gotNode) {

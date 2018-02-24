@@ -1,15 +1,10 @@
-import $ from 'domtastic';
 import Matrix from './Matrix';
-import TreeData from '../TreeData';
 import Camera from './Camera';
-import NodeData from '../NodeData';
-import { Canvas, ChunkHTML5 } from '../renderers';
+import { Canvas, draw } from '../renderers';
 import InteractionManager from './InteractionManager';
 import Emitter from '../Emitter';
 import ClientStore from '../ClientStore';
-import { strokeSize } from '../utils/constants';
 
-// TODO: make better draw logic, shit's not really knice
 class View {
   constructor() {
     this.InteractionManager = new InteractionManager();
@@ -31,33 +26,36 @@ class View {
 
     Emitter.listen(this.Canvas.getCanvas(), 'wheel', 'zoom');
 
-    Emitter.on('redrawNode', this.redrawTile.bind(this));
+    Emitter.on('redrawNode', this.allocate.bind(this));
   }
 
-  redrawTile(node) {
-    this.matrix.getTile({ x: node.x, y: node.y }, (tile) => {
-      const context = tile.context;
-      const x = tile.x * ClientStore.tileSize;
-      const y = tile.y * ClientStore.tileSize;
-      const offsetX = x + -Camera.position.x;
-      const offsetY = y + -Camera.position.y;
+  allocate(target) {
+    let lowestX = target.x - target.size;
+    let lowestY = target.y - target.size;
+    let highestX = target.x + target.size;
+    let highestY = target.y + target.size;
 
-      context.translate(-x, -y);
+    Object.keys(target.connection).forEach((connection) => {
+      const node = target.connection[connection];
 
-      context.strokeStyle = '#4455ad';
-      context.lineWidth = Camera.scale(strokeSize);
+      if (node.x - node.size < lowestX) lowestX = node.x - node.size;
+      if (node.y - node.size < lowestY) lowestY = node.y - node.size;
+      if (node.x + node.size > highestX) highestX = node.x + node.size;
+      if (node.y + node.size > highestY) highestY = node.y + node.size;
+    });
 
-      View.drawNode(node.id, context);
+    this.matrix.getTiles({ x: lowestX, y: lowestY }, { x: highestX, y: highestY }, (tileBuffer) => {
+      tileBuffer.forEach((tile) => {
+        const x = tile.x * ClientStore.tileSize;
+        const y = tile.y * ClientStore.tileSize;
+        const offsetX = x + -Camera.position.x;
+        const offsetY = y + -Camera.position.y;
 
-      tile.cacheTile(ClientStore.tileSize, context, -x, -y);
-      this.Canvas.clear(offsetX, offsetY, ClientStore.tileSize, ClientStore.tileSize);
-      this.context.drawImage(
-        tile.canvas.canvas,
-        (tile.x * ClientStore.tileSize) + -Camera.position.x,
-        (tile.y * ClientStore.tileSize) + -Camera.position.y,
-        ClientStore.tileSize,
-        ClientStore.tileSize,
-      );
+        this.Canvas.clear(offsetX, offsetY, ClientStore.tileSize, ClientStore.tileSize);
+        tile.canvas.clear();
+      });
+
+      draw(tileBuffer, this.context);
     });
   }
 
@@ -65,7 +63,6 @@ class View {
     this.Canvas.clear();
 
     this.matrix.getVisableTileCoordiantes(this.context, (tile) => {
-      this.context.fillStyle = `hsl(${(10 * (tile.x + tile.y))}, 50%, 50%)`;
       this.context.drawImage(
         tile.canvas.canvas,
         (tile.x * ClientStore.tileSize) + -Camera.position.x,
@@ -74,147 +71,8 @@ class View {
         ClientStore.tileSize,
       );
     }, (tileBuffer) => {
-      // rewrite into more functional code
-      if (tileBuffer.length === 0) return;
-
-      const firstValue = tileBuffer[0];
-      const lastValue = tileBuffer[tileBuffer.length - 1];
-      let groupWidth = ClientStore.tileSize;
-      let groupHeight = ClientStore.tileSize;
-      let groupX = 0;
-      let groupY = 0;
-      let background = 'red';
-      const offsetX = -(firstValue.x * ClientStore.tileSize);
-      const offsetY = -(firstValue.y * ClientStore.tileSize);
-      if (firstValue.x < lastValue.x && firstValue.y === lastValue.y) {
-        groupWidth = (tileBuffer.length) * ClientStore.tileSize;
-        groupY = firstValue.y;
-        groupX = firstValue.x;
-        background = 'blue';
-      } else if (firstValue.y < lastValue.y && firstValue.x === lastValue.x) {
-        groupHeight = (tileBuffer.length) * ClientStore.tileSize;
-        groupY = firstValue.y;
-        groupX = firstValue.x;
-        background = 'green';
-      } else {
-        groupHeight = ((lastValue.y - firstValue.y) + 1) * ClientStore.tileSize;
-        groupWidth = ((lastValue.x - firstValue.x) + 1) * ClientStore.tileSize;
-        groupY = firstValue.y;
-        groupX = firstValue.x;
-      }
-
-      const chunkCanvas = new ChunkHTML5({
-        width: groupWidth,
-        height: groupHeight,
-        x: groupX,
-        y: groupY,
-      });
-
-      const chunkContext = chunkCanvas.context();
-
-      // rewrite
-      chunkContext.translate(offsetX, offsetY);
-      const startX = Math.floor(
-        ((firstValue.x * ClientStore.tileSize) / Camera.zoomLevel / TreeData.tileSize),
-      );
-      const startY = Math.floor(
-        ((firstValue.y * ClientStore.tileSize) / Camera.zoomLevel / TreeData.tileSize),
-      );
-      const endX = Math.ceil(
-        (((lastValue.x + 1) * ClientStore.tileSize) / Camera.zoomLevel / TreeData.tileSize),
-      );
-      const endY = Math.ceil(
-        (((lastValue.y + 1) * ClientStore.tileSize) / Camera.zoomLevel / TreeData.tileSize),
-      );
-      const chunkData = TreeData.getTiles(startX, startY, endX, endY);
-
-      // tileBuffer.map((tile) => {
-      //   chunkContext.fillStyle = `hsl(${(10 * (tile.x + tile.y))}, 50%, 50%)`;
-      //   chunkContext.fillRect(
-      //     tile.x * ClientStore.tileSize,
-      //     tile.y * ClientStore.tileSize,
-      //     ClientStore.tileSize,
-      //     ClientStore.tileSize,
-      //   );
-      // });
-
-      chunkContext.strokeStyle = '#A38D6D';
-      chunkContext.lineWidth = Camera.scale(strokeSize);
-
-      chunkContext.beginPath();
-      chunkData.connections.forEach(c => View.drawConnection(c, chunkContext));
-      chunkContext.stroke();
-
-      chunkData.nodes.forEach(n => View.drawNode(n, chunkContext));
-
-      chunkContext.setTransform(1, 0, 0, 1, 0, 0);
-
-      tileBuffer.forEach((tile) => {
-        tile.cacheTile(ClientStore.tileSize, chunkContext, offsetX, offsetY);
-        this.context.drawImage(
-          tile.canvas.canvas,
-          (tile.x * ClientStore.tileSize) + -Camera.position.x,
-          (tile.y * ClientStore.tileSize) + -Camera.position.y,
-          ClientStore.tileSize,
-          ClientStore.tileSize,
-        );
-      });
-
-      // document.body.append(chunkCanvas.bufferCanvas.getCanvas());
-      // $(chunkCanvas.bufferCanvas.getCanvas()).css({
-      //   transform: 'scale(0.1)',
-      //   'transform-origin': 'top left',
-      //   position: 'absolute',
-      //   left: `${10 + (groupX * ClientStore.tileSize) * 0.1}px`,
-      //   top: `${10 + (groupY * ClientStore.tileSize) * 0.1}px`,
-      //   'z-index': 999,
-      //   background: background,
-      // });
-
-      // this.cache.push(bufferCanvas);
+      draw(tileBuffer, this.context);
     });
-  }
-
-  // TODO: make so draw node doesn't need id
-  static drawNode(n, context) {
-    const node = NodeData.nodes[n];
-
-    if (node.m === true || node.ascendancyName) return;
-
-    context.beginPath();
-    context.arc(
-      Camera.scale(node.x),
-      Camera.scale(node.y),
-      Camera.scale(node.size),
-      0,
-      2 * Math.PI,
-    );
-
-    context.fillStyle = node.color;
-    context.fill();
-    context.stroke();
-  }
-
-  static drawConnection(c, context) {
-    const outNode = c.points.b;
-    if (outNode.ascendancyName) return;
-
-    if (
-      'startPositionClasses' in outNode &&
-      outNode.startPositionClasses.length > 0
-    ) return;
-
-    if (outNode.isAscendancyStartNode) return;
-
-    context.moveTo(
-      Camera.scale(c.points.a.x),
-      Camera.scale(c.points.a.y),
-    );
-    context.lineTo(
-      Camera.scale(c.points.b.x),
-      Camera.scale(c.points.b.y),
-    );
-    context.closePath();
   }
 }
 

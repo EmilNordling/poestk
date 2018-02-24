@@ -1,3 +1,5 @@
+import { theme } from './utils/constants';
+
 class ClientStore {
   constructor() {
     this.parent = undefined;
@@ -14,6 +16,7 @@ class ClientStore {
         allocated: {},
       },
     ];
+    this.theme = theme.dark;
   }
 }
 

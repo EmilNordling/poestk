@@ -89,20 +89,22 @@ class Wrapper {
         } else if (outNode.dn === 'Strength') {
           outNode.color = '#d85555';
         } else {
-          outNode.color = '#5d482a';
+          outNode.color = '#20232a';
         }
+
+        outNode.color = ClientStore.theme.nodeDefault;
 
         if (outNode.ks === true) {
           outNode.size = keystoneSize;
-          outNode.color = '#c200ff';
+          outNode.color = ClientStore.theme.keyStoneDefault;
         } else if (outNode.not) {
           outNode.size = notableSize;
-          outNode.color = '#fdc163';
+          outNode.color = ClientStore.theme.notableDefault;
         } else {
           outNode.size = nodeSize;
         }
 
-        const halfSize = (outNode.size / 2) + strokeSize;
+        const halfSize = (outNode.size / 2) + (strokeSize * 2);
         const topX = Math.floor((baseNodePosition.x + halfSize) / TreeData.tileSize);
         const topY = Math.floor((baseNodePosition.y + halfSize) / TreeData.tileSize);
         const bottomX = Math.floor((baseNodePosition.x - halfSize) / TreeData.tileSize);
@@ -110,22 +112,22 @@ class Wrapper {
 
         if (topX !== column) {
           TreeData.matrix[`${topX}/${row}`].nodes.push(outNode.id);
-          outNode.color = 'red';
+          //outNode.color = 'red';
         }
 
         if (bottomX !== column) {
           TreeData.matrix[`${bottomX}/${row}`].nodes.push(outNode.id);
-          outNode.color = 'red';
+          //outNode.color = 'red';
         }
 
         if (topY !== row) {
           TreeData.matrix[`${column}/${topY}`].nodes.push(outNode.id);
-          outNode.color = 'red';
+          //outNode.color = 'red';
         }
 
         if (bottomY !== row) {
           TreeData.matrix[`${column}/${bottomY}`].nodes.push(outNode.id);
-          outNode.color = 'red';
+          //outNode.color = 'red';
         }
 
         // should it be here?
@@ -136,7 +138,7 @@ class Wrapper {
             NodeData.nodes[out].connection[outNode.id] = outNode;
             outNode.connection[out] = NodeData.nodes[out];
 
-            if (NodeData.nodes[out].ascendancyName) return;
+            if (NodeData.nodes[out].ascendancyName || outNode.ascendancyName) return;
             const newConnection = new Connection(outNode, NodeData.nodes[out]);
             TreeData.matrix[matrixID].connections.push(newConnection);
 

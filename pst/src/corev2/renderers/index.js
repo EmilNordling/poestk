@@ -1,10 +1,10 @@
-import ChunkHTML5 from './ChunkHTML5';
+import draw from './ChunkHTML5';
 import Canvas from './Canvas';
 import FrameProvider from './FrameProvider';
 import Render from './Render';
 
 export {
-  ChunkHTML5,
+  draw,
   Canvas,
   FrameProvider,
   Render,
