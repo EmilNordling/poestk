@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import Wrapper from '../../../pst/src/corev2/Wrapper'
@@ -12,8 +12,7 @@ const PstContainer = styled.div`
 
 @inject('nodeDataStore')
 @observer
-
-class Pst extends React.Component {
+class Pst extends Component {
   async componentDidMount() {
     if (!Wrapper.loaded) {
       await this.props.nodeDataStore.getPassiveData()

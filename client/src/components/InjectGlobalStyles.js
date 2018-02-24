@@ -20,7 +20,7 @@ const injectGlobalStyles = () => injectGlobal`
     font-smoothing: antialiased;
     color: white;
     cursor: default;
-    background-color: ${colors.gray300};
+    background-color: ${colors.gray202};
   }
 
   img {
