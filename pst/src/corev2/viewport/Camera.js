@@ -1,6 +1,8 @@
 import Logger from '../utils/Logger';
 import ClientStore from '../ClientStore';
 import Emitter from '../Emitter';
+// TODO: add option to swap between these
+import GlobalEmitter from '../../../../client/src/decorators/GlobalEmitter';
 
 // should just be one like: Logger.register('camera', ['x', 'y'])
 Logger.register('cameraX', 'x');
@@ -95,7 +97,9 @@ class Camera {
     this.setZoom(direction, event.x, event.y);
   }
 
-  onTouchStart() {
+  onTouchStart(event) {
+    event.preventDefault();
+
     this.pastData.x = null;
     this.pastData.y = null;
     this.pastData.zoom = null;
@@ -165,4 +169,4 @@ class Camera {
   }
 }
 
-export default new Camera(-0, -0, 0.2);
+export default new Camera(900, 900, 0.2);

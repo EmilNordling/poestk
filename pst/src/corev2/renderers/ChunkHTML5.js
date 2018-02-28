@@ -57,14 +57,14 @@ function draw(tileBuffer, viewContext) {
   chunkContext.setTransform(1, 0, 0, 1, 0, 0);
 
   tileBuffer.forEach((tile) => {
-    tile.cacheTile(ClientStore.tileSize, chunkContext, offsetX, offsetY);
-    viewContext.drawImage(
+    requestAnimationFrame(() => tile.cacheTile(ClientStore.tileSize, chunkContext, offsetX, offsetY));
+    requestAnimationFrame(() => viewContext.drawImage(
       tile.canvas.canvas,
       (tile.x * ClientStore.tileSize) + -Camera.position.x,
       (tile.y * ClientStore.tileSize) + -Camera.position.y,
       ClientStore.tileSize,
       ClientStore.tileSize,
-    );
+    ));
   });
 }
 

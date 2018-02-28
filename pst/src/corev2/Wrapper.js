@@ -161,6 +161,7 @@ class Wrapper {
 
     // TEMP: witch as start on tab 0
     ClientStore.treeState[ClientStore.viewTab].allocated[58833] = NodeData.nodes[58833];
+    // AllocationObservable.allocate(NodeData.nodes[58833], true);
 
     this.loaded = true;
     // this module is bad ¯\_(ツ)_/¯ one day it WILL not be

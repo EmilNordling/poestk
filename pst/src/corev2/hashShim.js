@@ -2,10 +2,6 @@
 * @fileoverview Hash encoder & decoder.
 */
 
-import Logger from './utils/Logger';
-
-Logger.register('allocated');
-
 const version = 4;
 const availableCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 const binderChar = '=';
@@ -269,8 +265,6 @@ export function generateHash(startClass, ascendancy, nodes) {
   let link = Hash.encodeBase64(encode.dataString);
 
   link = link.replace(/\+/g, '-').replace(/\//g, '_');
-
-  Logger.log('allocated', link);
 
   return link;
 }

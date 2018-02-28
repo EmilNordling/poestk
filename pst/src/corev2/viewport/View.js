@@ -4,6 +4,7 @@ import { Canvas, draw } from '../renderers';
 import InteractionManager from './InteractionManager';
 import Emitter from '../Emitter';
 import ClientStore from '../ClientStore';
+import { strokeSize } from '../utils/constants';
 
 class View {
   constructor() {
@@ -37,11 +38,12 @@ class View {
 
     Object.keys(target.connection).forEach((connection) => {
       const node = target.connection[connection];
+      const nodeSize = node.size + (strokeSize * 2)
 
-      if (node.x - node.size < lowestX) lowestX = node.x - node.size;
-      if (node.y - node.size < lowestY) lowestY = node.y - node.size;
-      if (node.x + node.size > highestX) highestX = node.x + node.size;
-      if (node.y + node.size > highestY) highestY = node.y + node.size;
+      if (node.x - nodeSize < lowestX) lowestX = node.x - nodeSize;
+      if (node.y - nodeSize < lowestY) lowestY = node.y - nodeSize;
+      if (node.x + nodeSize > highestX) highestX = node.x + nodeSize;
+      if (node.y + nodeSize > highestY) highestY = node.y + nodeSize;
     });
 
     this.matrix.getTiles({ x: lowestX, y: lowestY }, { x: highestX, y: highestY }, (tileBuffer) => {

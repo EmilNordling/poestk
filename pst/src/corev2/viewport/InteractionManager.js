@@ -4,6 +4,7 @@ import TreeData from '../TreeData';
 import NodeData from '../NodeData';
 import Logger from '../utils/Logger';
 import Emitter from '../Emitter';
+import GlobalEmitter from '../../../../client/src/decorators/GlobalEmitter';
 import { strokeSize } from '../utils/constants';
 
 Logger.register('coords');
