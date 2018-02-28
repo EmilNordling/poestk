@@ -1,6 +1,6 @@
 import GlobalEmitter from './GlobalEmitter'
 
-let isMobile = ('ontouchstart' in document.documentElement)
+const isMobile = ('ontouchstart' in document.documentElement)
 
 const touch = {
   start: ['touchstart', 'touchStart'],
@@ -21,4 +21,3 @@ export default function windowListners(target) {
     Object.keys(use).forEach(value => GlobalEmitter.listen(window, use[value][0], use[value][1]))
   }
 }
-

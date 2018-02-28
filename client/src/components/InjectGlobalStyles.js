@@ -13,6 +13,10 @@ const injectGlobalStyles = () => injectGlobal`
     box-sizing: inherit;
   }
 
+  body {
+    overscroll-behavior-y: contain;
+  }
+
   html {
     box-sizing: border-box;
     font-family: ${fontFamily};
