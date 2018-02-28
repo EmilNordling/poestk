@@ -1,6 +1,7 @@
 import ClientStore from './ClientStore';
 import Emitter from './Emitter';
 import { generateHash } from './hashShim';
+import NodeData from './NodeData';
 
 class Allocate {
   constructor() {
@@ -23,8 +24,7 @@ class Allocate {
   /**
    * @param {object} Passive object
    */
-  allocate(node) {
-    console.log(node);
+  allocate(node, force = false) {
     const targetedNode = node;
     const connections = Object.keys(targetedNode.connection);
     const tab = ClientStore.viewTab;
@@ -32,39 +32,55 @@ class Allocate {
 
     if (this.pointsAllocated === this.pointsMax) return;
 
+    // TODO: make code more functional
+    // TODO: add branch crawling:
+    // BFS all short paths to targeted allocating node. Build path to it.
+    // DFS/BFS to find bridges when unallocating node. Remove nodes in bridge.
     if (ClientStore.treeState[tab].allocated[targetedNode.id] !== targetedNode) {
-      if (isAllocated.length > 0) {
-        // adds targetedNode to Clientstore.treeState<tab>.allocated
+      if (force || isAllocated.length > 0) {
+        this.pointsAllocated++;
         ClientStore.treeState[tab].allocated[targetedNode.id] = targetedNode;
-
-        // locks allocated branch with tragetedNode
-        isAllocated.forEach((allocated) => {
-          if (!targetedNode.connection[allocated].tab[tab].locked) targetedNode.connection[allocated].tab[tab].locked = {};
-
-          targetedNode.connection[allocated].tab[tab].locked[targetedNode.id] = targetedNode;
-        });
-
         Emitter.emit('redrawNode', targetedNode);
       } else {
         console.log('branch to this node / use highlighted branch');
       }
-    } else if (!node.tab[tab].locked || Object.keys(node.tab[tab].locked).length === 0) {
-      // removes targetedNode from Clientstore.treeState<tab>.allocated
+    } else if (isAllocated.length === 1 || force) {
+      this.pointsAllocated--;
       delete ClientStore.treeState[tab].allocated[targetedNode.id];
-
-      // unlocks allocated branch with tragetedNode
-      isAllocated.forEach((allocated) => {
-        const PassiveInstance = targetedNode.connection[allocated];
-
-        if (!targetedNode.connection[allocated].tab[tab].locked) return;
-
-        delete PassiveInstance.tab[tab].locked[targetedNode.id];
-      });
-
       Emitter.emit('redrawNode', targetedNode, true);
     } else {
-      // TODO: add branch crawling
-      console.log('is locked');
+      let result = 0;
+      const rootNode = (node.id).toString(); // hehe JavaScript
+
+      isAllocated.forEach((con) => {
+        const findRoot = 58833;
+        const queue = [con];
+        const visited = [rootNode, con];
+
+        while (queue.length > 0) {
+          const current = queue.shift();
+
+          if (current == findRoot) { // eslint-disable-line eqeqeq
+            result++;
+
+            return;
+          }
+
+          const curCon = Object.keys(NodeData.nodes[current].connection).filter(connection => connection in ClientStore.treeState[ClientStore.viewTab].allocated);
+          curCon.forEach((x) => {
+            if (x != current && !visited.includes(x)) { // eslint-disable-line eqeqeq
+              visited.push(x);
+              queue.push(x);
+            }
+          });
+        }
+      });
+
+      if (result === isAllocated.length) {
+        this.pointsAllocated--;
+        delete ClientStore.treeState[tab].allocated[targetedNode.id];
+        Emitter.emit('redrawNode', targetedNode, true);
+      }
     }
 
     const startClass = ClientStore.treeState[tab].startClass;
