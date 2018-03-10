@@ -169,4 +169,4 @@ class Camera {
   }
 }
 
-export default new Camera(900, 900, 0.2);
+export default new Camera(900, 900, 0.15);

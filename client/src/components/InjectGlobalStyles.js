@@ -1,7 +1,8 @@
+import React from 'react'
 import { injectGlobal } from 'styled-components'
 import { fontFamily, colors } from '../constants'
 
-const injectGlobalStyles = () => injectGlobal`
+const style = () => injectGlobal`
   ${preval`
     const fs = require('fs')
     module.exports = fs.readFileSync('node_modules/reset-css/reset.css', 'utf-8')
@@ -44,8 +45,10 @@ const injectGlobalStyles = () => injectGlobal`
   }
 `
 
-export default () => {
-  injectGlobalStyles()
+const InjectGlobalStyles = Component => (props) => {
+  style()
 
-  return null
+  return <Component {...props} />
 }
+
+export default InjectGlobalStyles

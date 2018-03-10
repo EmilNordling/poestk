@@ -1,7 +1,5 @@
 import { css } from 'styled-components'
 
-export const API = 'https://api.poestk.com/'
-
 export const breakpoints = {
   large: '960px',
   medium: '640px',
@@ -16,7 +14,6 @@ export const colors = {
   gray201: '#1d202a',
   gray202: '#1b1f2a',
   blue400: '#3fa6ff',
-  '--test': '#ffffff',
 }
 
 // export const colors = {
