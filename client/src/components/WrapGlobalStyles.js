@@ -45,10 +45,10 @@ const style = () => injectGlobal`
   }
 `
 
-const InjectGlobalStyles = Component => (props) => {
+const WrapGlobalStyles = Component => (props) => {
   style()
 
   return <Component {...props} />
 }
 
-export default InjectGlobalStyles
+export default WrapGlobalStyles

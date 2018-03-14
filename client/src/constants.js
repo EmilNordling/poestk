@@ -8,7 +8,7 @@ export const breakpoints = {
 
 export const colors = {
   gray: '#323640',
-  gray400: '#323640',
+  gray400: '#313440',
   gray300: '#20232a',
   gray200: '#1d1f28',
   gray201: '#1d202a',
