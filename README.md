@@ -16,8 +16,8 @@ The collection of projects that make poestk
 
 |Name|Status|Description|
 |:--:|:----:|:----------|
-|<a href="https://github.com/EmilNordling/poestk/tree/master/client">poestk|**v0.1.1**|The client
-|<a href="https://github.com/EmilNordling/poestk/tree/master/pst">poestk-pst|**v0.4.11**|Passive Skill Tree
+|<a href="https://github.com/EmilNordling/poestk/tree/master/client">poestk|**v0.2.1**|Client
+|<a href="https://github.com/EmilNordling/poestk/tree/master/pst">poestk-pst|**v0.4.12**|Passive Skill Tree
 |<a href="https://github.com/EmilNordling/poestk/tree/master/filter">poestk-filter|**v1.3.2**|Reduces and adapts Tree Data
 
 ## Goals with poestk
