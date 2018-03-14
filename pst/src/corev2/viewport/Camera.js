@@ -45,7 +45,7 @@ class Camera {
   }
 
   scale(value) {
-    return Math.floor(value * this.zoomLevel);
+    return value * this.zoomLevel;
   }
 
   setPan() {

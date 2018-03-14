@@ -27,7 +27,8 @@ class View {
 
     Emitter.listen(this.Canvas.getCanvas(), 'wheel', 'zoom');
 
-    Emitter.on('redrawNode', this.allocate.bind(this));
+    Emitter.on('allocated', this.allocate.bind(this));
+    Emitter.on('deallocated', this.allocate.bind(this));
   }
 
   allocate(target) {

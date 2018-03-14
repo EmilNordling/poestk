@@ -30,24 +30,22 @@ class Allocate {
     const tab = ClientStore.viewTab;
     const isAllocated = connections.filter(connection => connection in ClientStore.treeState[tab].allocated);
 
-    if (this.pointsAllocated === this.pointsMax) return;
-
     // TODO: make code more functional
     // TODO: add branch crawling:
     // BFS all short paths to targeted allocating node. Build path to it.
     // DFS/BFS to find bridges when unallocating node. Remove nodes in bridge.
-    if (ClientStore.treeState[tab].allocated[targetedNode.id] !== targetedNode) {
+    if (ClientStore.treeState[tab].allocated[targetedNode.id] !== targetedNode && this.pointsAllocated !== this.pointsMax) {
       if (force || isAllocated.length > 0) {
         this.pointsAllocated++;
         ClientStore.treeState[tab].allocated[targetedNode.id] = targetedNode;
-        Emitter.emit('redrawNode', targetedNode);
+        Emitter.emit('allocated', targetedNode);
       } else {
         console.log('branch to this node / use highlighted branch');
       }
     } else if (isAllocated.length === 1 || force) {
       this.pointsAllocated--;
       delete ClientStore.treeState[tab].allocated[targetedNode.id];
-      Emitter.emit('redrawNode', targetedNode, true);
+      Emitter.emit('deallocated', targetedNode, true);
     } else {
       let result = 0;
       const rootNode = (node.id).toString(); // hehe JavaScript
@@ -79,7 +77,7 @@ class Allocate {
       if (result === isAllocated.length) {
         this.pointsAllocated--;
         delete ClientStore.treeState[tab].allocated[targetedNode.id];
-        Emitter.emit('redrawNode', targetedNode, true);
+        Emitter.emit('deallocated', targetedNode, true);
       }
     }
 
