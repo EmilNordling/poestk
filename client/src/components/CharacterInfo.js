@@ -6,29 +6,21 @@ import { colors, media } from '../constants'
 import Emitter from '../../../pst/src/corev2/Emitter'
 
 const Info = styled.div`
-  position: fixed;
-  right: 0;
+  position: absolute;
   top: 0;
-  width: 100%;
+  left: -320px;
   height: 100%;
+  width: 320px;
+  z-index: 1;
   overflow: hidden;
-  pointer-events: none;
-  transform: translateX(100%);
-  width: 300px;
   font-size: 1.3rem;
-  transition: transform 200ms ease;
+  transition: transform 300ms ease;
   will-change: transform;
   background-color: ${colors.gray400};
-  border-left: 2px solid ${colors.gray300};
-
-  ${media.large`
-    position: static;
-    display: flex;
-    flex-direction: column;
-  `}
+  color: #efefef;
 
   ${props => props.open && `
-    transform: none;
+    transform: translateX(320px);
   `}
 `
 
@@ -42,7 +34,7 @@ const Content = styled.div`
 `
 
 const Item = styled.div`
-  padding: 0px 10px 5px;
+  padding: 0 10px 5px;
   font-weight: 600;
 
   &:hover {
@@ -57,8 +49,8 @@ const Group = styled.div`
 const GroupHeader = styled.div`
   padding: 10px;
   margin-bottom: 10px;
-  font-size: 1.5em;
   border-bottom: 1px solid ${colors.gray300};
+  font-size: 1.5em;
 `
 
 const GroupFooter = styled.div`
@@ -68,7 +60,7 @@ const GroupFooter = styled.div`
 @inject('guiState')
 @inject('allocationStore')
 @observer
-export default class CharacterInfo extends Component {
+class CharacterInfo extends Component {
   constructor(props) {
     super(props)
 
@@ -151,3 +143,5 @@ export default class CharacterInfo extends Component {
     )
   }
 }
+
+export default CharacterInfo

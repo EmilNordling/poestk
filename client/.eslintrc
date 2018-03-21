@@ -12,7 +12,10 @@
     "react/jsx-filename-extension": 0,
     "react/prop-types": 0,
     "linebreak-style": 0,
-    "newline-before-return": "error"
+    "newline-before-return": "error",
+    "no-plusplus": ["warn", {
+      "allowForLoopAfterthoughts": true
+    }]
   },
   "globals": {
     "preval": true

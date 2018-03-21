@@ -22,7 +22,7 @@
     "react-hot-loader/babel",
     "transform-class-properties",
     "transform-object-rest-spread",
-    "transform-runtime",
+    ["transform-runtime", { "polyfill": false }],
     "syntax-dynamic-import",
     "styled-components",
     "polished"

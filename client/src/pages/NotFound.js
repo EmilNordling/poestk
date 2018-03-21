@@ -1,5 +1,5 @@
 import React from 'react'
-import Title from '../components/common/Title'
+import { Title } from '../common'
 
 const NotFound = () => (
   <Title.H1>
