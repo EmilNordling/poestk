@@ -17,6 +17,8 @@ const theme = {
   },
 };
 
+const tileSize = 256;
+
 export {
   orbitRadius,
   skillsPerOrbit,
@@ -26,4 +28,5 @@ export {
   keystoneSize,
   strokeSize,
   theme,
+  tileSize,
 };

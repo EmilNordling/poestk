@@ -1,8 +1,6 @@
 import Logger from '../utils/Logger';
-import ClientStore from '../ClientStore';
+import Controller from '../controller';
 import Emitter from '../Emitter';
-// TODO: add option to swap between these
-import GlobalEmitter from '../../../../client/src/decorators/GlobalEmitter';
 
 // should just be one like: Logger.register('camera', ['x', 'y'])
 Logger.register('cameraX', 'x');
@@ -66,7 +64,7 @@ class Camera {
       this.position.y -= deltaY;
     }
 
-    ClientStore.isMoving = true;
+    Controller.ClientStore.isMoving = true;
 
     this.pastData.x = touchPointX;
     this.pastData.y = touchPointY;
@@ -164,7 +162,7 @@ class Camera {
   }
 
   onTouchEnd() {
-    ClientStore.isMoving = false;
+    Controller.ClientStore.isMoving = false;
     this.pastData.touch = false;
   }
 }

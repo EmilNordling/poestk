@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
-import Wrapper from '../../../pst/src/corev2/Wrapper'
+import { renderer } from '../../../pst/src/core'
 
 const PstContainer = styled.div`
   width: 100%;
@@ -14,13 +14,9 @@ const PstContainer = styled.div`
 @observer
 class Pst extends Component {
   async componentDidMount() {
-    if (!Wrapper.loaded) {
-      await this.props.nodeDataStore.getPassiveData()
+    await this.props.nodeDataStore.getPassiveData()
 
-      Wrapper.popularizeTiles(this.props.nodeDataStore)
-    }
-
-    Wrapper.mountCanvas(this.canvas)
+    renderer.mountCanvas(this.canvas)
   }
 
   render() {

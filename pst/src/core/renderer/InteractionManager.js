@@ -1,10 +1,7 @@
-import ClientStore from '../ClientStore';
 import Camera from './Camera';
-import TreeData from '../TreeData';
-import NodeData from '../NodeData';
+import Controller from '../controller';
 import Logger from '../utils/Logger';
 import Emitter from '../Emitter';
-import GlobalEmitter from '../../../../client/src/decorators/GlobalEmitter';
 import { strokeSize } from '../utils/constants';
 
 Logger.register('coords');
@@ -32,16 +29,16 @@ class InteractionManager {
     const relativeX = Camera.position.x + clientX;
     const relativeY = Camera.position.y + clientY;
 
-    const dataX = Math.floor(relativeX / Camera.zoomLevel / TreeData.tileSize);
-    const dataY = Math.floor(relativeY / Camera.zoomLevel / TreeData.tileSize);
+    const dataX = Math.floor(relativeX / Camera.zoomLevel / Controller.TreeData.tileSize);
+    const dataY = Math.floor(relativeY / Camera.zoomLevel / Controller.TreeData.tileSize);
     const coordString = `${dataX}/${dataY}`;
 
-    if (coordString === ClientStore.activeCoords) {
-      chunkData = ClientStore.activeCoordsData;
+    if (coordString === Controller.ClientStore.activeCoords) {
+      chunkData = Controller.ClientStore.activeCoordsData;
     } else {
-      chunkData = TreeData.getTiles(dataX, dataY);
-      ClientStore.activeCoords = coordString;
-      ClientStore.activeCoordsData = chunkData;
+      chunkData = Controller.TreeData.getTiles(dataX, dataY);
+      Controller.ClientStore.activeCoords = coordString;
+      Controller.ClientStore.activeCoordsData = chunkData;
 
       Logger.log('coords', coordString);
     }
@@ -49,7 +46,7 @@ class InteractionManager {
     // TODO: change to while and break when match is found
     // TODO: add to array and check which one is closest
     chunkData.nodes.forEach((n) => {
-      const node = NodeData.nodes[n];
+      const node = Controller.NodeData.nodes[n];
       const gotNode = InteractionManager.pointIsInCircle(
         relativeX,
         relativeY,
@@ -65,13 +62,13 @@ class InteractionManager {
   }
 
   static touchEnd() {
-    if (ClientStore.isHovering) {
-      Emitter.emit('allocate', ClientStore.isHovering);
+    if (Controller.ClientStore.isHovering) {
+      Emitter.emit('allocate', Controller.ClientStore.isHovering);
     }
   }
 
   static move(event) {
-    if (ClientStore.isMoving === true) return;
+    if (Controller.ClientStore.isMoving === true) return;
 
     InteractionManager.hoveringNode(
       {
@@ -91,7 +88,7 @@ class InteractionManager {
 
   /**
    * @param {object<x, y>} vec2
-   * @return {object} node from NodeData
+   * @return {object} node from Controller.NodeData
    */
   static hoveringNode(position) {
     // TODO: replace with mobile device check
@@ -101,42 +98,42 @@ class InteractionManager {
     const relativeX = Camera.position.x + position.x;
     const relativeY = Camera.position.y + position.y;
 
-    if (ClientStore.isHovering) {
+    if (Controller.ClientStore.isHovering) {
       const stillHovering = InteractionManager.pointIsInCircle(
         relativeX,
         relativeY,
-        Camera.scale(ClientStore.isHovering.x),
-        Camera.scale(ClientStore.isHovering.y),
-        Camera.scale(ClientStore.isHovering.size + strokeSize),
+        Camera.scale(Controller.ClientStore.isHovering.x),
+        Camera.scale(Controller.ClientStore.isHovering.y),
+        Camera.scale(Controller.ClientStore.isHovering.size + strokeSize),
       );
 
       if (!stillHovering) {
-        ClientStore.isHovering = false;
+        Controller.ClientStore.isHovering = false;
         Emitter.emit('hoverOut', false);
-        Logger.log('hover', ClientStore.isHovering);
+        Logger.log('hover', Controller.ClientStore.isHovering);
       }
 
       return;
     }
 
-    const dataX = Math.floor(relativeX / Camera.zoomLevel / TreeData.tileSize);
-    const dataY = Math.floor(relativeY / Camera.zoomLevel / TreeData.tileSize);
+    const dataX = Math.floor(relativeX / Camera.zoomLevel / Controller.TreeData.tileSize);
+    const dataY = Math.floor(relativeY / Camera.zoomLevel / Controller.TreeData.tileSize);
     const coordString = `${dataX}/${dataY}`;
 
-    if (coordString === ClientStore.activeCoords) {
-      chunkData = ClientStore.activeCoordsData;
+    if (coordString === Controller.ClientStore.activeCoords) {
+      chunkData = Controller.ClientStore.activeCoordsData;
     } else {
-      chunkData = TreeData.getTiles(dataX, dataY);
+      chunkData = Controller.TreeData.getTiles(dataX, dataY);
 
-      ClientStore.activeCoords = coordString;
-      ClientStore.activeCoordsData = chunkData;
+      Controller.ClientStore.activeCoords = coordString;
+      Controller.ClientStore.activeCoordsData = chunkData;
 
       Logger.log('coords', coordString);
     }
 
     // TODO: change to while and break when match is found
     chunkData.nodes.forEach((n) => {
-      const node = NodeData.nodes[n];
+      const node = Controller.NodeData.nodes[n];
       const isHovering = InteractionManager.pointIsInCircle(
         relativeX,
         relativeY,
@@ -146,9 +143,9 @@ class InteractionManager {
       );
 
       if (isHovering) {
-        ClientStore.isHovering = node;
+        Controller.ClientStore.isHovering = node;
         Emitter.emit('hoverOver', node);
-        Logger.log('hover', ClientStore.isHovering.id);
+        Logger.log('hover', Controller.ClientStore.isHovering.id);
       }
     });
   }

@@ -1,6 +1,6 @@
 import ClientStore from './ClientStore';
 import Emitter from './Emitter';
-import { generateHash } from './hashShim';
+import { generateHash } from '../hashShim';
 import NodeData from './NodeData';
 
 class Allocate {

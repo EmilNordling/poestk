@@ -1,10 +1,10 @@
 import Matrix from './Matrix';
 import Camera from './Camera';
-import { Canvas, draw } from '../renderers';
+import Canvas from './Canvas';
+import ChunkHTML5 from './ChunkHTML5';
 import InteractionManager from './InteractionManager';
 import Emitter from '../Emitter';
-import ClientStore from '../ClientStore';
-import { strokeSize } from '../utils/constants';
+import { strokeSize, tileSize } from '../utils/constants';
 
 class View {
   constructor() {
@@ -49,16 +49,16 @@ class View {
 
     this.matrix.getTiles({ x: lowestX, y: lowestY }, { x: highestX, y: highestY }, (tileBuffer) => {
       tileBuffer.forEach((tile) => {
-        const x = tile.x * ClientStore.tileSize;
-        const y = tile.y * ClientStore.tileSize;
+        const x = tile.x * tileSize;
+        const y = tile.y * tileSize;
         const offsetX = x + -Camera.position.x;
         const offsetY = y + -Camera.position.y;
 
-        this.Canvas.clear(offsetX, offsetY, ClientStore.tileSize, ClientStore.tileSize);
+        this.Canvas.clear(offsetX, offsetY, tileSize, tileSize);
         tile.canvas.clear();
       });
 
-      draw(tileBuffer, this.context);
+      ChunkHTML5(tileBuffer, this.context);
     });
   }
 
@@ -68,13 +68,13 @@ class View {
     this.matrix.getVisableTileCoordiantes(this.context, (tile) => {
       this.context.drawImage(
         tile.canvas.canvas,
-        (tile.x * ClientStore.tileSize) + -Camera.position.x,
-        (tile.y * ClientStore.tileSize) + -Camera.position.y,
-        ClientStore.tileSize,
-        ClientStore.tileSize,
+        (tile.x * tileSize) + -Camera.position.x,
+        (tile.y * tileSize) + -Camera.position.y,
+        tileSize,
+        tileSize,
       );
     }, (tileBuffer) => {
-      draw(tileBuffer, this.context);
+      ChunkHTML5(tileBuffer, this.context);
     });
   }
 }

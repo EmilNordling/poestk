@@ -1,9 +1,7 @@
-import Bounds from './Bounds';
 import Camera from './Camera';
 import Logger from '../utils/Logger';
 import Tile from './Tile';
-import ClientStore from '../ClientStore';
-
+import Controller from '../controller';
 import minX from '../../treeData/min_x.json';
 import minY from '../../treeData/min_y.json';
 import maxX from '../../treeData/max_x.json';
@@ -14,34 +12,25 @@ Logger.register('tiles', 'visable tiles');
 export default class Matrix {
   // remake constructor
   constructor() {
-    this.bounds = new Bounds({
-      x: 0,
-      y: 0,
-    },
-    {
-      x: maxX - minX,
-      y: maxY - minY,
-    });
-
     this.zoomLevel = 0;
 
     this.length = (maxX - minX) * Camera.zoomLevel;
     this.height = (maxY - minY) * Camera.zoomLevel;
 
-    this.maxTileX = (this.length / ClientStore.tileSize);
-    this.maxTileY = (this.height / ClientStore.tileSize);
+    this.maxTileX = (this.length / Controller.ClientStore.tileSize);
+    this.maxTileY = (this.height / Controller.ClientStore.tileSize);
 
     this.tiles = {};
   }
 
   // TODO: find more fitting param & var names. Also rewrite it
   getVisableTileCoordiantes(context, tileCallback, tileBufferCallback) {
-    const cameraXsizeX = Camera.position.x / ClientStore.tileSize;
-    const cameraXsizeY = Camera.position.y / ClientStore.tileSize;
+    const cameraXsizeX = Camera.position.x / Controller.ClientStore.tileSize;
+    const cameraXsizeY = Camera.position.y / Controller.ClientStore.tileSize;
     const startCol = Math.floor(cameraXsizeX);
     const startRow = Math.floor(cameraXsizeY);
-    const endCol = (cameraXsizeX) + ((context.canvas.width / devicePixelRatio) / ClientStore.tileSize);
-    const endRow = (cameraXsizeY) + ((context.canvas.height / devicePixelRatio) / ClientStore.tileSize);
+    const endCol = (cameraXsizeX) + ((context.canvas.width / devicePixelRatio) / Controller.ClientStore.tileSize);
+    const endRow = (cameraXsizeY) + ((context.canvas.height / devicePixelRatio) / Controller.ClientStore.tileSize);
     let column = 0;
     let row = 0;
 
@@ -81,8 +70,8 @@ export default class Matrix {
   }
 
   getTile(position, callback) {
-    const tileX = Math.floor(Camera.scale(position.x) / ClientStore.tileSize);
-    const tileY = Math.floor(Camera.scale(position.y) / ClientStore.tileSize);
+    const tileX = Math.floor(Camera.scale(position.x) / Controller.ClientStore.tileSize);
+    const tileY = Math.floor(Camera.scale(position.y) / Controller.ClientStore.tileSize);
 
     callback.call(this, this.tiles[`${tileX}/${tileY}/${this.zoomLevel}`]);
   }
@@ -93,10 +82,10 @@ export default class Matrix {
    * @return {object} node from NodeData
    */
   getTiles(start, end, tileBufferCallback) {
-    const startCol = Math.floor(Camera.scale(start.x) / ClientStore.tileSize);
-    const startRow = Math.floor(Camera.scale(start.y) / ClientStore.tileSize);
-    const endCol = Math.floor(Camera.scale(end.x) / ClientStore.tileSize);
-    const endRow = Math.floor(Camera.scale(end.y) / ClientStore.tileSize);
+    const startCol = Math.floor(Camera.scale(start.x) / Controller.ClientStore.tileSize);
+    const startRow = Math.floor(Camera.scale(start.y) / Controller.ClientStore.tileSize);
+    const endCol = Math.floor(Camera.scale(end.x) / Controller.ClientStore.tileSize);
+    const endRow = Math.floor(Camera.scale(end.y) / Controller.ClientStore.tileSize);
     let column = 0;
     let row = 0;
     const tileBuffer = [];

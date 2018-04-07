@@ -1,7 +1,9 @@
 import { computed, observable, action } from 'mobx'
-import NodeData from '../../../pst/src/corev2/NodeData'
+import { loader } from '../../../pst/src/core'
 
 class NodeDataStore {
+  @observable loaded = false;
+
   @observable nodes = {}
 
   @computed get nodeData() {
@@ -10,9 +12,13 @@ class NodeDataStore {
 
   @action
   async getPassiveData() {
-    await NodeData.load()
+    if (this.loaded) return
 
-    this.nodes = NodeData.nodes
+    await loader.start()
+
+    this.loaded = true
+
+    this.nodes = loader.finish().nodes
   }
 }
 

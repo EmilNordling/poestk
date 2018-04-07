@@ -1,6 +1,5 @@
-import ClientStore from '../ClientStore';
-import Camera from '../viewport/Camera';
-import NodeData from '../NodeData';
+import Controller from '../controller';
+import Camera from './Camera';
 
 function drawConnection(connection, context) {
   let cancelBuffer = false;
@@ -8,12 +7,12 @@ function drawConnection(connection, context) {
   const outNode = connection.points.b;
 
   // TODO: add getterss
-  if (ClientStore.treeState[ClientStore.viewTab].allocated[node.id] &&
-      ClientStore.treeState[ClientStore.viewTab].allocated[outNode.id] &&
-     (node.id === ClientStore.treeState[ClientStore.viewTab].allocated[node.id].id) &&
-     (outNode.id === ClientStore.treeState[ClientStore.viewTab].allocated[outNode.id].id)) {
+  if (Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id] &&
+      Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[outNode.id] &&
+     (node.id === Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id].id) &&
+     (outNode.id === Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[outNode.id].id)) {
     context.stroke();
-    context.strokeStyle = ClientStore.theme.allocated;
+    context.strokeStyle = Controller.ClientStore.theme.allocated;
     context.beginPath();
     cancelBuffer = true;
   }
@@ -31,14 +30,14 @@ function drawConnection(connection, context) {
   if (cancelBuffer) {
     context.stroke();
 
-    context.strokeStyle = ClientStore.theme.path;
+    context.strokeStyle = Controller.ClientStore.theme.path;
     context.beginPath();
   }
 }
 
 // TODO: make so draw node doesn't need id
 function drawNode(n, context) {
-  const node = NodeData.nodes[n];
+  const node = Controller.NodeData.nodes[n];
 
   if (node.m === true || node.ascendancyName) return;
 
@@ -52,7 +51,7 @@ function drawNode(n, context) {
   );
 
   context.fillStyle = node.color;
-  context.strokeStyle = ClientStore.treeState[ClientStore.viewTab].allocated[node.id] !== undefined ? ClientStore.theme.allocated : ClientStore.theme.path;
+  context.strokeStyle = Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id] !== undefined ? Controller.ClientStore.theme.allocated : Controller.ClientStore.theme.path;
   context.fill();
   context.stroke();
 }

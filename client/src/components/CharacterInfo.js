@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { computed } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { colors, media } from '../constants'
-import Emitter from '../../../pst/src/corev2/Emitter'
+import Emitter from '../../../pst/src/core/Emitter'
 
 const Info = styled.div`
   position: absolute;
@@ -87,7 +87,7 @@ class CharacterInfo extends Component {
   allocated(node) {
     node.sd.forEach((stat) => {
       const Precent = stat.match(/%/g) || null
-      const Value = parseInt(/\d+/gi.exec(stat)[0].replace(/\s/g, ''), 10)
+      const Value = parseFloat(/\d*\.?\d/gi.exec(stat)[0].replace(/\s/g, ''))
       const Description = /\S+[a-z].*/gi.exec(stat)[0]
       const key = (Description).replace(/\s/g, '')
 
@@ -108,7 +108,7 @@ class CharacterInfo extends Component {
 
   deallocated(node) {
     node.sd.forEach((stat) => {
-      const value = parseInt(/\d+/gi.exec(stat)[0].replace(/\s/g, ''), 10)
+      const value = parseFloat(/\d*\.?\d/gi.exec(stat)[0].replace(/\s/g, ''))
       const Description = /\S+[a-z].*/gi.exec(stat)[0]
       const key = (Description).replace(/\s/g, '')
 

@@ -1,4 +1,4 @@
-import { theme } from './utils/constants';
+import { theme } from '../utils/constants';
 
 class ClientStore {
   constructor() {
@@ -20,4 +20,4 @@ class ClientStore {
   }
 }
 
-export default new ClientStore();
+export default ClientStore;

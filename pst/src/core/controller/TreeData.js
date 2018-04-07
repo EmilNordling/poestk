@@ -51,4 +51,4 @@ class TreeData {
   }
 }
 
-export default new TreeData();
+export default TreeData;
