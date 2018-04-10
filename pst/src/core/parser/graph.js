@@ -17,8 +17,8 @@ function nodePosition(node, group) {
   );
 
   const getPosition = {
-    x: group ? controller.nodeData.groups[group].x : controller.nodeData.groups[node.groupID].x,
-    y: group ? controller.nodeData.groups[group].y : controller.nodeData.groups[node.groupID].y,
+    x: group ? controller.NodeData.groups[group].x : controller.NodeData.groups[node.groupID].x,
+    y: group ? controller.NodeData.groups[group].y : controller.NodeData.groups[node.groupID].y,
   };
 
   getPosition.x -= getOrbit * Math.sin(-getAngle);
@@ -32,7 +32,7 @@ function nodePosition(node, group) {
 }
 
 function graph(data) {
-  data.nodes.map(node => controller.nodeData.addNode(node.id, new Passive(node)));
+  data.nodes.map(node => controller.NodeData.addNode(node.id, new Passive(node)));
 
   Object.keys(data.groups).forEach((key) => {
     const entry = data.groups[key];
@@ -43,7 +43,7 @@ function graph(data) {
     const group = new Group(key, { x: entry.x, y: entry.y }, entry.oo);
 
     for (let e = 0, t = entry.n.length; e < t; e += 1) {
-      const node = controller.nodeData.getNode(entry.n[e]);
+      const node = controller.NodeData.getNode(entry.n[e]);
       if (node.isAscendancy) {
         group.isAscendancy = true;
         group.ascendancyName = node.ascendancyName;
@@ -52,13 +52,13 @@ function graph(data) {
       group.addNode = node;
     }
 
-    controller.nodeData.groups[group.id] = group;
+    controller.NodeData.groups[group.id] = group;
   });
 }
 
 function popularizeTiles() {
-  Object.keys(controller.nodeData.groups).forEach(
-    group => controller.nodeData.groups[group].foreachNode(
+  Object.keys(controller.NodeData.groups).forEach(
+    group => controller.NodeData.groups[group].foreachNode(
       (OUTNODE) => {
         const outNode = OUTNODE;
 
@@ -67,13 +67,13 @@ function popularizeTiles() {
         outNode.x = baseNodePosition.x;
         outNode.y = baseNodePosition.y;
 
-        const column = Math.floor(baseNodePosition.x / controller.treeData.tileSize);
-        const row = Math.floor(baseNodePosition.y / controller.treeData.tileSize);
+        const column = Math.floor(baseNodePosition.x / controller.TreeData.tileSize);
+        const row = Math.floor(baseNodePosition.y / controller.TreeData.tileSize);
         let matrixID;
 
-        if (column >= 0 && row >= 0 && column <= controller.treeData.maxTileX && row <= controller.treeData.maxTileY) {
+        if (column >= 0 && row >= 0 && column <= controller.TreeData.maxTileX && row <= controller.TreeData.maxTileY) {
           matrixID = `${column}/${row}`;
-          controller.treeData.matrix[matrixID].nodes.push(outNode.id);
+          controller.TreeData.matrix[matrixID].nodes.push(outNode.id);
 
           if (outNode.dn === 'Dexterity') {
             outNode.color = '#4da73d';
@@ -98,45 +98,45 @@ function popularizeTiles() {
           }
 
           const halfSize = (outNode.size / 2) + (strokeSize * 2);
-          const topX = Math.floor((baseNodePosition.x + halfSize) / controller.treeData.tileSize);
-          const topY = Math.floor((baseNodePosition.y + halfSize) / controller.treeData.tileSize);
-          const bottomX = Math.floor((baseNodePosition.x - halfSize) / controller.treeData.tileSize);
-          const bottomY = Math.floor((baseNodePosition.y - halfSize) / controller.treeData.tileSize);
+          const topX = Math.floor((baseNodePosition.x + halfSize) / controller.TreeData.tileSize);
+          const topY = Math.floor((baseNodePosition.y + halfSize) / controller.TreeData.tileSize);
+          const bottomX = Math.floor((baseNodePosition.x - halfSize) / controller.TreeData.tileSize);
+          const bottomY = Math.floor((baseNodePosition.y - halfSize) / controller.TreeData.tileSize);
 
           if (topX !== column) {
-            controller.treeData.matrix[`${topX}/${row}`].nodes.push(outNode.id);
+            controller.TreeData.matrix[`${topX}/${row}`].nodes.push(outNode.id);
           }
 
           if (bottomX !== column) {
-            controller.treeData.matrix[`${bottomX}/${row}`].nodes.push(outNode.id);
+            controller.TreeData.matrix[`${bottomX}/${row}`].nodes.push(outNode.id);
           }
 
           if (topY !== row) {
-            controller.treeData.matrix[`${column}/${topY}`].nodes.push(outNode.id);
+            controller.TreeData.matrix[`${column}/${topY}`].nodes.push(outNode.id);
           }
 
           if (bottomY !== row) {
-            controller.treeData.matrix[`${column}/${bottomY}`].nodes.push(outNode.id);
+            controller.TreeData.matrix[`${column}/${bottomY}`].nodes.push(outNode.id);
           }
 
           if (outNode.out !== undefined) {
             outNode.out.forEach((out) => {
-              controller.nodeData.nodes[out].connection[outNode.id] = outNode;
-              outNode.connection[out] = controller.nodeData.nodes[out];
+              controller.NodeData.nodes[out].connection[outNode.id] = outNode;
+              outNode.connection[out] = controller.NodeData.nodes[out];
 
-              if (controller.nodeData.nodes[out].ascendancyName || outNode.ascendancyName) return;
-              const newConnection = new Connection(outNode, controller.nodeData.nodes[out]);
-              controller.treeData.matrix[matrixID].connections.push(newConnection);
+              if (controller.NodeData.nodes[out].ascendancyName || outNode.ascendancyName) return;
+              const newConnection = new Connection(outNode, controller.NodeData.nodes[out]);
+              controller.TreeData.matrix[matrixID].connections.push(newConnection);
 
-              const outNodeColumn = Math.floor(nodePosition(controller.nodeData.nodes[out], controller.nodeData.nodes[out].g).x / controller.treeData.tileSize);
-              const outNodeRow = Math.floor(nodePosition(controller.nodeData.nodes[out], controller.nodeData.nodes[out].g).y / controller.treeData.tileSize);
+              const outNodeColumn = Math.floor(nodePosition(controller.NodeData.nodes[out], controller.NodeData.nodes[out].g).x / controller.TreeData.tileSize);
+              const outNodeRow = Math.floor(nodePosition(controller.NodeData.nodes[out], controller.NodeData.nodes[out].g).y / controller.TreeData.tileSize);
 
               if (outNodeColumn !== column) {
-                controller.treeData.matrix[`${outNodeColumn}/${row}`].connections.push(newConnection);
+                controller.TreeData.matrix[`${outNodeColumn}/${row}`].connections.push(newConnection);
               }
 
               if (outNodeRow !== row) {
-                controller.treeData.matrix[`${column}/${outNodeRow}`].connections.push(newConnection);
+                controller.TreeData.matrix[`${column}/${outNodeRow}`].connections.push(newConnection);
               }
             });
           }

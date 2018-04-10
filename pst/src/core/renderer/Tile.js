@@ -3,7 +3,7 @@ import Canvas from './Canvas';
 let id = 0;
 
 export default class Tile {
-  constructor(coords) {
+  constructor(coords, frameID = null) {
     id += 1;
 
     this.key = coords.key;
@@ -16,6 +16,7 @@ export default class Tile {
     this.context = undefined;
     this.state = false;
     this.canCollectData = false;
+    this.localFrameID = frameID;
   }
 
   static coords(coord) {
@@ -29,6 +30,10 @@ export default class Tile {
 
   static coordsKey({ x, y, z }) {
     return `${x}/${y}/${z}`;
+  }
+
+  set frameID(newID) {
+    this.localFrameID = newID;
   }
 
   cacheTile(tileSize, context, offsetX, offsetY) {

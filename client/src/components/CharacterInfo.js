@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { computed } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import { colors, media } from '../constants'
+import { colors } from '../constants'
 import Emitter from '../../../pst/src/core/Emitter'
+import { reset } from '../../../pst/src/core/publicAPI'
 
 const Info = styled.div`
   position: absolute;
@@ -55,6 +56,10 @@ const GroupHeader = styled.div`
 
 const GroupFooter = styled.div`
   margin: 10px;
+`
+
+const Btn = styled.div`
+  font-size: 2rem;
 `
 
 @inject('guiState')
@@ -131,7 +136,9 @@ class CharacterInfo extends Component {
 
     return (
       <Info open={this.menuState}>
-        <Header />
+        <Header>
+          <Btn onClick={() => reset()}>change</Btn>
+        </Header>
         <Content>
           <Group>
             <GroupHeader>Stats</GroupHeader>

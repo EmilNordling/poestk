@@ -84,7 +84,7 @@ class Allocate {
     const ascendancy = Controller.ClientStore.treeState[tab].ascendancy;
     const allocated = Object.values(Controller.ClientStore.treeState[tab].allocated);
     allocated.shift();
-    generateHash(startClass, ascendancy, allocated);
+    localStorage.setItem('link', generateHash(startClass, ascendancy, allocated));
   }
 }
 

@@ -18,6 +18,10 @@ class ClientStore {
     ];
     this.theme = theme.dark;
   }
+
+  get tab() {
+    return this.viewTab;
+  }
 }
 
 export default ClientStore;

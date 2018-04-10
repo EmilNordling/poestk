@@ -2,7 +2,6 @@ import Controller from '../controller';
 import View from './View';
 import FrameProvider from './FrameProvider';
 import Emitter from '../Emitter';
-import { changeClass } from '../publicAPI';
 
 class Renderer {
   constructor() {
@@ -10,7 +9,7 @@ class Renderer {
   }
 
   init() {
-    changeClass('scion');
+    Controller.changeClass(Controller.currentTabData.startClass);
 
     this.FrameProvider = new FrameProvider();
     this.View = new View();

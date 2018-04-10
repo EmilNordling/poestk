@@ -55,7 +55,11 @@ export default class Matrix {
           });
 
           if (!this.tiles[coords.key]) {
-            this.tiles[coords.key] = new Tile(coords);
+            this.tiles[coords.key] = new Tile(coords, Controller.frameID);
+
+            tileBuffer.push(this.tiles[coords.key]);
+          } else if (this.tiles[coords.key].localFrameID !== Controller.frameID) {
+            this.tiles[coords.key].frameID = Controller.frameID;
 
             tileBuffer.push(this.tiles[coords.key]);
           } else {
