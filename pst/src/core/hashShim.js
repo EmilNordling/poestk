@@ -122,55 +122,57 @@ class Hash {
    * @return {string}
    */
   static decodeBase64(STRING) {
-    let stringLength = STRING.length;
+    return new Promise((resolve, reject) => {
+      let stringLength = STRING.length;
 
-    if (stringLength === 0) return STRING;
+      if (stringLength === 0) reject('String is empty');
 
-    if (stringLength % 4 !== 0) throw new TypeError('Cannot decode base64');
+      if (stringLength % 4 !== 0) reject('Cannot decode base64');
 
-    let binderCharCases = 0;
-    let iteration = 0;
-    let bitwise;
-    const characterArray = [];
+      let binderCharCases = 0;
+      let iteration = 0;
+      let bitwise;
+      const characterArray = [];
 
-    if (STRING.charAt(stringLength - 1) === binderChar) {
-      binderCharCases = 1;
+      if (STRING.charAt(stringLength - 1) === binderChar) {
+        binderCharCases = 1;
 
-      if (STRING.charAt(stringLength - 2) === binderChar) {
-        binderCharCases = 2;
+        if (STRING.charAt(stringLength - 2) === binderChar) {
+          binderCharCases = 2;
+        }
+
+        stringLength -= 4;
       }
 
-      stringLength -= 4;
-    }
-
-    for (; iteration < stringLength; iteration += 4) {
-      bitwise = (Hash.validCharCode(STRING, iteration) << 18) |
-                (Hash.validCharCode(STRING, iteration + 1) << 12) |
-                (Hash.validCharCode(STRING, iteration + 2) << 6) |
-                (Hash.validCharCode(STRING, iteration + 3));
-      characterArray.push(String.fromCharCode(
-        bitwise >> 16,
-        (bitwise >> 8) & 255,
-        bitwise & 255),
-      );
-    }
-
-    switch (binderCharCases) {
-      case 1:
+      for (; iteration < stringLength; iteration += 4) {
         bitwise = (Hash.validCharCode(STRING, iteration) << 18) |
                   (Hash.validCharCode(STRING, iteration + 1) << 12) |
-                  (Hash.validCharCode(STRING, iteration + 2) << 6);
-        characterArray.push(String.fromCharCode(bitwise >> 16, (bitwise >> 8) & 255));
-        break;
-      case 2:
-        bitwise = (Hash.validCharCode(STRING, iteration) << 18) |
-                  (Hash.validCharCode(STRING, iteration + 1) << 12);
-        characterArray.push(String.fromCharCode(bitwise >> 16));
-        break;
-      default: break;
-    }
+                  (Hash.validCharCode(STRING, iteration + 2) << 6) |
+                  (Hash.validCharCode(STRING, iteration + 3));
+        characterArray.push(String.fromCharCode(
+          bitwise >> 16,
+          (bitwise >> 8) & 255,
+          bitwise & 255),
+        );
+      }
 
-    return characterArray.join('');
+      switch (binderCharCases) {
+        case 1:
+          bitwise = (Hash.validCharCode(STRING, iteration) << 18) |
+                    (Hash.validCharCode(STRING, iteration + 1) << 12) |
+                    (Hash.validCharCode(STRING, iteration + 2) << 6);
+          characterArray.push(String.fromCharCode(bitwise >> 16, (bitwise >> 8) & 255));
+          break;
+        case 2:
+          bitwise = (Hash.validCharCode(STRING, iteration) << 18) |
+                    (Hash.validCharCode(STRING, iteration + 1) << 12);
+          characterArray.push(String.fromCharCode(bitwise >> 16));
+          break;
+        default: break;
+      }
+
+      resolve(characterArray.join(''));
+    });
   }
 
   /**
@@ -273,14 +275,14 @@ export function generateHash(startClass, ascendancy, nodes) {
  * @param {string} HASHSTRING
  * @return {object} returns decoded { startClass, ascendancy, nodes }
  */
-export function decodeHash(HASHSTRING) {
+export async function decodeHash(HASHSTRING) {
   const hashString = HASHSTRING.replace(/-/g, '+').replace(/_/g, '/');
   let decoded;
 
   try {
-    decoded = Hash.decodeBase64(hashString);
+    decoded = await Hash.decodeBase64(hashString);
   } catch (error) {
-    throw new Error('Failed to decode hash');
+    console.error('faield to decode hash', error);
   }
 
   const decode = new ByteDecode(decoded);
@@ -298,6 +300,6 @@ export function decodeHash(HASHSTRING) {
   return {
     startClass: decodedStartClass,
     ascendancy: decodedAscendancy,
-    nodes: decodedAllocatedNodes,
+    allocated: decodedAllocatedNodes,
   };
 }

@@ -6,11 +6,15 @@ function changeClass(changeTo) {
 }
 
 function reset() {
-  console.log('xdd');
-  Controller.clearPassives();
+  return Controller.clearPassives();
+}
+
+function decodeTree(hashstring) {
+  Controller.updatePassive(hashstring);
 }
 
 export {
   changeClass,
   reset,
+  decodeTree,
 };

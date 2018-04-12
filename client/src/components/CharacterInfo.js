@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { computed } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { colors } from '../constants'
+import { Dropdown } from '../common'
 import Emitter from '../../../pst/src/core/Emitter'
-import { reset } from '../../../pst/src/core/publicAPI'
+import { reset, decodeTree } from '../../../pst/src/core/publicAPI'
 
 const Info = styled.div`
   position: absolute;
@@ -26,7 +27,6 @@ const Info = styled.div`
 `
 
 const Header = styled.header`
-  height: 100px;
   border-bottom: 1px solid ${colors.gray300};
 `
 
@@ -59,7 +59,23 @@ const GroupFooter = styled.div`
 `
 
 const Btn = styled.div`
-  font-size: 2rem;
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  border: 1px solid ${colors.gray200};
+  border-radius: 4px;
+  cursor: pointer;
+`
+
+const BtnWrapper = styled.div`
+  padding: 20px 10px;
+  margin-top: 5px;
+  border-top: 1px solid ${colors.gray200};
+  display: flex;
+  justify-content: space-between;
+
+  &:first-of-type {
+    border-top: none;
+  }
 `
 
 @inject('guiState')
@@ -68,6 +84,10 @@ const Btn = styled.div`
 class CharacterInfo extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      hash: '',
+    }
 
     // TODO: make mobx store
     this.stats = {}
@@ -129,15 +149,21 @@ class CharacterInfo extends Component {
 
   render() {
     const stats = Object.keys(this.stats).map(x => (
-      <Item key={this.stats[x].id}>{
-        this.stats[x].value }{this.stats[x].type} { this.stats[x].description }
+      <Item key={this.stats[x].id}>
+        {this.stats[x].value }{this.stats[x].type} { this.stats[x].description }
       </Item>
     ))
 
     return (
       <Info open={this.menuState}>
         <Header>
-          <Btn onClick={() => reset()}>change</Btn>
+          <BtnWrapper>
+            <Btn onClick={() => reset()}>reset</Btn>
+          </BtnWrapper>
+          <BtnWrapper>
+            <input onChange={event => this.setState({ hash: event.target.value })} />
+            <Btn onClick={() => decodeTree(this.state.hash)}>decode</Btn>
+          </BtnWrapper>
         </Header>
         <Content>
           <Group>

@@ -2,6 +2,28 @@ import Controller from './controller';
 import Emitter from './Emitter';
 import { generateHash } from './hashShim';
 
+// move to somewhere it make sense to have it
+const getClassNode = (classID) => {
+  switch (classID) {
+    case 0:
+      return 58833;
+    case 1:
+      return 47175;
+    case 2:
+      return 50459;
+    case 3:
+      return 54447;
+    case 4:
+      return 50986;
+    case 5:
+      return 61525;
+    case 6:
+      return 50459;
+    default:
+      throw new Error('invalid');
+  }
+};
+
 class Allocate {
   constructor() {
     this.characterLevel = 100;
@@ -50,7 +72,7 @@ class Allocate {
       const rootNode = (node.id).toString(); // hehe JavaScript
 
       isAllocated.forEach((con) => {
-        const findRoot = 58833;
+        const findRoot = getClassNode(Controller.currentTabData.startClass);
         const queue = [con];
         const visited = [rootNode, con];
 
