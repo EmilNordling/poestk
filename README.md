@@ -11,33 +11,20 @@
   <p>
 </div>
 
-## Projects
-The collection of projects that make poestk
-
-|Name|Status|Description|
-|:--:|:----:|:----------|
-|<a href="https://github.com/EmilNordling/poestk/tree/master/client">poestk|**v0.3.2**|Client
-|<a href="https://github.com/EmilNordling/poestk/tree/master/pst">poestk-pst|**v0.5.12**|Passive Skill Tree
-|<a href="https://github.com/EmilNordling/poestk/tree/master/filter">poestk-filter|**v1.3.2**|Reduces and adapts Tree Data
-
-## Goals with poestk
-The current schedule of planned versions with goals to reach for each one.
-
-#### V1.0.0
+## Roadmap
+#### Near-term
 - [ ] Released as an Progressive Web Application
 - [ ] Mobile friendly, both UI and performance wise
 
-#### V2.0.0
+#### Medium-term
 - [ ] User profile
 - [ ] ServerLess architecture
 - [ ] Character profile with item & skill gems
-
-#### V3.0.0
-- [ ] Damage calculation
-
-#### Other golas
-- [ ] Switch to WebGL
 - [ ] Exposed a nice API for poestk's Passive Skill Tree
+
+#### Long-term
+- [ ] Damage calculation
+- [ ] Switch to WebGL
 
 ## License
 MIT
