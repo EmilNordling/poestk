@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react'
 import { colors } from '../constants'
 import { Dropdown } from '../common'
 import Emitter from '../../../pst/src/core/Emitter'
-import { reset, decodeTree } from '../../../pst/src/core/publicAPI'
+import { reset, decodeTree, changeClass } from '../../../pst/src/core/publicAPI'
 
 const Info = styled.div`
   position: absolute;
@@ -147,12 +147,16 @@ class CharacterInfo extends Component {
     this.forceUpdate()
   }
 
+
   render() {
     const stats = Object.keys(this.stats).map(x => (
       <Item key={this.stats[x].id}>
         {this.stats[x].value }{this.stats[x].type} { this.stats[x].description }
       </Item>
     ))
+
+    // temp
+    const classes = ['scion', 1, 2, 3, 4, 5, 6]
 
     return (
       <Info open={this.menuState}>
@@ -163,6 +167,13 @@ class CharacterInfo extends Component {
           <BtnWrapper>
             <input onChange={event => this.setState({ hash: event.target.value })} />
             <Btn onClick={() => decodeTree(this.state.hash)}>decode</Btn>
+          </BtnWrapper>
+          <BtnWrapper>
+            <select onChange={event => changeClass(parseInt(event.target.value, 10), 'xd', true)}>
+              {
+                classes.map((x, i) => (<option key={x} value={i}>{x}</option>))
+              }
+            </select>
           </BtnWrapper>
         </Header>
         <Content>

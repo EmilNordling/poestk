@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
-import { renderer } from '../../../pst/src/core'
+import { renderer, Emitter } from '../../../pst/src/core'
+import NodeInfo from './NodeInfo'
 
 const PstContainer = styled.div`
   width: 100%;

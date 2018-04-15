@@ -1,20 +1,24 @@
 import Controller from './controller';
-import Emitter from './Emitter';
 
-function changeClass(changeTo) {
-  Controller.changeClass(changeTo);
+function changeClass(changeTo, destructive, newFrame) {
+  Controller.changeClass(changeTo, destructive, newFrame);
 }
 
 function reset() {
-  return Controller.clearPassives();
+  Controller.clearPassives();
 }
 
 function decodeTree(hashstring) {
   Controller.updatePassive(hashstring);
 }
 
+function getCurrentTabData() {
+  return Controller.currentTabData;
+}
+
 export {
   changeClass,
   reset,
   decodeTree,
+  getCurrentTabData,
 };

@@ -17,47 +17,51 @@ class Controller {
     return this.ClientStore.treeState[this.ClientStore.tab];
   }
 
-  changeClass(changeTo) {
+  changeClass(changeTo, destructive = false, newFrame = false) {
+    if (destructive) this.currentTabData.allocated = {};
+
     switch (changeTo) {
       case 0:
-        this.ClientStore.treeState[this.ClientStore.tab].allocated[58833] = this.NodeData.nodes[58833];
+        this.currentTabData.allocated[58833] = this.NodeData.nodes[58833];
         break;
       case 1:
-        this.ClientStore.treeState[this.ClientStore.tab].allocated[47175] = this.NodeData.nodes[47175];
+        this.currentTabData.allocated[47175] = this.NodeData.nodes[47175];
         break;
       case 2:
-        this.ClientStore.treeState[this.ClientStore.tab].allocated[50459] = this.NodeData.nodes[50459];
+        this.currentTabData.allocated[50459] = this.NodeData.nodes[50459];
         break;
       case 3:
-        this.ClientStore.treeState[this.ClientStore.tab].allocated[54447] = this.NodeData.nodes[54447];
+        this.currentTabData.allocated[54447] = this.NodeData.nodes[54447];
         break;
       case 4:
-        this.ClientStore.treeState[this.ClientStore.tab].allocated[50986] = this.NodeData.nodes[50986];
+        this.currentTabData.allocated[50986] = this.NodeData.nodes[50986];
         break;
       case 5:
-        this.ClientStore.treeState[this.ClientStore.tab].allocated[61525] = this.NodeData.nodes[61525];
+        this.currentTabData.allocated[61525] = this.NodeData.nodes[61525];
         break;
       case 6:
-        this.ClientStore.treeState[this.ClientStore.tab].allocated[50459] = this.NodeData.nodes[50459];
+        this.currentTabData.allocated[50459] = this.NodeData.nodes[50459];
         break;
       default:
         throw new Error('invalid');
     }
+
+    this.currentTabData.startClass = changeTo;
+
+    if (newFrame) this.newFrameID();
   }
 
   newFrameID() {
     this.frameID = v4();
 
     Emitter.emit('draw');
-
-    return this.frameID;
   }
 
   clearPassives() {
     this.currentTabData.allocated = {};
     this.changeClass(this.currentTabData.startClass);
 
-    return this.newFrameID();
+    this.newFrameID();
   }
 
   async updatePassive(hashstring) {

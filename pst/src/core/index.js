@@ -8,6 +8,6 @@ export { default as renderer } from './renderer';
 
 export { default as AllocationObservable } from './AllocationObservable';
 
-// export { default as viewport } from './viewport';
+export { default as Emitter } from './Emitter';
 
 // export { default as events } from './events';
