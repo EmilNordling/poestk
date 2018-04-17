@@ -1,4 +1,5 @@
-import { parser, controller } from '../';
+import Controller from '../controller';
+import { parser } from '../';
 
 let loaded = false;
 
@@ -14,18 +15,31 @@ async function loadPassiveData(callback) {
   );
 }
 
-async function loadAssets() { }
+function loadAssets(src) {
+  return new Promise((resolve, reject) => {
+    Controller.assets.skills = new Image();
+    Controller.assets.skills.onload = () => resolve(Controller.assets.skills);
+    Controller.assets.skills.onerror = error => reject(error);
+    Controller.assets.skills.src = src;
+  });
+}
 
 async function start() {
   if (loaded) return;
 
-  await loadPassiveData(data => parser.init(data));
+  try {
+    // temp name on image
+    await loadAssets('/treeData/skills.jpg');
+    await loadPassiveData(data => parser.init(data));
 
-  loaded = true;
+    loaded = true;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function finish() {
-  return controller.NodeData;
+  return Controller.NodeData;
 }
 
 export default {

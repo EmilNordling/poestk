@@ -3,6 +3,7 @@ import { drawConnection, drawNode } from './drawUtilsHTML5';
 import { strokeSize, tileSize } from '../utils/constants';
 import Camera from './Camera';
 import Controller from '../controller';
+// TEMP
 
 function draw(tileBuffer, viewContext) {
   if (tileBuffer.length === 0) return;

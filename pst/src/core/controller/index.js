@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import assets from './assets';
 import NodeData from './NodeData';
 import TreeData from './TreeData';
 import ClientStore from './ClientStore';
@@ -7,6 +8,7 @@ import { decodeHash } from '../hashShim';
 
 class Controller {
   constructor() {
+    this.assets = assets;
     this.NodeData = new NodeData();
     this.TreeData = new TreeData();
     this.ClientStore = new ClientStore();

@@ -1,30 +1,11 @@
 import Logger from '../utils/Logger';
 
 Logger.register('frameRate', 'frame rendered in', 'ms');
-Logger.register('frameID');
 
 export default class FrameProvider {
   constructor() {
     this.tabs = [];
     this.currentTab = undefined;
-
-    this.provideNewFrameID();
-  }
-
-  provideNewFrameID() {
-    let hash = '';
-    const nameForThisAndItShouldBeInUtils = 'abc0123456789';
-
-    for (let i = 0; i < 5; i += 1) {
-      hash += nameForThisAndItShouldBeInUtils.charAt(
-        Math.floor(
-          Math.random() * nameForThisAndItShouldBeInUtils.length,
-        ),
-      );
-    }
-
-    this.frameID = hash;
-    Logger.log('frameID', this.frameID);
   }
 
   mountTabs(...tab) {

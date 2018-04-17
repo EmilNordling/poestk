@@ -6,7 +6,7 @@ class Logger {
     this.element.css({
       'z-index': 999,
       position: 'absolute',
-      top: '10px',
+      top: '50px',
       right: '10px',
       background: '#323640',
       'border-bottom': '2px solid #099aff',

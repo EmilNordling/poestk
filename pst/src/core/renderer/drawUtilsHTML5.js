@@ -1,5 +1,6 @@
 import Controller from '../controller';
 import Camera from './Camera';
+import skillSpritesData from '../../treeData/skillSpritesData.json';
 
 function drawConnection(connection, context) {
   let cancelBuffer = false;
@@ -41,6 +42,29 @@ function drawNode(n, context) {
 
   if (node.m === true || node.ascendancyName) return;
 
+  let constrains;
+
+  if (node.not === true) {
+    constrains = skillSpritesData.notableActive[0].coords[node.ni];
+  } else if (node.ks === true) {
+    constrains = skillSpritesData.keystoneActive[0].coords[node.ni];
+  } else {
+    constrains = skillSpritesData.normalActive[0].coords[node.ni];
+  }
+
+  // context.drawImage(Controller.assets.skills, Camera.scale(node.x), Camera.scale(node.y));
+  context.drawImage(
+    Controller.assets.skills,
+    constrains.x,
+    constrains.y,
+    constrains.w,
+    constrains.h,
+    Camera.scale(node.x - node.size),
+    Camera.scale(node.y - node.size),
+    Camera.scale((node.size * 2)),
+    Camera.scale((node.size * 2)),
+  );
+
   context.beginPath();
   context.arc(
     Camera.scale(node.x),
@@ -52,7 +76,7 @@ function drawNode(n, context) {
 
   context.fillStyle = node.color;
   context.strokeStyle = Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id] !== undefined ? Controller.ClientStore.theme.allocated : Controller.ClientStore.theme.path;
-  context.fill();
+  // context.fill();
   context.stroke();
 }
 
