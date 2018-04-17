@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react'
 import { colors } from '../constants'
 import { Dropdown } from '../common'
 import Emitter from '../../../pst/src/core/Emitter'
-import { reset, decodeTree, changeClass } from '../../../pst/src/core/publicAPI'
+import { reset, decodeTree, changeClass, redraw } from '../../../pst/src/core/publicAPI'
 
 const Info = styled.div`
   position: absolute;
@@ -163,13 +163,14 @@ class CharacterInfo extends Component {
         <Header>
           <BtnWrapper>
             <Btn onClick={() => reset()}>reset</Btn>
+            <Btn onClick={() => redraw()}>redraw</Btn>
           </BtnWrapper>
           <BtnWrapper>
             <input onChange={event => this.setState({ hash: event.target.value })} />
             <Btn onClick={() => decodeTree(this.state.hash)}>decode</Btn>
           </BtnWrapper>
           <BtnWrapper>
-            <select onChange={event => changeClass(parseInt(event.target.value, 10), 'xd', true)}>
+            <select onChange={event => changeClass(parseInt(event.target.value, 10), true, true)}>
               {
                 classes.map((x, i) => (<option key={x} value={i}>{x}</option>))
               }

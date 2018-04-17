@@ -12,6 +12,10 @@ function decodeTree(hashstring) {
   Controller.updatePassive(hashstring);
 }
 
+function redraw() {
+  Controller.newFrameID();
+}
+
 function getCurrentTabData() {
   return Controller.currentTabData;
 }
@@ -21,4 +25,5 @@ export {
   reset,
   decodeTree,
   getCurrentTabData,
+  redraw,
 };
