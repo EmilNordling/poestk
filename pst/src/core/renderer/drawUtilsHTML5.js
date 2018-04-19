@@ -1,6 +1,7 @@
 import Controller from '../controller';
 import Camera from './Camera';
 import skillSpritesData from '../../treeData/skillSpritesData.json';
+import { strokeSize } from '../utils/constants';
 
 function drawConnection(connection, context) {
   let cancelBuffer = false;
@@ -19,12 +20,12 @@ function drawConnection(connection, context) {
   }
 
   context.moveTo(
-    Camera.scale(node.x),
-    Camera.scale(node.y),
+    Math.floor(Camera.scale(node.x)),
+    Math.floor(Camera.scale(node.y)),
   );
   context.lineTo(
-    Camera.scale(outNode.x),
-    Camera.scale(outNode.y),
+    Math.floor(Camera.scale(outNode.x)),
+    Math.floor(Camera.scale(outNode.y)),
   );
   context.closePath();
 
@@ -43,27 +44,24 @@ function drawNode(n, context) {
   if (node.m === true || node.ascendancyName) return;
 
   let constrains;
+  let imgNodeSize;
 
   if (node.not === true) {
-    constrains = skillSpritesData.notableActive[0].coords[node.ni];
+    constrains = skillSpritesData.notableActive[2].coords[node.ni];
+    context.lineWidth = Camera.scale(strokeSize * 1.7);
+    imgNodeSize = node.size * 1.65;
   } else if (node.ks === true) {
-    constrains = skillSpritesData.keystoneActive[0].coords[node.ni];
+    constrains = skillSpritesData.keystoneActive[2].coords[node.ni];
+    context.lineWidth = Camera.scale(strokeSize * 2.6);
+    imgNodeSize = node.size * 1.7;
   } else {
-    constrains = skillSpritesData.normalActive[0].coords[node.ni];
+    constrains = skillSpritesData.normalActive[2].coords[node.ni];
+    context.lineWidth = Camera.scale(strokeSize);
+    imgNodeSize = node.size * 1.65;
   }
 
-  // context.drawImage(Controller.assets.skills, Camera.scale(node.x), Camera.scale(node.y));
-  context.drawImage(
-    Controller.assets.skills,
-    constrains.x,
-    constrains.y,
-    constrains.w,
-    constrains.h,
-    Camera.scale(node.x - node.size),
-    Camera.scale(node.y - node.size),
-    Camera.scale((node.size * 2)),
-    Camera.scale((node.size * 2)),
-  );
+  const imgRelativePosition = imgNodeSize / 2;
+  const imgPosition = Camera.scale(imgNodeSize);
 
   context.beginPath();
   context.arc(
@@ -74,9 +72,22 @@ function drawNode(n, context) {
     2 * Math.PI,
   );
 
-  context.fillStyle = node.color;
+  context.fillStyle = '#000000';
+  context.fill();
+
+  context.drawImage(
+    Controller.assets.skills,
+    constrains.x,
+    constrains.y,
+    constrains.w,
+    constrains.h,
+    Camera.scale(node.x - imgRelativePosition),
+    Camera.scale(node.y - imgRelativePosition),
+    imgPosition,
+    imgPosition,
+  );
+
   context.strokeStyle = Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id] !== undefined ? Controller.ClientStore.theme.allocated : Controller.ClientStore.theme.path;
-  // context.fill();
   context.stroke();
 }
 

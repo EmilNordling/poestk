@@ -17,7 +17,7 @@ class Logger {
       'user-select': 'none',
     });
 
-    // $('body').append(this.element);
+    $('body').append(this.element);
 
     this.tasks = {};
   }

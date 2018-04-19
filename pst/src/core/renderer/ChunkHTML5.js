@@ -1,6 +1,6 @@
 import Canvas from './Canvas';
 import { drawConnection, drawNode } from './drawUtilsHTML5';
-import { strokeSize, tileSize } from '../utils/constants';
+import { tileSize } from '../utils/constants';
 import Camera from './Camera';
 import Controller from '../controller';
 // TEMP
@@ -45,13 +45,13 @@ function draw(tileBuffer, viewContext) {
   const chunkData = Controller.TreeData.getTiles(startX, startY, endX, endY);
 
   chunkContext.strokeStyle = '#545662';
-  chunkContext.lineWidth = Camera.scale(strokeSize);
+
+  chunkContext.lineWidth = Camera.scale(5);
 
   chunkContext.beginPath();
   chunkData.connections.forEach(c => drawConnection(c, chunkContext));
   chunkContext.stroke();
 
-  chunkContext.lineWidth = Camera.scale(strokeSize + 5);
   chunkData.nodes.forEach(n => drawNode(n, chunkContext));
 
   chunkContext.setTransform(1, 0, 0, 1, 0, 0);

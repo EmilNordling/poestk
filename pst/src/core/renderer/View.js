@@ -39,7 +39,7 @@ class View {
 
     Object.keys(target.connection).forEach((connection) => {
       const node = target.connection[connection];
-      const nodeSize = node.size + (strokeSize * 2)
+      const nodeSize = node.size + (strokeSize * 2);
 
       if (node.x - nodeSize < lowestX) lowestX = node.x - nodeSize;
       if (node.y - nodeSize < lowestY) lowestY = node.y - nodeSize;

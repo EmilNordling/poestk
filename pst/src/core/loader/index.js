@@ -29,7 +29,7 @@ async function start() {
 
   try {
     // temp name on image
-    await loadAssets('/treeData/skills.jpg');
+    await loadAssets('/treeData/skills-2.jpg');
     await loadPassiveData(data => parser.init(data));
 
     loaded = true;

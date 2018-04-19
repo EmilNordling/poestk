@@ -5,7 +5,7 @@ const nodeAngle = 0.017453293;
 const nodeSize = 30;
 const notableSize = 50;
 const keystoneSize = 80;
-const strokeSize = 13;
+const strokeSize = 8;
 
 const theme = {
   dark: {
