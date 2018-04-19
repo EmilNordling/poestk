@@ -5,6 +5,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 const paths = require('./paths')
 
@@ -75,6 +76,9 @@ module.exports = {
       ServiceWorker: {
         minify: true,
       },
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
     }),
   ],
   performance: {

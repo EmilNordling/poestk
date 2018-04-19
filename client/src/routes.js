@@ -1,6 +1,7 @@
 import { v4 } from 'uuid'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import Dev from './pages/Dev'
 
 const routes = [
   {
@@ -8,6 +9,12 @@ const routes = [
     path: '/',
     exact: true,
     component: Home,
+  },
+  {
+    key: v4(),
+    path: '/dev',
+    exact: true,
+    component: Dev,
   },
   {
     key: v4(),
