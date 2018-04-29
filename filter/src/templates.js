@@ -1,3 +1,5 @@
+const { nodeSdParse } = require('./postParsing');
+
 const nodes = {
   id: 'number',
   icon: {
@@ -83,6 +85,7 @@ const nodes = {
   flavourText: {
     useIf: 'array',
   },
+  POST: (obj, key, value) => nodeSdParse(obj, key, value),
 };
 
 const assets = {
