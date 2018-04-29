@@ -36,7 +36,7 @@ module.exports = {
     new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
+      name: 'vendor',
       minChunks: module => module.context && module.context.indexOf('node_modules') !== -1,
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -68,7 +68,13 @@ module.exports = {
         minifyURLs: true,
       },
     }),
-    new UglifyJsPlugin(),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        output: {
+          comments: false,
+        },
+      },
+    }),
     new OfflinePlugin({
       appShell: '/',
       version: '[hash]',

@@ -6,6 +6,7 @@ import { colors } from '../constants'
 import { Dropdown } from '../common'
 import Emitter from '../../../pst/src/core/Emitter'
 import { reset, decodeTree, changeClass, redraw } from '../../../pst/src/core/publicAPI'
+import { scheme } from '../../../mod'
 
 const Info = styled.div`
   position: absolute;
@@ -85,9 +86,7 @@ class CharacterInfo extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      hash: '',
-    }
+    this.state = { hash: '' }
 
     // TODO: make mobx store
     this.stats = {}
@@ -110,20 +109,17 @@ class CharacterInfo extends Component {
   }
 
   allocated(node) {
-    node.sd.forEach((stat) => {
-      const Precent = stat.match(/%/g) || null
-      const Value = parseFloat(/\d*\.?\d/gi.exec(stat)[0].replace(/\s/g, ''))
-      const Description = /\S+[a-z].*/gi.exec(stat)[0]
-      const key = (Description).replace(/\s/g, '')
-
-      if (key in this.stats) {
-        this.stats[key].value += Value
+    Object.keys(node.sd).forEach((stat) => {
+      if (stat in this.stats) {
+        if (Array.isArray(this.stats[stat].value)) {
+          this.stats[stat].value.forEach((x, i) => { x += node.sd[stat][i] })
+        } else {
+          this.stats[stat].value += node.sd[stat]
+        }
       } else {
-        this.stats[key] = {
-          value: Value,
-          type: Precent,
-          description: Description,
-          id: key,
+        this.stats[stat] = {
+          value: node.sd[stat],
+          id: stat,
         }
       }
     })
@@ -132,28 +128,56 @@ class CharacterInfo extends Component {
   }
 
   deallocated(node) {
-    node.sd.forEach((stat) => {
-      const value = parseFloat(/\d*\.?\d/gi.exec(stat)[0].replace(/\s/g, ''))
-      const Description = /\S+[a-z].*/gi.exec(stat)[0]
-      const key = (Description).replace(/\s/g, '')
+    Object.keys(node.sd).forEach((stat) => {
+      if (Array.isArray(this.stats[stat].value)) {
+        this.stats[stat].value.forEach((x, i) => { x -= node.sd[stat][i] })
+      } else {
+        this.stats[stat].value -= node.sd[stat]
+      }
 
-      this.stats[key].value -= value
-
-      if (this.stats[key].value <= 0) {
-        delete this.stats[key]
+      if (this.stats[stat].value <= 0 || this.stats[stat].value[0] !== 0) {
+        delete this.stats[stat]
       }
     })
 
     this.forceUpdate()
   }
 
+  changeClass(changeTo, destructive, newFrame) {
+    this.stats = {}
+
+    changeClass(changeTo, destructive, newFrame)
+
+    this.forceUpdate()
+  }
+
+  reset() {
+    this.stats = {}
+
+    reset()
+
+    this.forceUpdate()
+  }
 
   render() {
-    const stats = Object.keys(this.stats).map(x => (
-      <Item key={this.stats[x].id}>
-        {this.stats[x].value }{this.stats[x].type} { this.stats[x].description }
-      </Item>
-    ))
+    const stats = Object.keys(this.stats).map((x) => {
+      let desc = scheme[x]
+      const hashCount = desc.match(/#/g) || []
+
+      if (hashCount.length > 1) {
+        hashCount.forEach((value, i) => {
+          desc = desc.replace('#', this.stats[x].value[i])
+        })
+      } else if (hashCount.length === 1) {
+        desc = desc.replace('#', this.stats[x].value)
+      }
+
+      return (
+        <Item key={this.stats[x].id}>
+          { desc }
+        </Item>
+      )
+    })
 
     // temp
     const classes = ['scion', 1, 2, 3, 4, 5, 6]
@@ -162,7 +186,7 @@ class CharacterInfo extends Component {
       <Info open={this.menuState}>
         <Header>
           <BtnWrapper>
-            <Btn onClick={() => reset()}>reset</Btn>
+            <Btn onClick={() => this.reset()}>reset</Btn>
             <Btn onClick={() => redraw()}>redraw</Btn>
           </BtnWrapper>
           <BtnWrapper>
@@ -170,7 +194,7 @@ class CharacterInfo extends Component {
             <Btn onClick={() => decodeTree(this.state.hash)}>decode</Btn>
           </BtnWrapper>
           <BtnWrapper>
-            <select onChange={event => changeClass(parseInt(event.target.value, 10), true, true)}>
+            <select onChange={event => this.changeClass(parseInt(event.target.value, 10), true, true)}>
               {
                 classes.map((x, i) => (<option key={x} value={i}>{x}</option>))
               }
