@@ -33,8 +33,8 @@ function parseMods(text, format = 'array') {
     }
 
     if (values !== null && individualCheck(pure, impure, values)) {
-      parsedArray.push(check, parseFloat(values[0]));
-      parsedObject[check] = parseFloat(values[0]);
+      parsedArray.push(check, values.length > 1 ? values.map(x => parseFloat(x)) : parseFloat(values[0]));
+      parsedObject[check] = values.length > 1 ? values.map(x => parseFloat(x)) : parseFloat(values[0]);
 
       return true;
     }
