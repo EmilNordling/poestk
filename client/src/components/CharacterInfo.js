@@ -135,7 +135,7 @@ class CharacterInfo extends Component {
         this.stats[stat].value -= node.sd[stat]
       }
 
-      if (this.stats[stat].value <= 0 || this.stats[stat].value[0] !== 0) {
+      if (this.stats[stat].value <= 0 || (typeof this.stats[stat].value[0] !== 'undefined' && this.stats[stat].value[0] !== 0)) {
         delete this.stats[stat]
       }
     })
