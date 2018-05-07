@@ -1,35 +1,33 @@
 {
-  "presets": [
-    ["env", {
+  "presets": [[
+    "@babel/env", {
       "modules": false,
-      "useBuiltIns": true,
-      "loose": true,
       "targets": {
-        "browsers": [
-          "chrome >= 60",
-          "safari >= 10.1",
-          "iOS >= 10.3",
-          "Firefox >= 54",
-          "Edge >= 15"
-        ]
+        "browsers": ["last 2 versions", "safari >= 7"]
       }
     }],
-    "react"
+    "@babel/react",
+    ["@babel/preset-stage-2", { "loose": true, "decoratorsLegacy": true }],
+    "@babel/typescript"
   ],
   "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "preval",
-    ["transform-decorators-legacy"],
-    "react-hot-loader/babel",
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    ["transform-runtime", { "polyfill": false }],
-    "syntax-dynamic-import",
     "styled-components",
-    "polished"
+    "polished",
+    "react-hot-loader/babel",
+    ["module-resolver", {
+      "extensions": [".js", ".jsx", ".ts", ".tsx"],
+      "root": ["./src"]
+    }],
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-syntax-dynamic-import",
+    ["@babel/plugin-proposal-class-properties", { "loose": true, "decoratorsLegacy": true }],
+    "@babel/plugin-proposal-object-rest-spread"
   ],
   "env": {
-    "production": {
-      "plugins": ["transform-react-remove-prop-types"]
+      "development": {
+          "plugins": ["react-hot-loader/babel"]
+      }
     }
-  }
 }

@@ -1,6 +1,46 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "allowJs": true
-    }
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "lib": ["es2017", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "baseUrl": "./",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "noEmit": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "pretty": true,
+    "skipLibCheck": true,
+  },
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+  ],
+  "types": [
+    "typePatches"
+  ],
+  "paths": {
+    "history": [
+        "history/v2"
+    ],
+    "history/*": [
+        "history/v2/*"
+    ]
+  },
 }

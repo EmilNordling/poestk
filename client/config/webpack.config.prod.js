@@ -1,36 +1,25 @@
-const webpack = require('webpack')
-const HtmlWebpackPLugin = require('html-webpack-plugin')
-const CleanWebpackPLugin = require('clean-webpack-plugin')
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const OfflinePlugin = require('offline-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-
-const paths = require('./paths')
+const webpack = require('webpack');
+const HtmlWebpackPLugin = require('html-webpack-plugin');
+const CleanWebpackPLugin = require('clean-webpack-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OfflinePlugin = require('offline-plugin');
+const paths = require('./paths');
+const base = require('./webpack.config.base');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
+  ...base,
   devtool: 'sourcemap',
   entry: {
-    app: [paths.appIndexJs],
+    app: [paths.appIndex],
   },
   output: {
+    pathinfo: true,
+    filename: 'scripts/[name].js',
+    chunkFilename: 'scripts/[name].chunk.js',
     path: paths.appBuild,
-    filename: 'scripts/[name].[chunkhash:8].js',
-    chunkFilename: 'scripts/[name].[chunkhash:8].chunk.js',
-    publicPath: paths.servedPath,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx|mjs)$/,
-        include: paths.appSrc,
-        loader: require.resolve('babel-loader'),
-        options: {
-          cacheDirectory: true,
-        },
-      },
-    ],
   },
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
@@ -68,13 +57,7 @@ module.exports = {
         minifyURLs: true,
       },
     }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        output: {
-          comments: false,
-        },
-      },
-    }),
+    new UglifyJsPlugin({ uglifyOptions: { output: { comments: false }} }),
     new OfflinePlugin({
       appShell: '/',
       version: '[hash]',
@@ -87,7 +70,4 @@ module.exports = {
       analyzerMode: 'static',
     }),
   ],
-  performance: {
-    hints: false,
-  },
-}
+};

@@ -8,18 +8,19 @@ const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware')
 const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const paths = require('./paths')
+const base = require('./webpack.config.base')
 
-const publicPath = '/'
-const port = 5001
-const proxyPort = 5000
+const publicPath = '/';
+const port = 5001;
 
 module.exports = {
+  ...base,
   devtool: 'cheap-module-inline-source-map',
   entry: {
     app: [
       require.resolve('react-hot-loader/patch'),
       require.resolve('react-dev-utils/webpackHotDevClient'),
-      paths.appIndexJs,
+      paths.appIndex,
     ],
   },
   output: {
@@ -27,18 +28,6 @@ module.exports = {
     filename: 'scripts/[name].js',
     chunkFilename: 'scripts/[name].chunk.js',
     publicPath,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx|mjs)$/,
-        include: paths.appSrc,
-        loader: require.resolve('babel-loader'),
-        options: {
-          cacheDirectory: true,
-        },
-      },
-    ],
   },
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
@@ -50,7 +39,7 @@ module.exports = {
       compilationSuccessInfo: {
         messages: [
           `
-          Ready on http://localhost:${proxyPort}
+          Ready on http://localhost:${port}
           `,
         ],
       },
@@ -61,19 +50,7 @@ module.exports = {
       template: paths.appHtml,
       inject: true,
     }),
-    // note: proxy interferes with WS
-    new BrowserSyncPlugin({
-      host: 'localhost',
-      port: proxyPort,
-      proxy: `http://localhost:${port}/`,
-      notify: false,
-    }, {
-      reload: false,
-    }),
   ],
-  performance: {
-    hints: false,
-  },
   devServer: {
     disableHostCheck: true,
     compress: true,
@@ -93,4 +70,4 @@ module.exports = {
       app.use(noopServiceWorkerMiddleware())
     },
   },
-}
+};
