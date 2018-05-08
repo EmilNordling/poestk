@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "@babel/runtime": "^7.0.0-beta.46",
-    "@types/react-transition-group": "^2.0.9"
-  }
-}

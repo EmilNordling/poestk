@@ -13,8 +13,6 @@
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "preval",
-    "styled-components",
-    "polished",
     "react-hot-loader/babel",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],
@@ -23,7 +21,9 @@
     "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-dynamic-import",
     ["@babel/plugin-proposal-class-properties", { "loose": true, "decoratorsLegacy": true }],
-    "@babel/plugin-proposal-object-rest-spread"
+    "@babel/plugin-proposal-object-rest-spread",
+    "styled-components",
+    "polished"
   ],
   "env": {
       "development": {
