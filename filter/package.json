@@ -1,6 +1,6 @@
 {
   "name": "poestk-filter",
-  "version": "1.3.2",
+  "version": "1.4.2",
   "description": "Filtering tool for GGG's Passive Skill Tree JSON data",
   "license": "MIT",
   "author": "Emil Nordling <ekala001@gmail.com> (emilnordling.com)",

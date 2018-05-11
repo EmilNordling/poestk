@@ -47,6 +47,7 @@ function filter(obj, key, value) {
 function postFilter(obj, key, value) {
   return new Promise(async (resolve, reject) => {
     const newFile = `${config.dist}/${key}.json`;
+
     const newEntry = await template[key].POST(obj, key, value);
 
     jsonfile.writeFile(newFile, newEntry, (writeErr) => {

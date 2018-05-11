@@ -1,3 +1,4 @@
+const jsonfile = require('jsonfile');
 const { parseMods } = require('../../mod');
 
 function findMatches(sd) {
@@ -31,6 +32,37 @@ function nodeSdParse(nodes) {
   return newEntry;
 }
 
+function nodeSkillSpriteParse(nodes) {
+  return new Promise((resolve, reject) => {
+    const newEntry = nodes;
+
+    jsonfile.readFile('dist/skillSprites.json', (err, skillSpritesData) => {
+      if (err) reject(err);
+
+      newEntry.forEach((node) => {
+        let constrains;
+
+        if (node.not === true) {
+          constrains = skillSpritesData.notableActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+        } else if (node.ks === true) {
+          constrains = skillSpritesData.keystoneActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+        } else if (node.m === true) {
+          constrains = skillSpritesData.mastery[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+        } else {
+          constrains = skillSpritesData.normalActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+        }
+
+        if (typeof constrains === 'undefined') console.log(node);
+
+        node['s'] = Object.values(constrains);
+      });
+
+      resolve(newEntry);
+    });
+  });
+}
+
 module.exports = {
   nodeSdParse,
+  nodeSkillSpriteParse,
 };

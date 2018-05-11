@@ -1,4 +1,4 @@
-const { nodeSdParse } = require('./postParsing');
+const { nodeSdParse, nodeSkillSpriteParse } = require('./postParsing');
 
 const nodes = {
   id: 'number',
@@ -85,7 +85,11 @@ const nodes = {
   flavourText: {
     useIf: 'array',
   },
-  POST: (obj, key, value) => nodeSdParse(obj, key, value),
+  POST: (obj, key, value) => {
+    const finalConfig = nodeSdParse(obj, key, value);
+
+    return nodeSkillSpriteParse(finalConfig);
+  },
 };
 
 const assets = {

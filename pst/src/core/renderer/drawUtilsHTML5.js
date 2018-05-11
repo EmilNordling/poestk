@@ -1,6 +1,5 @@
 import Controller from '../controller';
 import Camera from './Camera';
-import skillSpritesData from '../../treeData/skillSpritesData.json';
 import { strokeSize } from '../utils/constants';
 
 function drawConnection(connection, context) {
@@ -43,19 +42,15 @@ function drawNode(n, context) {
 
   if (node.m === true || node.ascendancyName) return;
 
-  let constrains;
   let imgNodeSize;
 
   if (node.not === true) {
-    constrains = skillSpritesData.notableActive[2].coords[node.ni];
     context.lineWidth = Camera.scale(strokeSize * 1.7);
     imgNodeSize = node.size * 1.65;
   } else if (node.ks === true) {
-    constrains = skillSpritesData.keystoneActive[2].coords[node.ni];
     context.lineWidth = Camera.scale(strokeSize * 2.6);
     imgNodeSize = node.size * 1.7;
   } else {
-    constrains = skillSpritesData.normalActive[2].coords[node.ni];
     context.lineWidth = Camera.scale(strokeSize);
     imgNodeSize = node.size * 1.65;
   }
@@ -77,10 +72,10 @@ function drawNode(n, context) {
 
   context.drawImage(
     Controller.assets.skills,
-    constrains.x,
-    constrains.y,
-    constrains.w,
-    constrains.h,
+    node.s[0],
+    node.s[1],
+    node.s[2],
+    node.s[3],
     Camera.scale(node.x - imgRelativePosition),
     Camera.scale(node.y - imgRelativePosition),
     imgPosition,
