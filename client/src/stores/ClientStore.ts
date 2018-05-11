@@ -1,7 +1,7 @@
 import { observable } from 'mobx'
 
 class ClientStore {
-  @observable client = {}
+  @observable client = {};
 }
 
 export default new ClientStore()

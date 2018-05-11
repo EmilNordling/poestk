@@ -100,6 +100,30 @@ const style = () => injectGlobal`
   a {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   }
+
+  p {
+    font-size: 1.6rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.8rem;
+  }
+
+  #app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 `
 
 const WrapGlobalStyles = (Component: React.ComponentClass<any>) => (props: any) => {

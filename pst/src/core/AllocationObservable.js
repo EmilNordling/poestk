@@ -68,11 +68,28 @@ class Allocate {
       delete Controller.ClientStore.treeState[tab].allocated[targetedNode.id];
       Emitter.emit('deallocated', targetedNode, true);
     } else {
+      // const rootNode = (node.id).toString();
+      // const removeGroup = [rootNode];
+      // const findRoot = getClassNode(Controller.currentTabData.startClass);
+
+      // isAllocated.forEach((con) => {
+      //   const allocatedCon = Object.keys(Controller.NodeData.nodes[con].connection).filter(connection => connection in Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated);
+
+      //   if (allocatedCon.length === 1) {
+      //     removeGroup.concat(allocatedCon);
+
+      //     return;
+      //   }
+
+      //   console.log(allocatedCon)
+      // });
+
+
       let result = 0;
       const rootNode = (node.id).toString(); // hehe JavaScript
+      const findRoot = getClassNode(Controller.currentTabData.startClass);
 
       isAllocated.forEach((con) => {
-        const findRoot = getClassNode(Controller.currentTabData.startClass);
         const queue = [con];
         const visited = [rootNode, con];
 
@@ -94,6 +111,9 @@ class Allocate {
           });
         }
       });
+
+      console.log(result);
+      console.log(isAllocated.length);
 
       if (result === isAllocated.length) {
         this.pointsAllocated--;

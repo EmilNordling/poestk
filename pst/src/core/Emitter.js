@@ -1,15 +1,41 @@
 import EventEmitter from 'events';
 
 class Emitter extends EventEmitter {
-  listen(element, e, emit) {
-    let events = e;
+  constructor() {
+    super();
 
-    if (!Array.isArray(events)) events = [events];
+    this.nativeEvents = [];
+  }
 
-    events.map(listen => element.addEventListener(
-      listen,
-      event => this.emit(emit, event),
-    ));
+  rebindNativeEvents() {
+    this.nativeEvents.forEach(listner =>
+      listner.htmlElement.addEventListener(
+        listner.emitterCall,
+        listner.eventFunction,
+      ),
+    );
+  }
+
+  unbindNativeEvents() {
+    this.nativeEvents.forEach(listner =>
+      listner.htmlElement.removeEventListener(
+        listner.emitterCall,
+        listner.eventFunction,
+      ),
+    );
+  }
+
+  listen(element, event, emit) {
+    const builder = {
+      htmlElement: element,
+      nativeEvent: event,
+      emitterCall: emit,
+      eventFunction: nativeEvent => this.emit(emit, nativeEvent),
+    };
+
+    element.addEventListener(builder.nativeEvent, builder.eventFunction);
+
+    this.nativeEvents.push(builder);
   }
 }
 

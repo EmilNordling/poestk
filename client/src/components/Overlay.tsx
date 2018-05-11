@@ -17,28 +17,50 @@ const Inner = transition.div.attrs({
   height: 100%;
   background: rgba(0, 0, 0, 0.52);
   z-index: 1;
+  opacity: ${(props: any) => props.precent / 100};
+  transition: opacity ${duration}ms ease;
 
   &:enter {
     opacity: 0.01;
   }
   &:enter-active {
-    opacity: 1;
-    transition: opacity ${duration}ms ease;
+
   }
   &:exit {
-    opacity: 1;
+
   }
   &:exit-active {
     opacity: 0.01;
-    transition: opacity ${duration}ms ease;
   }
 `
 
 @inject('guiStore')
 @observer
 class Overlay extends Component {
-  props: { guiStore?: GUI | any } = {};
-  node: HTMLElement;
+  public props: { guiStore?: GUI | any };
+  private node: HTMLElement;
+
+  set precent(value) {
+    this.props.guiStore.overlayPrecent = value
+  }
+
+  @computed get precent() {
+    return this.props.guiStore.overlayPrecent
+  }
+
+  @computed get menuState() {
+    let precent;
+
+    if (this.props.guiStore.overlayOpen) {
+      precent = 100;
+
+      this.precent = precent
+    } else {
+      precent = this.props.guiStore.overlayPrecent
+    }
+
+    return precent > 0
+  }
 
   constructor(props: any) {
     super(props)
@@ -46,11 +68,7 @@ class Overlay extends Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this)
   }
 
-  @computed get menuState() {
-    return this.props.guiStore.overlayOpen
-  }
-
-  handleOutsideClick(event: Event) {
+  private handleOutsideClick(event: Event) {
     if (this.node.contains(event.target as HTMLElement)) {
       return
     }
@@ -58,7 +76,7 @@ class Overlay extends Component {
     this.props.guiStore.overlayOpen = false
   }
 
-  closeOverlay = () => {
+  private closeOverlay = () => {
     this.props.guiStore.overlayOpen = false
   }
 
@@ -66,7 +84,7 @@ class Overlay extends Component {
     return (
       <TransitionGroup>
         {this.menuState &&
-          <Inner innerRef={(node: HTMLElement) => { this.node = node }} onClick={this.closeOverlay} />
+          <Inner precent = {this.precent} innerRef={(node: HTMLElement) => { this.node = node }} onClick={this.closeOverlay} />
         }
       </TransitionGroup>
     )

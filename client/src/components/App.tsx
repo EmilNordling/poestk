@@ -1,28 +1,19 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Provider } from 'mobx-react'
-import { colors } from '../constants'
-import routes from '../routes'
-import stores from '../stores'
-import WrapGlobalStyles from './WrapGlobalStyles'
-import Nav from './Nav'
-import Header from './Header'
-import BottomBar from './BottomBar'
-import Overlay from './Overlay'
-import CharacterInfo from './CharacterInfo'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'mobx-react';
+import { colors } from '../constants';
+import routes from '../routes';
+import stores from '../stores';
+import WrapGlobalStyles from './WrapGlobalStyles';
+import Overlay from './Overlay';
+import CharacterInfo from './CharacterInfo';
+import HoverNode from './HoverNode';
+import { isMobile } from '../utils/isMobile';
+import { GlobalContainer, Container } from './Containers';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-`
-
-const GlobalContainer = styled.div`
-  flex: 1;
-  position: relative;
-  background-color: ${colors.gray202};
-`
+import TopBar from './mobile/TopBar';
+import BottomBar from './mobile/BottomBar';
 
 class App extends Component {
   render () {
@@ -30,13 +21,14 @@ class App extends Component {
       <Provider {...stores}>
         <Router>
           <Container>
-            <Header />
-            <GlobalContainer>
-              <Switch>
-                {routes.map(props => <Route {...props} />)}
-              </Switch>
-            </GlobalContainer>
-            <BottomBar />
+            { isMobile && <TopBar /> }
+            { isMobile && <BottomBar /> }
+
+            <Switch>
+              {routes.map(props => <Route {...props} />)}
+            </Switch>
+
+            <HoverNode />
             <Overlay />
             <CharacterInfo />
           </Container>

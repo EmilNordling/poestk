@@ -12,6 +12,7 @@ const base = require('./webpack.config.base')
 
 const publicPath = '/';
 const port = 5001;
+const proxyPort = 5000
 
 module.exports = {
   ...base,
@@ -39,7 +40,7 @@ module.exports = {
       compilationSuccessInfo: {
         messages: [
           `
-          Ready on http://localhost:${port}
+          Ready on http://localhost:${proxyPort}
           `,
         ],
       },
@@ -50,7 +51,19 @@ module.exports = {
       template: paths.appHtml,
       inject: true,
     }),
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: proxyPort,
+      proxy: `http://localhost:${port}/`,
+      notify: false,
+      open: false,
+    }, {
+      reload: false,
+    }),
   ],
+  performance: {
+    hints: false,
+  },
   devServer: {
     disableHostCheck: true,
     compress: true,

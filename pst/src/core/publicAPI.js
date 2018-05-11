@@ -1,4 +1,13 @@
 import Controller from './controller';
+import Emitter from './Emitter';
+
+function rebindEvents() {
+  Emitter.rebindNativeEvents();
+}
+
+function unbindEvents() {
+  Emitter.unbindNativeEvents();
+}
 
 function changeClass(changeTo, destructive, newFrame) {
   Controller.changeClass(changeTo, destructive, newFrame);
@@ -26,4 +35,6 @@ export {
   decodeTree,
   getCurrentTabData,
   redraw,
+  rebindEvents,
+  unbindEvents,
 };

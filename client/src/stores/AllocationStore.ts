@@ -1,10 +1,10 @@
 import { observable, action } from 'mobx'
 
 class AllocationStore {
-  @observable allocated = {}
+  @observable allocated = {};
 
   @action allocatedData() {
-    return this.allocated
+    return this.allocated;
   }
 }
 

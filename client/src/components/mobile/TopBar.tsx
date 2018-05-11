@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import Nav from './Nav'
-import { colors } from '../constants'
+import { colors } from '../../constants'
 
-const Header = styled.header`
+const TopBar = styled.header`
   position: absolute;
   top: 5px;
   right: 5px;
@@ -17,7 +16,7 @@ const Header = styled.header`
 `
 
 export default () => (
-  <Header>
+  <TopBar>
     qwe
-  </Header>
+  </TopBar>
 )

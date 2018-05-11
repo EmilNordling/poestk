@@ -715,6 +715,13 @@
     pirates "^3.0.1"
     source-map-support "^0.4.2"
 
+"@babel/runtime@^7.0.0-beta.46":
+  version "7.0.0-beta.46"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.46.tgz#466a9c0498f6d12d054a185981eef742d59d4871"
+  dependencies:
+    core-js "^2.5.3"
+    regenerator-runtime "^0.11.1"
+
 "@babel/template@7.0.0-beta.46":
   version "7.0.0-beta.46"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.46.tgz#8b23982411d5b5dbfa479437bfe414adb1411bb9"
@@ -796,6 +803,12 @@
   resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-4.0.24.tgz#e378e84186522216ae36cea12313965e190cd55f"
   dependencies:
     "@types/history" "*"
+    "@types/react" "*"
+
+"@types/react-transition-group@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-2.0.9.tgz#ed6a71fb711e524345844defec2a861c1a222a03"
+  dependencies:
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.0.40":

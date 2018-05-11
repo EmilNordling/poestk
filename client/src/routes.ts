@@ -12,6 +12,6 @@ const routes: Array<route> = [
     key: v4(),
     component: page.NotFound,
   },
-]
+];
 
 export default routes

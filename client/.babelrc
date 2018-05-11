@@ -18,10 +18,10 @@
       "extensions": [".js", ".jsx", ".ts", ".tsx"],
       "root": ["./src"]
     }],
-    "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-dynamic-import",
     ["@babel/plugin-proposal-class-properties", { "loose": true, "decoratorsLegacy": true }],
     "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-runtime",
     "styled-components",
     "polished"
   ],

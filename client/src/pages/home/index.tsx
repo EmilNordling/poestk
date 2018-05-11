@@ -2,9 +2,22 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { observer, inject } from 'mobx-react'
 import Pst from '../../components/Pst'
+import DesktopStats from '../../components/desktop/Stats'
+import { GlobalContainer } from '../../components/Containers'
+import { isMobile } from '../../utils/isMobile'
+
+import Header from '../../components/desktop/Tabs';
+import Footer from '../../components/desktop/Footer';
+
+const Inner = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+`
 
 const Content = styled.div`
   position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
@@ -15,11 +28,26 @@ const Content = styled.div`
 class Home extends Component {
   render() {
     return (
-      <Content>
-        <Pst />
-      </Content>
+      <GlobalContainer>
+        {!isMobile &&
+          <DesktopStats />
+        }
+
+        <Inner>
+          {/* { !isMobile && <Header /> } */}
+
+          <GlobalContainer>
+            <Content>
+              <Pst />
+            </Content>
+          </GlobalContainer>
+
+          { !isMobile && <Footer /> }
+        </Inner>
+
+      </GlobalContainer>
     )
   }
 }
 
-export default Home
+export default Home;

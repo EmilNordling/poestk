@@ -109,7 +109,7 @@ class InteractionManager {
 
       if (!stillHovering) {
         Controller.ClientStore.isHovering = false;
-        Emitter.emit('hoverOut', false);
+        Emitter.emit('hoverOut', position, false);
         Logger.log('hover', Controller.ClientStore.isHovering);
       }
 
@@ -144,7 +144,7 @@ class InteractionManager {
 
       if (isHovering) {
         Controller.ClientStore.isHovering = node;
-        Emitter.emit('hoverOver', node);
+        Emitter.emit('hoverOver', position, node);
         Logger.log('hover', Controller.ClientStore.isHovering.id);
       }
     });

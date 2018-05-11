@@ -14,7 +14,11 @@ const PstContainer = styled.div`
 @observer
 class Pst extends Component {
   canvas: HTMLCanvasElement;
-  props: { nodeDataStore?: any } = {};
+  props: { nodeDataStore?: any };
+
+  constructor(props: any) {
+    super(props);
+  }
 
   async componentDidMount() {
     await this.props.nodeDataStore.getPassiveData()

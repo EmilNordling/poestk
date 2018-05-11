@@ -2,23 +2,23 @@ import { computed, observable, action } from 'mobx'
 import { loader } from '../../../pst/src/core'
 
 class NodeDataStore {
-  @observable loaded = false
+  @observable loaded = false;
 
-  @observable nodes = {}
+  @observable nodes = {};
 
   @computed get nodeData() {
-    return this.nodes
+    return this.nodes;
   }
 
   @action async getPassiveData() {
-    if (this.loaded) return
+    if (this.loaded) return;
 
-    await loader.start()
+    await loader.start();
 
-    this.loaded = true
+    this.loaded = true;
 
-    this.nodes = loader.finish().nodes
+    this.nodes = loader.finish().nodes;
   }
 }
 
-export default new NodeDataStore()
+export default new NodeDataStore();

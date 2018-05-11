@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom'
-import React from 'react'
-import { AppContainer } from 'react-hot-loader'
-import App from './components/App'
+import ReactDOM from 'react-dom';
+import React from 'react';
+import { AppContainer } from 'react-hot-loader';
+import App from './components/App';
 
 const render = (Component: any) => {
   ReactDOM.render(
@@ -10,19 +10,19 @@ const render = (Component: any) => {
     </AppContainer>,
     document.getElementById('app')
   )
-}
+};
 
-render(App)
+render(App);
 
 // Reload react hot loader
 if (module.hot) {
   module.hot.accept('./components/App', () => {
     render(App)
   })
-}
+};
 
 // Install Service Worker
 if (process.env.NODE_ENV === 'production') {
   // eslint-disable-next-line global-require
   require('offline-plugin/runtime').install()
-}
+};

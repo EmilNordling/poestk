@@ -1,9 +1,12 @@
 import { observable } from 'mobx'
 
 class GUIStore implements GUI {
-  @observable characterInfoOpen = false
+  @observable isHovering = false;
+  @observable characterInfoOpen = false;
+  @observable bottomBar = 40;
   // @observable overlayQueue: Array<OverlayQueue> = [];
-  @observable overlayOpen = false
+  @observable overlayPrecent = 0;
+  @observable overlayOpen = false;
 }
 
 export default new GUIStore()
