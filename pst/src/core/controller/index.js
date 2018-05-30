@@ -42,7 +42,7 @@ class Controller {
         this.currentTabData.allocated[61525] = this.NodeData.nodes[61525];
         break;
       case 6:
-        this.currentTabData.allocated[50459] = this.NodeData.nodes[50459];
+        this.currentTabData.allocated[44683] = this.NodeData.nodes[44683];
         break;
       default:
         throw new Error('invalid');

@@ -2,7 +2,7 @@ import $ from 'domtastic';
 
 class Logger {
   constructor() {
-    this.element = $('<debug class="debug"></debug>');
+    this.element = $('<debug class="debug" id="__debug"></debug>');
     this.element.css({
       'z-index': 999,
       position: 'absolute',
@@ -15,6 +15,7 @@ class Logger {
       color: '#ffffff',
       'font-size': '14px',
       'user-select': 'none',
+      visibility: 'hidden',
     });
 
     $('body').append(this.element);

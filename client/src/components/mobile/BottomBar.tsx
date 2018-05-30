@@ -7,6 +7,7 @@ import { colors } from '../../constants';
 import { touch } from '../../utils/isMobile';
 import Emitter from '../../../../pst/src/core/Emitter';
 import setStyle from '../../utils/attrStyleUpdate'
+import Allocated from '../Allocated';
 
 const BottomBarStyle = styled.div`
   display: flex;
@@ -114,136 +115,9 @@ class BottomBar extends Component {
         <BottomBarStyle>
           <Button onClick={this.toggleMenu} />
           <Button onClick={this.change}/>
-          <Button />
+          <Button onClick={this.toggleMenu} />
         </BottomBarStyle>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
-        <p>qweqwe</p>
+        <Allocated />
       </Dragabble>
     )
   }

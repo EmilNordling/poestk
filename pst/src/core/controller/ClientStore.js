@@ -11,7 +11,7 @@ class ClientStore {
     this.isHovering = false;
     this.treeState = [
       {
-        startClass: 4,
+        startClass: 0,
         ascendancy: 0,
         allocated: {},
       },

@@ -7,6 +7,9 @@ class GUIStore implements GUI {
   // @observable overlayQueue: Array<OverlayQueue> = [];
   @observable overlayPrecent = 0;
   @observable overlayOpen = false;
+
+
+  @observable settingsPop = false;
 }
 
 export default new GUIStore()

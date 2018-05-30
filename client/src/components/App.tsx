@@ -1,39 +1,52 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { inject, observer } from 'mobx-react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'mobx-react';
 import { colors } from '../constants';
 import routes from '../routes';
-import stores from '../stores';
 import WrapGlobalStyles from './WrapGlobalStyles';
 import Overlay from './Overlay';
-import CharacterInfo from './CharacterInfo';
 import HoverNode from './HoverNode';
-import { isMobile } from '../utils/isMobile';
 import { GlobalContainer, Container } from './Containers';
+import Modal from './Modal';
+import Settings from './Settings';
 
-import TopBar from './mobile/TopBar';
-import BottomBar from './mobile/BottomBar';
+const Popouts = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+`
 
+@inject('userStore', 'commonStore')
+@observer
 class App extends Component {
+  componentWillMount() {
+
+  }
+
+  componentDidMount() {
+    if (this.props.commonStore.token) {
+      this.props.userStore.pullUser();
+    }
+  }
+
   render () {
     return (
-      <Provider {...stores}>
-        <Router>
-          <Container>
-            { isMobile && <TopBar /> }
-            { isMobile && <BottomBar /> }
+      <Router>
+        <Container>
+          <Switch>
+            {routes.map(props => <Route {...props} />)}
+          </Switch>
 
-            <Switch>
-              {routes.map(props => <Route {...props} />)}
-            </Switch>
-
-            <HoverNode />
-            <Overlay />
-            <CharacterInfo />
-          </Container>
-        </Router>
-      </Provider>
+          <HoverNode />
+          <Overlay />
+          <Popouts>
+            <Settings />
+          </Popouts>
+        </Container>
+      </Router>
     )
   }
 }

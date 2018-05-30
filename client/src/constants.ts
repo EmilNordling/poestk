@@ -15,9 +15,23 @@ export const colors = {
   gray201: '#1d202a',
   gray202: '#1b1f2a',
   blue400: '#3fa6ff',
+
+
   desktop_bar_backdrop: '#1e222d',
   desktop_bar_backdrop_strong: '#1a1e27',
   desktop_bar_foreground: '#2b2e3a',
+
+  main_color_dimmed: 'hsla(0, 0%, 100%, 0.3)',
+  main_color_bright: 'hsla(0, 0%, 100%, 0.9)',
+  main_color: 'hsla(0, 0%, 100%, 0.75)',
+  main_backdrop: '#1e222d',
+  main_content_dark: '#2B2E3A',
+  main_content: '#313440',
+  main_error: '#ff480e',
+  main_background: '#1b1f2a',
+  main_sep: '#2E313D',
+  main_border: '#2B2E3A',
+  main_light: '#4a4e5b',
 };
 
 export const fontFamily = `

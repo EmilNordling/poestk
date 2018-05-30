@@ -2,24 +2,21 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
+      "name": "Launch",
+      "type": "node",
       "request": "launch",
-      "name": "Node",
-      "url": "http://localhost:5001",
-      "webRoot": "${workspaceRoot}/client/src",
-      "skipFiles": [
-        "node_modules/**/*.js"
-      ]
+      "program": "${workspaceRoot}/server/app.js",
+      "stopOnEntry": true,
+      "args": [],
+      "cwd": "${workspaceRoot}/server",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+        "--nolazy"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
     },
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Node",
-      "url": "http://localhost:5002",
-      "webRoot": "${workspaceRoot}/pst/src",
-      "skipFiles": [
-        "node_modules/**/*.js"
-      ]
-    }
   ]
 }

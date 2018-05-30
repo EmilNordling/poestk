@@ -1,6 +1,6 @@
 {
-  "presets": [[
-    "@babel/env", {
+  "presets": [
+    ["@babel/env", {
       "modules": false,
       "targets": {
         "browsers": ["last 2 versions", "safari >= 7"]
@@ -11,8 +11,8 @@
     "@babel/typescript"
   ],
   "plugins": [
+    "./scripts/material-ui-babel-preval",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    "preval",
     "react-hot-loader/babel",
     ["module-resolver", {
       "extensions": [".js", ".jsx", ".ts", ".tsx"],

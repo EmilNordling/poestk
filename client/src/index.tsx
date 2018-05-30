@@ -1,13 +1,17 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { AppContainer } from 'react-hot-loader';
+import { Provider } from 'mobx-react';
 import App from './components/App';
+import stores from './stores';
 
 const render = (Component: any) => {
   ReactDOM.render(
-    <AppContainer>
-      <Component />
-    </AppContainer>,
+    <Provider {...stores}>
+      <AppContainer>
+        <Component />
+      </AppContainer>
+    </Provider>,
     document.getElementById('app')
   )
 };

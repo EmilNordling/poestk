@@ -8,6 +8,8 @@ import { isMobile } from '../../utils/isMobile'
 
 import Header from '../../components/desktop/Tabs';
 import Footer from '../../components/desktop/Footer';
+import TopBar from '../../components/mobile/TopBar';
+import BottomBar from '../../components/mobile/BottomBar';
 
 const Inner = styled.div`
   display: flex;
@@ -29,12 +31,14 @@ class Home extends Component {
   render() {
     return (
       <GlobalContainer>
+        { isMobile && <TopBar /> }
+        { isMobile && <BottomBar /> }
         {!isMobile &&
           <DesktopStats />
         }
 
         <Inner>
-          {/* { !isMobile && <Header /> } */}
+          { !isMobile && <Header /> }
 
           <GlobalContainer>
             <Content>

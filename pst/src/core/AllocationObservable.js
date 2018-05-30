@@ -18,7 +18,7 @@ const getClassNode = (classID) => {
     case 5:
       return 61525;
     case 6:
-      return 50459;
+      return 44683;
     default:
       throw new Error('invalid');
   }

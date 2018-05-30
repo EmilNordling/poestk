@@ -3,34 +3,64 @@ import styled from 'styled-components'
 import { NavLink as RouterLink, withRouter } from 'react-router-dom'
 import { observer, inject } from 'mobx-react'
 import { colors } from '../constants'
+import Icon from '../common/icon';
 
-const NavItem = styled.nav`
+const NavStyle = styled.nav`
   display: flex;
-  justify-content: center;
+  height: 100%;
 `
 
-const Item = styled.li`
-  margin: 0 12px;
-  font-size: 1.8rem;
-  text-decoration: none;
+const LinkIcon = styled(RouterLink)`
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  font-size: 1.6rem;
+
+  &:hover {
+    background: ${colors.main_backdrop};
+  }
 `
 
-const Link = styled(RouterLink)`
+const LinkText = styled(RouterLink)`
+  position: relative;
+  display: flex;
+  align-items: center;
   font-size: 1.4rem;
   font-weight: 500;
+  overflow: hidden;
+
+  &:hover {
+    &::after {
+      transform: translateY(-2px);
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background: ${colors.blue400};
+    transition: transform 100ms ease;
+    will-change: transform;
+  }
 `
 
 const Nav = (props: any) => {
     console.log(props)
 
-    const { clientStore, location } = props;
+    const { commonStore, guiStore, location } = props;
 
     return (
-      <NavItem>
-        <Link to="/">home</Link>
-        <Link to="/sample">sample</Link>
-      </NavItem>
+      <NavStyle>
+        {commonStore.token ?
+          <LinkIcon to="/settings"><Icon name='gearFilled' /></LinkIcon>
+          :
+          <LinkText to="/signin">sign in</LinkText>
+        }
+      </NavStyle>
     )
 }
 
-export default withRouter(inject('ClientStore')(observer(Nav)))
+export default withRouter(inject('guiStore', 'commonStore')(observer(Nav)))
