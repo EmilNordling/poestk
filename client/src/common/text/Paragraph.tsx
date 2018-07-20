@@ -1,17 +1,21 @@
-import React, { Component, cloneElement, Children } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React from 'react';
+import styled, { css } from 'styled-components';
 
-const TitleStyle = styled.div`
-
-`
-
-class Paragraph extends Component {
-  render() {
-    const { children, ...rest } = this.props;
-
-    return <TitleStyle {...rest}>{children}</TitleStyle>
-  }
+interface ParagraphProps {
+  margin?: true | number;
 }
+
+const ParagraphStyle = styled.div`
+  color: inherit;
+  font-size: 1.6rem;
+
+  ${(props: ParagraphProps) => props.margin && css`
+    margin-bottom: ${props.margin === true ? '20px' : props.margin + 'px'}};
+  `};
+`;
+
+const Paragraph: React.SFC<ParagraphProps> = ({ children, ...rest }) => (
+  <ParagraphStyle {...rest}>{children}</ParagraphStyle>
+);
 
 export default Paragraph;

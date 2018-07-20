@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+      "editorconfig.editorconfig",
+      "dzannotti.vscode-babel-coloring",
+      "msjsdiag.debugger-for-chrome",
+      "shinnn.stylelint",
+      "eg2.tslint",
+      "jpoissonnier.vscode-styled-components"
+  ]
+}

@@ -17,11 +17,13 @@ module.exports = {
   },
   output: {
     pathinfo: true,
-    filename: 'scripts/[name].js',
-    chunkFilename: 'scripts/[name].chunk.js',
+    filename: 'scripts/[name]-[hash].js',
+    chunkFilename: 'scripts/[name]-[hash].chunk.js',
     path: paths.appBuild,
+    publicPath: paths.publicPath,
   },
   plugins: [
+    new CleanWebpackPLugin([paths.appBuild], { root: process.cwd() }),
     new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
@@ -32,7 +34,6 @@ module.exports = {
       name: 'manifest',
       minChunks: Infinity,
     }),
-    new CleanWebpackPLugin([paths.appBuild], { root: process.cwd() }),
     new CopyWebpackPlugin([
       {
         from: paths.appPublic,
@@ -41,6 +42,34 @@ module.exports = {
       },
     ]),
     new InterpolateHtmlPlugin({ PUBLIC_URL: '' }),
+    new OfflinePlugin({
+      appShell: '/',
+      version: '[hash]',
+      AppCache: false,
+      updateStrategy: 'changed',
+      autoUpdate: 1000 * 60 * 2,
+      ServiceWorker: {
+        minify: true,
+        events: true,
+        navigateFallbackURL: '/',
+      },
+    }),
+    new UglifyJsPlugin({ uglifyOptions: {
+      compress: true,
+      warnings: false,
+      screw_ie8: true,
+      conditionals: true,
+      unused: true,
+      comparisons: true,
+      sequences: true,
+      dead_code: true,
+      evaluate: true,
+      if_return: true,
+      join_vars: true,
+      output: {
+        comments: false
+      }
+    }}),
     new HtmlWebpackPLugin({
       template: paths.appHtml,
       inject: true,
@@ -55,15 +84,6 @@ module.exports = {
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true,
-      },
-    }),
-    new UglifyJsPlugin({ uglifyOptions: { output: { comments: false }} }),
-    new OfflinePlugin({
-      appShell: '/',
-      version: '[hash]',
-      AppCache: false,
-      ServiceWorker: {
-        minify: true,
       },
     }),
     new BundleAnalyzerPlugin({

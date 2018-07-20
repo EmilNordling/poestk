@@ -1,3 +1,5 @@
 node_modules
 oldTree
 profiles
+.cache-loader
+yarn-error.log

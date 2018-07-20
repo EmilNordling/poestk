@@ -1,93 +1,94 @@
-import Axios from 'axios';
-import { observable, action } from 'mobx';
-import userStore from './UserStore';
-import commonStore from './CommonStore';
-import { APIRoot } from '../agent';
+import { observable, action, reaction, computed } from 'mobx';
+import auth, { RegisterResponse, LoginResponse } from '../services/auth';
 
-class AuthStore {
-  @observable inProgress = false;
-  @observable errors = undefined;
-  @observable values = {
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  };
+export default class AuthStore {
+  @observable public loading = false;
+  @observable public currentUser: any | null = null;
+  @observable public errors: any = null;
+  @observable private _token = window.localStorage.getItem('jwt');
 
-  @action setUsername(username: string) {
-    this.values.username = username;
+  @computed public get authenticated(): boolean {
+    return !!this._token;
   }
 
-  @action setEmail(email: string) {
-    this.values.email = email;
+  public get token() {
+    return this._token;
   }
 
-  @action setPassword(password: string) {
-    this.values.password = password;
+  public set token(token: string | null) {
+    this._token = token;
   }
 
-  @action setPasswordConfirm(password: string) {
-    this.values.passwordConfirm = password;
+  constructor() {
+    reaction(() => this.token, (token) => {
+      if (token) {
+        window.localStorage.setItem('jwt', token);
+      } else {
+        window.localStorage.removeItem('jwt');
+      }
+    });
   }
 
-  @action reset() {
-    this.values.username = '';
-    this.values.email = '';
-    this.values.password = '';
-  }
-
-  @action async login(callback: Function) {
-    this.inProgress = true;
-    this.errors = undefined;
-
-    const { email, password } = this.values;
+  @action async login(builder: LoginResponse.builder, callback: Function) {
+    this.loading = true;
 
     try {
-      const { data } = await Axios.post(`${APIRoot}/users/login`, { user: { email, password } });
+      const { data } = await auth.login(builder);
 
-      commonStore.setToken(data.user.token);
+      this.token = data.user.token;
 
-      await userStore.pullUser();
+      await this.pullUser();
 
-      this.inProgress = false;
+      this.loading = false;
       callback.call(this);
     } catch (error) {
-      this.inProgress = false;
-
-      throw error;
+      this.loading = false;
+      this.errors = error.response && error.response.body && error.response.body.errors;
     }
   }
 
-  @action async register(callback: Function) {
-    this.inProgress = true;
-    this.errors = undefined;
-
-    const { username, email, password, passwordConfirm } = this.values;
+  @action async register(builder: RegisterResponse.builder, callback: Function) {
+    this.loading = true;
 
     try {
-      const { data } = await Axios.post(`${APIRoot}/users`, { user: { username, email, password, passwordConfirm } });
+      const { data } = await auth.register(builder);
 
-      commonStore.setToken(data.user.token);
+      this.token = data.user.token;
 
-      console.log(data.user.token)
-      await userStore.pullUser();
+      await this.pullUser();
 
-      this.inProgress = false;
+      this.loading = false;
       callback.call(this);
-    } catch(error) {
-      this.inProgress = false;
+    } catch (error) {
+      this.loading = false;
       this.errors = error.response && error.response.body && error.response.body.errors;
-
-      throw error;
     }
   }
 
-  @action logout() {
-    commonStore.setToken(undefined);
-    userStore.forgetUser();
+  @action async pullUser() {
+    if (this.token === null) return;
+
+    this.loading = true;
+
+    try {
+      const { data } = await auth.pullUser(this.token);
+
+      this.currentUser = data.user;
+
+      this.loading = false;
+    } catch (error) {
+      this.loading = false;
+    }
+  }
+
+  @action forgetUser() {
+    this.currentUser = null;
+  }
+
+  @action logout(): Promise<void> {
+    this.token = null;
+    this.forgetUser();
 
     return Promise.resolve();
   }
 }
-
-export default new AuthStore();

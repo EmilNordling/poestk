@@ -109,7 +109,7 @@ const scheme = {
   // Spell
   sp_tsmfs: '+#% to Critical Strike Multiplier for Spells',
   sp_icscfs: '#% increased Critical Strike Chance for Spells',
-  sp_msdwoll: '#% more Spell Damage when on Low Life',
+  sp_MORE_msdwoll: '#% more Spell Damage when on Low Life',
 
   // General Melee
   me_imd: '#% increased Melee Damage',
@@ -748,7 +748,7 @@ const scheme = {
   berserker_bf2: '#% increased Attack Speed if you\'ve taken a Savage Hit Recently',
 
   // ascendancy specific
-  as_p_pahdutmdttatsotmdldttatptf: 'Projectile Attack Hits deal up to #% more Damage to targets at the start of their movement, dealing less Damage to targets as the projectile travels farther',
+  as_MORE_p_pahdutmdttatsotmdldttatptf: 'Projectile Attack Hits deal up to #% more Damage to targets at the start of their movement, dealing less Damage to targets as the projectile travels farther',
   as_arid: 'Accuracy Rating is Doubled',
   as_tcscppaeut: '+#% to Critical Strike Chance per Poison affecting Enemy, up to +#%',
   as_ctiywgecyigutymnoec: '#% chance that if you would gain Endurance Charges, you instead gain up to your maximum number of Endurance Charges',

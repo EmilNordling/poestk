@@ -3,7 +3,7 @@
     ["@babel/env", {
       "modules": false,
       "targets": {
-        "browsers": ["last 2 versions", "safari >= 7"]
+        "chrome": 60
       }
     }],
     "@babel/react",
@@ -11,7 +11,7 @@
     "@babel/typescript"
   ],
   "plugins": [
-    "./scripts/material-ui-babel-preval",
+    "preval",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "react-hot-loader/babel",
     ["module-resolver", {
@@ -22,6 +22,7 @@
     ["@babel/plugin-proposal-class-properties", { "loose": true, "decoratorsLegacy": true }],
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-transform-runtime",
+    "@babel/plugin-transform-classes",
     "styled-components",
     "polished"
   ],

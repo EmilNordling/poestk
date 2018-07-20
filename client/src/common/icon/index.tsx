@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
+import inject from '../../utils/dangerouslyInjectHTML';
 
 const iconMap = preval`
   const fs = require('fs');
@@ -35,7 +35,7 @@ const iconMap = preval`
       const node = content.childNodes.item(i);
 
       if (matching.includes(node.nodeName)) {
-        innerHTML += (new XMLSerializer().serializeToString(node)).trim();
+        innerHTML += (new XMLSerializer().serializeToString(node)).trim().replace('xmlns="http://www.w3.org/2000/svg"', '');
       }
     }
 
@@ -52,13 +52,9 @@ const iconMap = preval`
 
     acc[file.slice(0, -4)] = getString(parser.parseFromString(fileData, 'image/svg+xml'));
 
-    return acc
+    return acc;
   }, {})
-`
-
-function inject(htmlString: any) {
-  return { __html: htmlString }
-}
+`;
 
 const Svg = styled.svg`
   display: inline-block;
@@ -67,14 +63,10 @@ const Svg = styled.svg`
   vertical-align: text-top;
   fill: currentColor;
   pointer-events: none;
-`
+`;
 
-const Icon = ({ name, ...rest }) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" viewBox={iconMap[name].viewBox} {...rest} dangerouslySetInnerHTML={inject(iconMap[name].innerHTML)} />
-)
-
-Icon.propTypes = {
-  name: PropTypes.string.isRequired,
-}
+const Icon: React.SFC<{ name: string }> = ({ name, ...rest }) => (
+  <Svg xmlns='http://www.w3.org/2000/svg' viewBox={iconMap[name].viewBox} {...rest} dangerouslySetInnerHTML={inject(iconMap[name].innerHTML)} />
+);
 
 export default Icon;

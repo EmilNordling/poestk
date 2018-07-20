@@ -11,5 +11,6 @@ module.exports = {
   appIndex: resolveApp('src/index.tsx'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
+  pstSrc: resolveApp('../pst_typescript'),
   appNodeModules: resolveApp('node_modules'),
 };

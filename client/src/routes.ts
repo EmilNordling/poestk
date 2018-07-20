@@ -1,8 +1,8 @@
-import { v4 } from 'uuid'
-import * as page from './pages'
-import authGuard from './authGuard'
+import { v4 } from 'uuid';
+import * as page from './pages';
+import withAuthGuard from './hoc/withAuthGuard';
 
-const routes: Array<route> = [
+const routes = [
   {
     key: v4(),
     path: '/',
@@ -19,13 +19,13 @@ const routes: Array<route> = [
     key: v4(),
     path: '/signin',
     exact: true,
-    component: page.Login,
+    component: page.Signin,
   },
   {
     key: v4(),
     path: '/settings',
     exact: true,
-    component: authGuard(page.Settings),
+    component: withAuthGuard(page.Settings),
   },
   {
     key: v4(),
@@ -33,4 +33,4 @@ const routes: Array<route> = [
   },
 ];
 
-export default routes
+export default routes;

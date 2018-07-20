@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
 import { colors, fontFamily } from '../../constants';
 import Icon from '../icon';
+import { P } from '../text';
 
 export type SelectValue = string;
 
@@ -30,7 +30,7 @@ const SelectStyle = styled.div`
   background: ${colors.main_backdrop};
   transition: all 0.2s;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-`
+`;
 
 const SelectItemStyle = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ const SelectItemStyle = styled.div`
   ${props => props.selected && css`
     background: rgba(0, 0, 0, 0.15);
   `}
-`
+`;
 
 const Wrapper = styled.div`
   position: relative;
@@ -77,10 +77,6 @@ const IconWrapper = styled.div`
 `;
 
 export class Options extends Component<SelectOptionProps, any> {
-  static propTypes = {
-    value: PropTypes.string.isRequired,
-  }
-
   state: any = {
     selected: false,
   };
@@ -106,23 +102,18 @@ export class Options extends Component<SelectOptionProps, any> {
   render() {
     return (
       <SelectItemStyle selected={this.state.selected} onClick={this.localClick}><p>{this.props.children}</p></SelectItemStyle>
-    )
+    );
   }
 }
 
 export class Select extends Component<SelectProps, any> {
-  static propTypes = {
-    onChange: PropTypes.func.isRequired,
-    model: PropTypes.string.isRequired,
-  }
-
   value: string;
   node: HTMLDivElement;
 
   state: any = {
     selected: '',
     isOpen: false,
-  }
+  };
 
   get selectedValue() {
     return this.value;
@@ -185,7 +176,7 @@ export class Select extends Component<SelectProps, any> {
     return (
       <Wrapper>
         <div ref={(node: HTMLDivElement) => this.node = node}>
-          <Input tabIndex="0" onClick={() => this.handleToggle(!this.state.isOpen)}><p>{this.state.selected}</p><Icon name="arrowStroke" /></Input>
+          <Input tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}><P>{this.state.selected}</P><Icon name='arrowStroke' /></Input>
           {this.state.isOpen &&
             <SelectStyle>
               {React.Children.map(this.props.children, child => (
@@ -195,6 +186,6 @@ export class Select extends Component<SelectProps, any> {
           }
         </div>
       </Wrapper>
-    )
+    );
   }
 }

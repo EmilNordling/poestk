@@ -1,54 +1,58 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { colors } from '../constants';
+import Helmet from 'react-helmet';
+import styled from 'styled-components';
+import { AuthStore, GuiStore } from '../stores';
 import routes from '../routes';
-import WrapGlobalStyles from './WrapGlobalStyles';
-import Overlay from './Overlay';
-import HoverNode from './HoverNode';
-import { GlobalContainer, Container } from './Containers';
-import Modal from './Modal';
-import Settings from './Settings';
+import { colors } from '../constants';
+import { H } from '../common/text';
+import withGlobalStyles from '../hoc/withGlobalStyles';
 
-const Popouts = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 2;
-`
+const SWUpdate = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  background: ${colors.main_color_highlight};
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+`;
 
-@inject('userStore', 'commonStore')
+@inject('authStore', 'guiStore')
 @observer
-class App extends Component {
-  componentWillMount() {
-
+class App extends Component<{ authStore: AuthStore, guiStore: GuiStore }> {
+  public componentDidMount() {
+    this.props.authStore.pullUser();
   }
 
-  componentDidMount() {
-    if (this.props.commonStore.token) {
-      this.props.userStore.pullUser();
-    }
+  private handleSWUpdateClick() {
+    window.location.reload();
   }
 
-  render () {
+  render() {
+    const { authenticated, currentUser } = this.props.authStore;
+
     return (
       <Router>
-        <Container>
-          <Switch>
-            {routes.map(props => <Route {...props} />)}
-          </Switch>
+        <Fragment>
 
-          <HoverNode />
-          <Overlay />
-          <Popouts>
-            <Settings />
-          </Popouts>
-        </Container>
+
+          {this.props.guiStore.showSWUpdated &&
+            <SWUpdate onClick={this.handleSWUpdateClick}>
+              <H size={3}>There's a new version available. Click here to update</H>
+            </SWUpdate>
+          }
+
+          <Switch>
+            {routes.map((pages, index) => <Route key={index} {...pages} />)}
+          </Switch>
+        </Fragment>
       </Router>
-    )
+    );
   }
 }
 
-export default WrapGlobalStyles(App)
+export default withGlobalStyles(App);

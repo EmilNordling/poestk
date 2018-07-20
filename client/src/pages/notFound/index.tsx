@@ -1,20 +1,15 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
+import React, { Component } from 'react';
+import Page from '../../components/Page';
+import { H } from '../../common/text';
 
-const NotFound = styled.div`
-  padding: 10px 0;
-  text-align: center;
-  font-size: 4rem;
-`
-
-class Home extends Component {
+class NotFound extends Component {
   render() {
     return (
-      <NotFound>
-        404
-      </NotFound>
-    )
+      <Page showHeader={false}>
+        <H size={1}>404</H>
+      </Page>
+    );
   }
 }
 
-export default Home
+export default NotFound;

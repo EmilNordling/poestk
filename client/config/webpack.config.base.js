@@ -1,4 +1,4 @@
-const paths = require('./paths')
+const paths = require('./paths');
 
 const threadLoader = {
   loader: 'thread-loader',
@@ -19,7 +19,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        include: paths.appSrc,
+        include: [paths.appSrc],
         exclude: /node_modules/,
         use: [
           { loader: 'cache-loader' },

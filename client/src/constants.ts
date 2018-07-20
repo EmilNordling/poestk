@@ -1,20 +1,10 @@
-import { css } from 'styled-components'
-
-export const breakpoints = {
-  large: '960px',
-  medium: '640px',
-  small: '420px',
-};
+import { css } from 'styled-components';
 
 export const colors = {
-  gray: '#323640',
-  gray400: '#313440',
-  gray300: '#20232a',
-  gray250: '#2b2e3a',
-  gray200: '#1d1f28',
-  gray201: '#1d202a',
-  gray202: '#1b1f2a',
-  blue400: '#3fa6ff',
+  main_background_light: '#24292e',
+  main_background_dark: '#18191c',
+  main_background_input: '#23252b',
+  main_color_highlight: '#00d8ff',
 
 
   desktop_bar_backdrop: '#1e222d',
@@ -25,8 +15,11 @@ export const colors = {
   main_color_bright: 'hsla(0, 0%, 100%, 0.9)',
   main_color: 'hsla(0, 0%, 100%, 0.75)',
   main_backdrop: '#1e222d',
-  main_content_dark: '#2B2E3A',
-  main_content: '#313440',
+  main_dark: '#2B2E3A',
+  main_content_alt: '#2e313a',
+  main_content_dark: '#282b35',
+  main_content_dark_alt: '#252831',
+  main_content: 'var(--main_content, #313440)',
   main_error: '#ff480e',
   main_background: '#1b1f2a',
   main_sep: '#2E313D',
@@ -43,20 +36,20 @@ export const fontFamily = `
   "Apple Color Emoji",
   "Segoe UI Emoji",
   "Segoe UI Symbol"
-`
+`;
 
 const sizes = {
   large: 1170,
   medium: 960,
-  small: 520,
+  small: 500,
 };
 
 export const media = Object.keys(sizes).reduce((acc, label) => {
-  acc[label] = (...args) => css`
-    @media (min-width: ${sizes[label]}px) {
+  acc[label] = (...args: any[]) => css`
+    @media (max-width: ${sizes[label]}px) {
       ${css(...args)}
     }
-  `
+  `;
 
-  return acc
+  return acc;
 }, {});

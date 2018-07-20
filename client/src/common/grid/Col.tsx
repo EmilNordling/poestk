@@ -1,23 +1,25 @@
-import React, { Component, cloneElement, Children } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+
+interface ColProps {
+  span?: number;
+  gutter?: number;
+}
 
 const ColStyle = styled.div`
-  width: ${props => props.span === 0 ? '100%' : 100 / props.span + '%'};
-  padding: 0 ${props => props.gutter === 0 ? 'auto' : props.gutter / 2 + 'px'};
-`
+  width: ${(props: ColProps) => props.span === 0 ? '100%' : 100 / props.span! + '%'};
+  padding: 0 ${(props: ColProps) => props.gutter === 0 ? 'auto' : props.gutter! / 2 + 'px'};
+`;
 
-class Col extends Component {
-  static propTypes = {
-    span: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    gutter: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }
+const Col: React.SFC<ColProps> = (props) => {
+  const { children, ...rest } = props;
 
-  render() {
-    const { children, ...rest } = this.props;
+  return <ColStyle {...rest}>{children}</ColStyle>;
+};
 
-    return <ColStyle {...rest}>{children}</ColStyle>
-  }
-}
+Col.defaultProps = {
+  span: 0,
+  gutter: 0,
+};
 
 export default Col;

@@ -1,11 +1,9 @@
-import Heading from './Heading';
+import H from './Heading';
+import P from './Paragraph';
 import Label from './Label';
-import Paragraph from './Paragraph';
-import Title from './Title';
 
 export {
-  Heading,
+  H,
+  P,
   Label,
-  Paragraph,
-  Title,
-}
+};

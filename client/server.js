@@ -1,13 +1,13 @@
-const { join, resolve } = require('path')
-const express = require('express')
-const compression = require('compression')
+const { join, resolve } = require('path');
+const express = require('express');
+const compression = require('compression');
 
 // Init app
-const server = express()
-const port = process.env.PORT || 3005
+const server = express();
+const port = process.env.PORT || 3005;
 
 // Gzip
-server.use(compression())
+server.use(compression());
 
 // Cache
 server.use(express.static(resolve(__dirname, 'dist'), {
@@ -17,12 +17,12 @@ server.use(express.static(resolve(__dirname, 'dist'), {
       res.setHeader('Cache-Control', 'dist, max-age=0')
     }
   },
-}))
+}));
 
 // Index route
-server.use((req, res) => res.sendFile(join(__dirname, 'dist', 'index.html')))
+server.use((req, res) => res.sendFile(join(__dirname, 'dist', 'index.html')));
 
 // Listen
 server.listen(port, () => {
   console.log(`> Ready on http://localhost:${port}`)
-})
+});

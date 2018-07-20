@@ -1,38 +1,35 @@
-import React, { Component, cloneElement, Children } from 'react';
-import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
+import React, { cloneElement, Children, ReactElement } from 'react';
+import styled from 'styled-components';
+
+interface RowProps {
+  gutter: number;
+}
 
 const RowStyle = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
   align-content: flex-start;
-  margin: 0 ${props => props.gutter === 0 ? 'auto' : '-' + props.gutter / 2 + 'px'} 10px;
+  margin: 0 ${(props: RowProps) => props.gutter === 0 ? 'auto' : '-' + props.gutter / 2 + 'px'} 10px;
 
   &:last-of-type {
     margin-bottom: 0;
   }
-`
+`;
 
-export class Row extends Component {
-  static defaultProps = {
-    gutter: 0,
-  };
+const Row: React.SFC<RowProps> = (props) => {
+  const { children, ...rest } = props;
+  const cols = Children.map(children, (col: ReactElement<RowProps>) => {
+    if (!col) return null;
 
-  static propTypes = {
-    gutter: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }
+    return cloneElement(col, { gutter: props.gutter });
+  });
 
-  render() {
-    const { children, ...rest } = this.props;
-    const cols = Children.map(children, (col: React.ReactElement<HTMLDivElement>) => {
-      if (!col) return null;
+  return <RowStyle {...rest}>{cols}</RowStyle>;
+};
 
-      return cloneElement(col, { gutter: this.props.gutter });
-    });
-
-    return <RowStyle { ...rest }>{cols}</RowStyle>
-  }
-}
+Row.defaultProps = {
+  gutter: 0,
+};
 
 export default Row;

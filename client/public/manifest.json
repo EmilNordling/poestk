@@ -1,6 +1,6 @@
 {
-  "name": "poestk",
-  "short_name": "poestk",
+  "name": "boilerplate",
+  "short_name": "boilerplate",
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",

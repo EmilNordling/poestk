@@ -9,13 +9,13 @@ export type FormFieldParams = {
   id?: string,
   errorMessage?: string,
   name?: string,
-  onChange?: any,
-}
+  onChange?: (event: React.FormEvent<HTMLInputElement>) => void,
+};
 
 const Button = styled.button`
   display: inline-block;
   padding: 15px 24px;
-  border: 1px solid rgba(0,0,0,0.3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   vertical-align: top;
   outline: none;
   border-radius: 4px;
@@ -25,15 +25,15 @@ const Button = styled.button`
   line-height: 1em;
   text-align: center;
   text-decoration: none;
-  color: ${colors.main_color};
-  background: ${colors.main_backdrop};
+  color: #fefefe;
+  background: ${colors.main_background_input};
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
   &:hover {
     background: rgba(0, 0, 0, 0.15);
   }
-`
+`;
 
 const Label = styled.label`
   position: absolute;
@@ -42,14 +42,14 @@ const Label = styled.label`
   font-size: 1.6rem;
   transition: all 0.2s;
   pointer-events: none;
-  color: ${colors.main_color_dimmed};
-`
+  color: #fefefe;
+`;
 
 const inFocus = () => `
   font-size: 1.4rem;
   top: 16px;
-  color: ${colors.main_color};
-`
+  color: #fefefe;
+`;
 
 const FieldContent = styled.div`
   position: relative;
@@ -59,54 +59,54 @@ const FieldContent = styled.div`
     ${inFocus()}
   }
 
-  & input:not([value=""]) + label {
+  & input:not([value='']) + label {
     ${inFocus()}
   }
 
-  & input:invalid:not([value=""]) {
+  & input:invalid:not([value='']) {
     background: rgba(255, 28, 27, 0.1);
   }
 
   &:last-child {
     border-bottom: 0;
   }
-`
+`;
 
 const Input = styled.input`
+  display: block;
+  width: 100%;
   border: 0;
   outline: none;
   font-size: 1.6rem;
-  width: 100%;
-  display: block;
   transition: transform 0.2s;
-`
+`;
 
 const FieldInput = Input.extend`
-  transition: background-color 0.2s;
   padding: 32px 20px 16px;
+  transition: background-color 0.2s;
   background: rgba(255, 255, 255, 0);
-  color: ${colors.main_color};
-`
+  color: #fefefe;
+`;
 
 const Form = styled.form`
-  text-align: center;
   width: 300px;
-`
+  text-align: center;
+`;
 
 const Fieldset = styled.fieldset`
+  width: 100%;
   padding: 0;
   margin-bottom: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  background: ${colors.main_backdrop};
-  width: 100%;
+  background: ${colors.main_background_input};
   transition: all 0.2s;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0,0,0,0.3);
-`
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+`;
 
-const FieldsetItem = ({ label, errorMessage, ...props, }: FormFieldParams) => (
+const FieldsetItem = ({ label, errorMessage, ...props }: FormFieldParams) => (
   <FieldContent>
-    <FieldInput required="required" { ...props as any }/>
+    <FieldInput required='required' {...props as any} />
     <Label>{ label }</Label>
   </FieldContent>
 );
@@ -117,4 +117,4 @@ export {
   Form,
   Input,
   Button,
-}
+};

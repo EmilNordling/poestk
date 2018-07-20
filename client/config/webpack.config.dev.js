@@ -1,14 +1,14 @@
-const webpack = require('webpack')
-const HtmlWebpackPLugin = require('html-webpack-plugin')
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
-const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin')
-const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware')
-const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const paths = require('./paths')
-const base = require('./webpack.config.base')
+const webpack = require('webpack');
+const HtmlWebpackPLugin = require('html-webpack-plugin');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const errorOverlayMiddleware = require('react-dev-utils/errorOverlayMiddleware');
+const noopServiceWorkerMiddleware = require('react-dev-utils/noopServiceWorkerMiddleware');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const paths = require('./paths');
+const base = require('./webpack.config.base');
 
 const publicPath = '/';
 const port = 5001;
@@ -46,11 +46,11 @@ module.exports = {
       },
     }),
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
-    new InterpolateHtmlPlugin({ PUBLIC_URL: '' }),
     new HtmlWebpackPLugin({
       template: paths.appHtml,
       inject: true,
     }),
+    new InterpolateHtmlPlugin({ PUBLIC_URL: '' }),
     new BrowserSyncPlugin({
       host: 'localhost',
       port: proxyPort,

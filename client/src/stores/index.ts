@@ -1,19 +1,28 @@
-import clientStore from './ClientStore'
-import guiStore from './GUIStore'
-import nodeDataStore from './NodeDataStore'
-import allocationStore from './AllocationStore'
-import authStore from './AuthStore'
-import commonStore from './CommonStore'
-import userStore from './UserStore'
-import buildsStore from './BuildsStore'
+import GuiStore from './GUIStore';
+import AuthStore from './AuthStore';
+import StatsStore from './StatsStore';
+import BuildStore from './BuildStore';
+
+const guiStore = new GuiStore();
+const authStore = new AuthStore();
+const statsStore = new StatsStore();
+const buildStore = new BuildStore();
+
+export { default as GuiStore } from './GUIStore';
+export { default as AuthStore } from './AuthStore';
+export { default as StatsStore } from './StatsStore';
+export { default as BuildStore } from './BuildStore';
+
+export {
+  guiStore,
+  authStore,
+  statsStore,
+  buildStore,
+};
 
 export default {
-  clientStore,
   guiStore,
-  nodeDataStore,
-  allocationStore,
   authStore,
-  commonStore,
-  userStore,
-  buildsStore,
-}
+  statsStore,
+  buildStore,
+};

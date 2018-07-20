@@ -1,3 +1,0 @@
-interface Sample {
-  menuOpen: boolean;
-}

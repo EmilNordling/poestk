@@ -4,6 +4,9 @@ import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'mobx-react';
 import App from './components/App';
 import stores from './stores';
+import setTheme from './theme';
+
+setTheme();
 
 const render = (Component: any) => {
   ReactDOM.render(
@@ -12,21 +15,36 @@ const render = (Component: any) => {
         <Component />
       </AppContainer>
     </Provider>,
-    document.getElementById('app')
-  )
+    document.getElementById('app'),
+  );
 };
 
 render(App);
 
 // Reload react hot loader
 if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    render(App)
-  })
-};
+  module.hot.accept('./components/App', () => render(App));
+}
 
 // Install Service Worker
 if (process.env.NODE_ENV === 'production') {
-  // eslint-disable-next-line global-require
-  require('offline-plugin/runtime').install()
-};
+  const runtime = require('offline-plugin/runtime');
+
+  runtime.install({
+    onUpdating: () => {
+      console.log('SW:', 'onUpdating');
+    },
+    onUpdateReady: () => {
+      console.log('SW:', 'onUpdateReady');
+      runtime.applyUpdate();
+    },
+    onUpdated: () => {
+      console.log('SW:', 'onUpdated');
+
+      stores.guiStore.showSWUpdated = true;
+    },
+    onUpdateFailed: () => {
+      console.log('SW:', 'onUpdateFailed');
+    },
+  });
+}
