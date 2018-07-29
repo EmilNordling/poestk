@@ -9,14 +9,15 @@ const sizes = [
 
 interface HeadingProps {
   size: 1 | 2 | 3;
-  margin?: true | number;
+  margin?: boolean | number;
+  weight?: 300 | 400 | 500 | 700 | 800;
+  color?: string;
 }
 
 const HeadingStyle = styled.div`
-  color: inherit;
+  color: ${(props) => props.color ? props.color : 'inherit'};
+  font-weight: ${(props) => props.weight ? props.weight : 300};
   font-size: ${(props: HeadingProps) => sizes[props.size - 1]}rem;
-  text-align: center;
-  font-weight: 300;
 
   ${(props: HeadingProps) => props.margin && css`
     margin-bottom: ${props.margin === true ? '20px' : props.margin + 'px'}};

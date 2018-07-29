@@ -29,6 +29,10 @@ function getCurrentTabData() {
   return Controller.currentTabData;
 }
 
+function readMod(mod: string): number {
+
+}
+
 export {
   changeClass,
   reset,

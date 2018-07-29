@@ -12,6 +12,7 @@
   ],
   "plugins": [
     "preval",
+    "transform-modern-regexp",
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "react-hot-loader/babel",
     ["module-resolver", {

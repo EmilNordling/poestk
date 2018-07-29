@@ -23,6 +23,12 @@ const routes = [
   },
   {
     key: v4(),
+    path: '/privacy',
+    exact: true,
+    component: page.Privacy,
+  },
+  {
+    key: v4(),
     path: '/settings',
     exact: true,
     component: withAuthGuard(page.Settings),

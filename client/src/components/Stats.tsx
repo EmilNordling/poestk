@@ -4,16 +4,17 @@ import { observer, inject } from 'mobx-react';
 import { colors } from '../constants';
 import { Select, Options } from '../common/select';
 import { Col, Row } from '../common/grid';
-import { Label } from '../common/text';
-import { changeClass, redraw } from '../classes/pst/publicAPI';
+import { Label, P } from '../common/text';
 import { characters } from '../classes/pst';
 import { BuildStore } from '../stores';
-import { values } from 'mobx';
+import Inventory from './Inventory';
+import CharStats from './CharStats';
+import Nav from './Nav';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 380px;
   height: 100%;
   z-index: 1;
   background: ${colors.main_content};
@@ -29,16 +30,26 @@ const Header = styled.header`
   background: ${colors.main_content_dark};
 `;
 
-const Content = styled.header`
+const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
 `;
 
 const Footer = styled.footer`
-  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   height: 18px;
+  padding-right: 10px;
+  z-index: 1;
   background: ${colors.main_content_dark};
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+
+  & p {
+    margin-bottom: 2px;
+    font-size: 1rem;
+  }
 `;
 
 const Left = styled.div`
@@ -57,13 +68,35 @@ const StatsItem = styled.div`
   }
 `;
 
-const TempItem = styled.div`
-  width: 20px;
-  height: 20px;
-  background: red;
+const StatsDisplayStyle = styled.div`
+  display: flex;
 `;
 
-const Stats: React.SFC<{ buildStore?: BuildStore }> = inject('buildStore')(observer((props) => {
+const Description = styled.div`
+  flex: 1;
+`;
+
+const Value = styled.div`
+  flex: 1;
+  margin-left: 10px;
+`;
+
+const StatsDisplay: React.SFC<{ name: string, display: number | null }> = (props) => {
+  if (props.display === null) return null;
+
+  return (
+    <StatsDisplayStyle>
+      <Description>
+        <P align='right'>{props.name}:</P>
+      </Description>
+      <Value>
+        <P align='left'>{props.display}</P>
+      </Value>
+    </StatsDisplayStyle>
+  );
+};
+
+const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
   const { loading, activeBuild, change } = props.buildStore!;
 
   if (loading) return <></>;
@@ -72,14 +105,14 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = inject('buildStore')(obser
     <Options key={char} value={char}>{characters[char].name}</Options>
   ));
 
-  const ascendancies = Object.keys(activeBuild.ascendancies).map(asc => (
-    <Options key={asc} value={asc}>{activeBuild.ascendancies[asc].name}</Options>
+  const ascendancies = Object.keys(characters[activeBuild.classID].classes).map(asc => (
+    <Options key={asc} value={asc}>{characters[activeBuild.classID].classes[asc].name}</Options>
   ));
 
   return (
     <Container>
       <Header>
-        qwe
+        <Nav />
       </Header>
       <Content>
         <StatsItem>
@@ -98,12 +131,32 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = inject('buildStore')(obser
             </Col>
           </Row>
         </StatsItem>
+        <StatsItem>
+          <StatsDisplay name='Strength' display={activeBuild.stats.strength.display} />
+          <StatsDisplay name='Dexterity' display={activeBuild.stats.dexterity.display} />
+          <StatsDisplay name='Intelligence' display={activeBuild.stats.intelligence.display} />
+        </StatsItem>
+
+        <StatsItem>
+          <StatsDisplay name='Total Life' display={activeBuild.stats.life.display} />
+          <StatsDisplay name='%Inc Life' display={activeBuild.stats.life.increased} />
+        </StatsItem>
+        <StatsItem>
+          <StatsDisplay name='Total Mana' display={activeBuild.stats.mana.display} />
+          <StatsDisplay name='%Inc Mana' display={activeBuild.stats.mana.increased} />
+        </StatsItem>
+        <StatsItem>
+          <StatsDisplay name='Total Energy Shield' display={activeBuild.stats.energyShield.display} />
+          <StatsDisplay name='%Inc Energy Shield' display={activeBuild.stats.energyShield.increased} />
+        </StatsItem>
       </Content>
       <Footer>
-        qwe
+        <div>
+          <p>version: 0.5.0</p>
+        </div>
       </Footer>
     </Container>
   );
-}));
+};
 
-export default Stats;
+export default inject('buildStore')(observer(Stats));

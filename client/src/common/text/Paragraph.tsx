@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 interface ParagraphProps {
   margin?: true | number;
+  align?: 'center' | 'left' | 'right';
 }
 
 const ParagraphStyle = styled.div`
@@ -11,6 +12,10 @@ const ParagraphStyle = styled.div`
 
   ${(props: ParagraphProps) => props.margin && css`
     margin-bottom: ${props.margin === true ? '20px' : props.margin + 'px'}};
+  `};
+
+  ${(props: ParagraphProps) => props.align && css`
+    text-align: ${props.align};
   `};
 `;
 

@@ -12,7 +12,7 @@ class Group {
 
 export default class StatsStore {
   constructor() {
-    Emitter.on('allocated', (node: PassiveNode) => parseTreeData(node));
-    Emitter.on('deallocated', (node: PassiveNode) => parseTreeData(node));
+    // Emitter.on('allocated', (node: PassiveNode) => parseTreeData(node));
+    // Emitter.on('deallocated', (node: PassiveNode) => parseTreeData(node));
   }
 }

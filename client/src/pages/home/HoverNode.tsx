@@ -135,7 +135,7 @@ class HoverNode extends Component<{ guiStore?: GUIStore }> {
     return (
       <TransitionGroup>
         {this.hoverState &&
-          <Inner position={this.currentPosition} innerRef={(node: HTMLElement) => { this.node = node }}>
+          <Inner position={this.currentPosition || { x: 0, y: 0 }} innerRef={(node: HTMLElement) => { this.node = node }}>
             <h3>{this.text.title}</h3>
             {
               this.text.mods.map((mod, index) => (

@@ -11,7 +11,9 @@ interface PassiveNode {
   passivePointsGranted?: number,
   da?: number,
   spc?: Array<any>,
-  sd?: Array<any>,
+  sd?: {
+    [modifier: string]: number,
+  },
   g?: number,
   o?: number,
   oidx?: number,

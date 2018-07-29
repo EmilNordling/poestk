@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-client",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "boilerplate",
   "author": "Emil Nordling",
   "repository": {
@@ -82,6 +82,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-modern-regexp": "^0.0.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
     "browser-sync": "^2.23.6",

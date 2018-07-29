@@ -38,7 +38,10 @@ class App extends Component<{ authStore: AuthStore, guiStore: GuiStore }> {
     return (
       <Router>
         <Fragment>
-
+          <Helmet
+            titleTemplate='poestk - %s'
+            defaultTitle='poestk'
+          />
 
           {this.props.guiStore.showSWUpdated &&
             <SWUpdate onClick={this.handleSWUpdateClick}>

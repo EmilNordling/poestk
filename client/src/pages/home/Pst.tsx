@@ -16,7 +16,7 @@ class Pst extends Component<{ buildStore?: BuildStore}> {
   private containerRef = React.createRef<HTMLElement>();
 
   componentDidMount() {
-    this.props.buildStore!.firstLoad(this.containerRef.current!);
+    this.props.buildStore!.load(this.containerRef.current!);
   }
 
   render() {

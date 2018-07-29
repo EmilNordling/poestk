@@ -1,3 +1,4 @@
+// TODO: rewrite the entire thing since it's 200 lines longer than it have to be.
 const version = 4;
 const availableCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 const binderChar = '=';

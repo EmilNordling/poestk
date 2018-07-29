@@ -6,9 +6,8 @@
  * @param more the total amount of more stats
  * @param less the total amount of less stats
  */
-
 function statsStack(addedFlat: number, increased: number, reduced: number, more: number, less: number) {
-  return addedFlat * (1 + increased - reduced) * (1 + more) * (1 + less);
+  return addedFlat * (1 + ((increased - reduced) / 100)) * (1 + (more / 100)) * (1 + (less / 100));
 }
 
 export {

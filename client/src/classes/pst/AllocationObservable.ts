@@ -2,6 +2,11 @@ import Controller from './controller';
 import Emitter from './Emitter';
 import { generateHash } from './hashShim';
 
+export enum AllocationEmitState {
+  allocate,
+  deallocate,
+}
+
 // move to somewhere it make sense to have it
 const getClassNode = (classID) => {
   switch (classID) {
@@ -43,7 +48,7 @@ class Allocate {
   /**
    * @param {object} Passive object
    */
-  allocate(node, force = false) {
+  allocate(node, force = true) {
     const targetedNode = node;
     const connections = Object.keys(targetedNode.connection);
     const tab = Controller.ClientStore.viewTab;
@@ -57,14 +62,14 @@ class Allocate {
       if (force || isAllocated.length > 0) {
         this.pointsAllocated++;
         Controller.ClientStore.treeState[tab].allocated[targetedNode.id] = targetedNode;
-        Emitter.emit('allocated', targetedNode);
+        Emitter.emit('allocated', targetedNode, AllocationEmitState.allocate);
       } else {
         console.log('branch to this node / use highlighted branch');
       }
     } else if (isAllocated.length === 1 || force) {
       this.pointsAllocated--;
       delete Controller.ClientStore.treeState[tab].allocated[targetedNode.id];
-      Emitter.emit('deallocated', targetedNode, true);
+      Emitter.emit('deallocated', targetedNode, AllocationEmitState.deallocate);
     } else {
       // const rootNode = (node.id).toString();
       // const removeGroup = [rootNode];
@@ -116,7 +121,7 @@ class Allocate {
       if (result === isAllocated.length) {
         this.pointsAllocated--;
         delete Controller.ClientStore.treeState[tab].allocated[targetedNode.id];
-        Emitter.emit('deallocated', targetedNode, true);
+        Emitter.emit('deallocated', targetedNode, AllocationEmitState.deallocate);
       }
     }
 
