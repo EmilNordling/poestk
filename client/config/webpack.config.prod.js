@@ -47,11 +47,16 @@ module.exports = {
       version: '[hash]',
       AppCache: false,
       updateStrategy: 'changed',
+      responseStrategy: 'cache-first',
       autoUpdate: 1000 * 60 * 2,
       ServiceWorker: {
         minify: true,
         events: true,
         navigateFallbackURL: '/',
+      },
+      caches: {
+        main: [':rest:'],
+        optional: ['scripts/*.chunk.js', 'assets/*.**', 'icons/*.**', 'treeData/*.**']
       },
     }),
     new UglifyJsPlugin({ uglifyOptions: {
