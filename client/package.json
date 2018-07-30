@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "webpack-dev-server --config config/webpack.config.dev.js",
     "build": "SET NODE_ENV=production&& webpack --config config/webpack.config.prod.js",
+    "build:heroku": "NODE_ENV=production webpack --config config/webpack.config.prod.js",
     "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*"
   },
   "dependencies": {
