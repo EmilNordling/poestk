@@ -23,7 +23,7 @@ module.exports = {
     publicPath: paths.publicPath,
   },
   plugins: [
-    new CleanWebpackPLugin([paths.appBuild], { root: process.cwd() }),
+    new CleanWebpackPLugin([paths.appBuild], { root: `${process.cwd()}/..` }),
     new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.CommonsChunkPlugin({

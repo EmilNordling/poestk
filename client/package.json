@@ -10,14 +10,11 @@
   "scripts": {
     "dev": "webpack-dev-server --config config/webpack.config.dev.js",
     "build": "SET NODE_ENV=production&& webpack --config config/webpack.config.prod.js",
-    "start": "SET NODE_ENV=production&& node server.js",
     "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*"
   },
   "dependencies": {
     "animejs": "^2.2.0",
     "axios": "^0.17.1",
-    "compression": "^1.7.1",
-    "express": "^4.16.2",
     "history": "^4.7.2",
     "lodash.functions": "^4.3.0",
     "lodash.isequal": "^4.5.0",

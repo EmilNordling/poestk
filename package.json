@@ -1,0 +1,17 @@
+{
+  "name": "poestk",
+  "description": "poestk",
+  "version": "0.1.0",
+  "engines": {
+    "node": "10.6.0",
+    "yarn": "1.7.0"
+  },
+  "scripts": {
+    "start": "SET NODE_ENV=production&& node server.js",
+    "heroku-prebuild": "cd client&& yarn install&& yarn build"
+  },
+  "dependencies": {
+    "compression": "^1.7.3",
+    "express": "^4.16.3"
+  }
+}
