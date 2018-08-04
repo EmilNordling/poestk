@@ -1,16 +1,25 @@
 const { join, resolve } = require('path');
 const express = require('express');
 const compression = require('compression');
+const sslRedirect  = require('heroku-ssl-redirect');
+
+const mobileDir = 'dist_mobile';
+const desktopDir = 'dist_desktop';
 
 // Init app
-const server = express();
+const app = express();
 const port = process.env.PORT || 3005;
 
 // Gzip
-server.use(compression());
+app.use(compression());
+
+if (process.env.NODE_ENV === 'production') {
+  // http trafic to https
+  app.use(sslRedirect());
+}
 
 // Cache
-server.use(express.static(resolve(__dirname, 'dist'), {
+app.use(express.static(resolve(__dirname, desktopDir), {
   maxAge: '7d',
   setHeaders: (res, filePath) => {
     if (filePath.match(/(sw.js|index.html)$/)) {
@@ -19,10 +28,28 @@ server.use(express.static(resolve(__dirname, 'dist'), {
   },
 }));
 
+// app.use(express.static(resolve(__dirname, mobileDir), {
+//   maxAge: '7d',
+//   setHeaders: (res, filePath) => {
+//     if (filePath.match(/(sw.js|index.html)$/)) {
+//       res.setHeader('Cache-Control', 'dist, max-age=0')
+//     }
+//   },
+// }));
+
 // Index route
-server.use((req, res) => res.sendFile(join(__dirname, 'dist', 'index.html')));
+app.get('/', (req, res) => {
+  const userAgent = req.header('user-agent');
+
+  if(/mobile|iphone|ipod|android|blackberry|opera|mini|windows\sce|palm|smartphone|iemobile|ipad|android|android 3.0|xoom|sch-i800|playbook|tablet|kindle/i.test(userAgent)) {
+    res.sendFile(join(__dirname, desktopDir, 'index.html'));
+    // res.sendFile(join(__dirname, mobileDir, 'index.html'));
+  } else {
+    res.sendFile(join(__dirname, desktopDir, 'index.html'));
+  }
+});
 
 // Listen
-server.listen(port, () => {
-  console.log(`> Ready on http://localhost:${port}`)
+app.listen(port, () => {
+  console.log(`> Ready on ${process.env.NODE_ENV === 'production' ? 'https' : 'http'}://localhost:${port}`)
 });

@@ -1,18 +1,26 @@
 {
   "name": "poestk",
-  "description": "poestk",
   "version": "0.1.0",
+  "description": "poestk",
+  "author": "Emil Nordling",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EmilNordling/boilerplate"
+  },
   "engines": {
     "node": "10.6.0",
     "yarn": "1.7.0"
   },
   "scripts": {
+    "dev": "node server.js",
     "start:windows": "SET NODE_ENV=production&& node server.js",
     "start": "NODE_ENV=production node server.js",
     "postinstall": "cd client && yarn install && yarn build:heroku"
   },
   "dependencies": {
     "compression": "^1.7.3",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "heroku-ssl-redirect": "^0.0.4"
   }
 }

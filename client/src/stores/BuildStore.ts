@@ -87,9 +87,13 @@ export default class BuildStore {
     }
   }
 
+  test() {
+    getNewCharacter(Characters.duelist);
+  }
+
   private newCharacter(character: Characters, destructive = true) {
-    changeClass(character, destructive, destructive);
     this.builds[this.currentTab] = getNewCharacter(character);
     this.activeBuild = this.builds[this.currentTab];
+    changeClass(character, destructive, destructive);
   }
 }

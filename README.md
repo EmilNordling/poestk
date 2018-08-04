@@ -16,13 +16,13 @@
 - [ ] Released as an Progressive Web Application
 - [ ] Mobile friendly, both UI and performance wise
 - [ ] User profile
+- [ ] Character profile with item & skill gems
 
 #### Medium-term
-- [ ] Character profile with item & skill gems
-- [ ] Exposed a nice API for poestk's Passive Skill Tree
+- [ ] Damage calculation
 
 #### Long-term
-- [ ] Damage calculation
+- [ ] Exposed a nice API for poestk's Passive Skill Tree
 - [ ] Switch to WebGL
 
 ## License

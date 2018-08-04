@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { colors, fontFamily } from '../../constants';
+import { TransitionGroup } from 'react-transition-group';
+import transition from 'styled-transition-group';
 import Icon from '../icon';
 import { P } from '../text';
+import { propTypes } from 'mobx-react';
 
 export type SelectValue = string;
 
 export interface SelectProps {
+  width?: number;
   options?: any;
   model?: string;
   selected?: string;
@@ -19,7 +23,11 @@ export interface SelectOptionProps {
   value: string;
 }
 
-const SelectStyle = styled.div`
+const SelectStyle = transition.div.attrs({
+  unmountOnExit: true,
+  timeout: 125,
+})`
+  box-sizing: border-box;
   position: absolute;
   width: 100%;
   padding: 0;
@@ -28,15 +36,36 @@ const SelectStyle = styled.div`
   z-index: 1;
   border-radius: 4px;
   background: ${colors.main_backdrop};
-  transition: all 0.2s;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: opacity 125ms, transform 125ms;
+  transform-origin: 50% 0;
+  padding: 4px 0;
+
+  &:enter {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+
+  &:enter-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  &:exit {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  &:exit-active {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
 `;
 
 const SelectItemStyle = styled.div`
   display: flex;
   align-items: center;
   padding: 10px 0 10px 10px;
-  color: ${colors.main_color};
   cursor: pointer;
 
   &:hover {
@@ -50,7 +79,8 @@ const SelectItemStyle = styled.div`
 
 const Wrapper = styled.div`
   position: relative;
-  width: 100%;
+  width: ${(props: { width?: number }) => props.width ? `${props.width}px` : '100%' };
+  color: ${colors.main_color};
   user-select: none;
 `;
 
@@ -68,12 +98,6 @@ const Input = styled.div`
     outline: 0;
     background: ${colors.main_content_dark};
   }
-`;
-
-const IconWrapper = styled.div`
-  width: 7px;
-  height: 7px;
-  background: red;
 `;
 
 export class Options extends Component<SelectOptionProps, any> {
@@ -101,7 +125,7 @@ export class Options extends Component<SelectOptionProps, any> {
 
   render() {
     return (
-      <SelectItemStyle selected={this.state.selected} onClick={this.localClick}><p>{this.props.children}</p></SelectItemStyle>
+      <SelectItemStyle selected={this.state.selected} onClick={this.localClick}><P>{this.props.children}</P></SelectItemStyle>
     );
   }
 }
@@ -173,17 +197,21 @@ export class Select extends Component<SelectProps, any> {
   }
 
   render() {
+    const { width } = this.props;
+
     return (
-      <Wrapper>
+      <Wrapper width={width}>
         <div ref={(node: HTMLDivElement) => this.node = node}>
           <Input tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}><P>{this.state.selected}</P><Icon name='arrowStroke' /></Input>
-          {this.state.isOpen &&
-            <SelectStyle>
-              {React.Children.map(this.props.children, child => (
-                React.cloneElement(child, { handleClick: this.handleChange, selectedValue: this.selectedValue})
-              ))}
-            </SelectStyle>
-          }
+          <TransitionGroup>
+            {this.state.isOpen &&
+              <SelectStyle>
+                {React.Children.map(this.props.children, child => (
+                  React.cloneElement(child, { handleClick: this.handleChange, selectedValue: this.selectedValue})
+                ))}
+              </SelectStyle>
+            }
+          </TransitionGroup>
         </div>
       </Wrapper>
     );

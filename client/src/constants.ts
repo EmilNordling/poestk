@@ -4,7 +4,7 @@ export const colors = {
   main_background_light: '#24292e',
   main_background_dark: '#18191c',
   main_background_input: '#23252b',
-  main_color_highlight: '#00d8ff',
+  main_color_highlight: '#847aff',
 
 
   desktop_bar_backdrop: '#1e222d',
@@ -13,7 +13,7 @@ export const colors = {
 
   main_color_dimmed: 'hsla(0, 0%, 100%, 0.3)',
   main_color_bright: 'hsla(0, 0%, 100%, 0.9)',
-  main_color: 'hsla(0, 0%, 100%, 0.75)',
+  main_color: 'hsla(0, 0%, 100%, 0.88)',
   main_backdrop: '#1e222d',
   main_dark: '#2B2E3A',
   main_content_alt: '#2e313a',
@@ -31,8 +31,10 @@ export const fontFamily = `
   -apple-system,
   BlinkMacSystemFont,
   "Segoe UI",
-  Roboto, Helvetica,
-  Arial, sans-serif,
+  Roboto,
+  Helvetica,
+  Arial,
+  sans-serif,
   "Apple Color Emoji",
   "Segoe UI Emoji",
   "Segoe UI Symbol"

@@ -9,6 +9,12 @@ import formGroup from '../../utils/formGroup';
 import { colors } from '../../constants';
 import Icon from '../../common/icon';
 import { Helmet } from 'react-helmet';
+import { History } from 'history';
+
+interface Props {
+  authStore?: AuthStore;
+  history: History;
+}
 
 const Background = styled.div`
   display: flex;
@@ -44,7 +50,7 @@ const IconWrapper = styled.div`
 
 @inject('authStore')
 @observer
-class Register extends Component<{ authStore?: AuthStore }> {
+class Register extends Component<Props> {
   private form = formGroup({
     email: '',
     password: '',

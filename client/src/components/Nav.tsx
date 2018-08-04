@@ -38,6 +38,7 @@ const LinkText = styled(RouterLink)`
     width: 100%;
     height: 3px;
     background: ${colors.main_color_highlight};
+    background-image: linear-gradient(90deg, rgba(219, 86, 255, 0.62) -20%, rgba(108, 96, 255, 0.52));
     transition: transform 100ms ease;
     will-change: transform;
   }

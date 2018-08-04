@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "boilerplate",
   "author": "Emil Nordling",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/EmilNordling/boilerplate"
@@ -11,7 +12,9 @@
     "dev": "webpack-dev-server --config config/webpack.config.dev.js",
     "build": "SET NODE_ENV=production&& webpack --config config/webpack.config.prod.js",
     "build:heroku": "NODE_ENV=production webpack --config config/webpack.config.prod.js",
-    "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*"
+    "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "animejs": "^2.2.0",
@@ -55,6 +58,10 @@
     "@babel/preset-typescript": "^7.0.0-beta.51",
     "@babel/register": "^7.0.0-beta.51",
     "@babel/runtime": "^7.0.0-beta.51",
+    "@storybook/addon-actions": "^3.4.10",
+    "@storybook/addon-links": "^3.4.10",
+    "@storybook/addons": "^3.4.10",
+    "@storybook/react": "^3.4.10",
     "@types/animejs": "^2.0.0",
     "@types/history": "^4.6.2",
     "@types/jest": "^21.1.8",
@@ -71,6 +78,7 @@
     "@types/react-transition-group": "^2.0.9",
     "@types/uuid": "^3.4.3",
     "@types/webpack-env": "^1.13.5",
+    "babel-core": "7.0.0-bridge.0",
     "babel-loader": "8.0.0-beta.0",
     "babel-plugin-module-resolver": "^3.0.0",
     "babel-plugin-polished": "^1.1.0",
@@ -83,6 +91,7 @@
     "babel-plugin-transform-modern-regexp": "^0.0.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "babel-runtime": "^6.26.0",
     "browser-sync": "^2.23.6",
     "browser-sync-webpack-plugin": "^2.2.2",
     "cache-loader": "^1.2.0",
