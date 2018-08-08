@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../constants';
+import Loadable from 'react-loadable';
 
 const Background = styled.div`
   display: flex;
@@ -10,6 +11,6 @@ const Background = styled.div`
   background-image: linear-gradient(90deg, #1b1d23 20%, #282b35);
 `;
 
-const Loading: React.SFC = () => <Background />;
+const Loading: React.SFC<Loadable.LoadingComponentProps> = () => <Background />;
 
 export default Loading;

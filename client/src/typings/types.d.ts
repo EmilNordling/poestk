@@ -1,1 +1,1 @@
-declare var preval: (fn: TemplateStringsArray) => any;
+declare function preval(fn: TemplateStringsArray): any;

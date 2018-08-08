@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { SVGAttributes } from 'react';
 import styled from 'styled-components';
 import inject from '../../utils/dangerouslyInjectHTML';
+
+interface IconProps {
+  name: string;
+  className?: string;
+}
 
 const iconMap = preval`
   const fs = require('fs');
@@ -35,7 +40,11 @@ const iconMap = preval`
       const node = content.childNodes.item(i);
 
       if (matching.includes(node.nodeName)) {
-        innerHTML += (new XMLSerializer().serializeToString(node)).trim().replace('xmlns="http://www.w3.org/2000/svg"', '');
+        try {
+          innerHTML += (new XMLSerializer().serializeToString(node)).trim().replace('xmlns="http://www.w3.org/2000/svg"', '');
+        } catch(error) {
+          console.error(error);
+        }
       }
     }
 
@@ -62,11 +71,16 @@ const Svg = styled.svg`
   height: 1em;
   vertical-align: text-top;
   fill: currentColor;
+  stroke: currentColor;
   pointer-events: none;
 `;
 
-const Icon: React.SFC<{ name: string }> = ({ name, ...rest }) => (
+const Icon: React.SFC<IconProps> = ({ name, ...rest }) => (
   <Svg xmlns='http://www.w3.org/2000/svg' viewBox={iconMap[name].viewBox} {...rest} dangerouslySetInnerHTML={inject(iconMap[name].innerHTML)} />
 );
+
+export {
+  iconMap,
+};
 
 export default Icon;

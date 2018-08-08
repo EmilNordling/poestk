@@ -38,6 +38,7 @@ const SelectStyle = transition.div.attrs({
   background: ${colors.main_backdrop};
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   transition: opacity 125ms, transform 125ms;
+  will-change: transform;
   transform-origin: 50% 0;
   padding: 4px 0;
 
@@ -94,9 +95,30 @@ const Input = styled.div`
   border-radius: 4px;
   cursor: pointer;
 
+  &:hover {
+
+  }
+
   &:focus {
     outline: 0;
     background: ${colors.main_content_dark};
+  }
+
+  & svg {
+    position: relative;
+    transition: transform 200ms, top 200ms, stroke-dasharray 200ms;
+  }
+
+  & .closed {
+    top: 3px;
+    stroke-dasharray: 140;
+    transform: rotate(0deg);
+  }
+
+  & .open {
+    top: 0;
+    stroke-dasharray: 280;
+    transform: rotate(-90deg);
   }
 `;
 
@@ -198,11 +220,15 @@ export class Select extends Component<SelectProps, any> {
 
   render() {
     const { width } = this.props;
+    const { isOpen } = this.state;
 
     return (
       <Wrapper width={width}>
         <div ref={(node: HTMLDivElement) => this.node = node}>
-          <Input tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}><P>{this.state.selected}</P><Icon name='arrowStroke' /></Input>
+          <Input tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}>
+            <P>{this.state.selected}</P>
+            <Icon name='exit2' className={(isOpen ? 'open' : 'closed')} />
+          </Input>
           <TransitionGroup>
             {this.state.isOpen &&
               <SelectStyle>

@@ -2,6 +2,7 @@ import { characters } from '../pst';
 import { Characters } from '../pst/characters';
 import { statsStack } from './genericCalculations';
 import { TreeDataNode } from './parseData';
+import hamt from '../../utils/hamt';
 
 interface VirutalModifier {
   addedFlat: number;
@@ -138,6 +139,13 @@ export function parseAll(virutalCharacter: VirutalCharacter): VirutalCharacter {
 
 export function getNewCharacter(character: Characters): VirutalCharacter {
   const { base_dex, base_int, base_str } = characters[character];
+
+  const test = hamt.empty.set('key', {
+    qwe: 'qwe',
+    zxc: 'zxc',
+  });
+
+  const test2 = test.set('key2', { hmm: '?'}).set('key3', { hmm: '?'}).set('key4', { hmm: '?'});
 
   const builder: VirutalCharacter = {
     selectedAsendency: null,

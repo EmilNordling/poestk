@@ -25,6 +25,9 @@ export const colors = {
   main_sep: '#2E313D',
   main_border: '#2B2E3A',
   main_light: '#4a4e5b',
+
+  danger: '#ff5858',
+  danger_dimmed: 'rgba(152, 62, 62, 0.4)',
 };
 
 export const fontFamily = `

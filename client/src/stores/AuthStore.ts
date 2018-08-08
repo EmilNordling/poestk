@@ -1,5 +1,6 @@
 import { observable, action, reaction, computed } from 'mobx';
-import auth, { RegisterResponse, LoginResponse } from '../services/auth';
+import auth, { RegisterResponse, LoginResponse, UpdateResponse } from '../services/auth';
+import Register from '../pages/register/Register';
 
 export default class AuthStore {
   @observable public loading = false;
@@ -29,7 +30,7 @@ export default class AuthStore {
     });
   }
 
-  @action async login(builder: LoginResponse.builder, callback: Function) {
+  @action public async login(builder: LoginResponse.builder, callback: Function) {
     this.loading = true;
 
     try {
@@ -47,7 +48,7 @@ export default class AuthStore {
     }
   }
 
-  @action async register(builder: RegisterResponse.builder, callback: Function) {
+  @action public async register(builder: RegisterResponse.builder, callback?: Function) {
     this.loading = true;
 
     try {
@@ -58,14 +59,36 @@ export default class AuthStore {
       await this.pullUser();
 
       this.loading = false;
-      callback.call(this);
+
+      if (typeof callback !== 'undefined') callback.call(this);
     } catch (error) {
       this.loading = false;
       this.errors = error.response && error.response.body && error.response.body.errors;
     }
   }
 
-  @action async pullUser() {
+  @action public async update(builder: UpdateResponse.builder, callback?: Function) {
+    if (!this.token) return;
+
+    this.loading = true;
+
+    try {
+      const { data } = await auth.update(builder, this.token);
+
+      console.log(data)
+      // this.token = data.user.token;
+
+      // await this.pullUser();
+
+      // this.loading = false;
+      // callback.call(this);
+    } catch (error) {
+      this.loading = false;
+      this.errors = error.response && error.response.body && error.response.body.errors;
+    }
+  }
+
+  @action public async pullUser() {
     if (this.token === null) return;
 
     this.loading = true;
@@ -81,13 +104,9 @@ export default class AuthStore {
     }
   }
 
-  @action forgetUser() {
-    this.currentUser = null;
-  }
-
-  @action logout(): Promise<void> {
+  @action public logout(): Promise<void> {
     this.token = null;
-    this.forgetUser();
+    this.currentUser = null;
 
     return Promise.resolve();
   }

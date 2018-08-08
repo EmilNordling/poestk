@@ -8,7 +8,7 @@ function withAuthGuard(Component: any) {
       return <Redirect to={`/signin`} />;
     }
 
-    return <Component />;
+    return <Component {...props} />;
   }));
 
   return AuthenticatedComponent;

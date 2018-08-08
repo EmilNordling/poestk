@@ -30,7 +30,7 @@ const routes = [
   {
     key: v4(),
     path: '/settings',
-    exact: true,
+    exact: false,
     component: withAuthGuard(page.Settings),
   },
   {

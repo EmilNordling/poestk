@@ -7,9 +7,9 @@ const LoadableComponent = Loadable({
   loading: Loading,
 });
 
-const LoadableSettings: React.SFC = () => {
+const LoadableSettings: React.SFC = (props: any) => {
   return (
-    <LoadableComponent />
+    <LoadableComponent {...props} />
   );
 };
 

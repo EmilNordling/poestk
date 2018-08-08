@@ -25,7 +25,7 @@ interface NavProps extends RouteComponentProps<any> {
 const NavRow: React.SFC<NavProps> = (props) => {
   const { authStore, location, links } = props;
 
-  const spanSize = links.length;
+  const spanSize = 24 / links.length;
 
   return (
     <NavRowStyle>

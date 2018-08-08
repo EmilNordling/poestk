@@ -10,7 +10,7 @@ const Inner = styled.div`
   flex-direction: column;
 `;
 
-const Container = styled.div`
+const Container = styled.main`
   position: relative;
   display: flex;
   flex: 1;

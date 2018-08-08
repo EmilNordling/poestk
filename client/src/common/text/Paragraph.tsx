@@ -4,17 +4,19 @@ import styled, { css } from 'styled-components';
 interface ParagraphProps {
   margin?: true | number;
   align?: 'center' | 'left' | 'right';
+  weight?: 300 | 400 | 500 | 700 | 800;
 }
 
 const ParagraphStyle = styled.div`
   color: inherit;
   font-size: 1.6rem;
+  font-weight: ${(props: ParagraphProps) => props.weight ? props.weight : 'normal'};
 
-  ${(props: ParagraphProps) => props.margin && css`
+  ${(props) => props.margin && css`
     margin-bottom: ${props.margin === true ? '20px' : props.margin + 'px'}};
   `};
 
-  ${(props: ParagraphProps) => props.align && css`
+  ${(props) => props.align && css`
     text-align: ${props.align};
   `};
 `;

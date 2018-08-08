@@ -5,10 +5,11 @@ const sizes = [
   3.2,
   2.8,
   2.1,
+  1.8,
 ];
 
 interface HeadingProps {
-  size: 1 | 2 | 3;
+  size: 1 | 2 | 3 | 4;
   margin?: boolean | number;
   weight?: 300 | 400 | 500 | 700 | 800;
   color?: string;
@@ -16,7 +17,7 @@ interface HeadingProps {
 
 const HeadingStyle = styled.div`
   color: ${(props) => props.color ? props.color : 'inherit'};
-  font-weight: ${(props) => props.weight ? props.weight : 300};
+  font-weight: ${(props) => props.weight ? props.weight : 'normal'};
   font-size: ${(props: HeadingProps) => sizes[props.size - 1]}rem;
 
   ${(props: HeadingProps) => props.margin && css`

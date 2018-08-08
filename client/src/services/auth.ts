@@ -1,6 +1,12 @@
 import Axios, { AxiosPromise } from 'axios';
 import { APIRoot, headers } from './';
 
+export declare module pullUserResponse {
+  export type response = {
+    user: any,
+  };
+}
+
 export declare module LoginResponse {
   export type builder = {
     email: string,
@@ -25,7 +31,14 @@ export declare module RegisterResponse {
   };
 }
 
-export declare module pullUserResponse {
+export declare module UpdateResponse {
+  export type builder = {
+    username: string | null,
+    email: string | null,
+    password: string | null,
+    passwordConfirm: string | null,
+  };
+
   export type response = {
     user: any,
   };
@@ -39,6 +52,7 @@ const API = {
   pullUser: (token: string): AxiosPromise<pullUserResponse.response> => Axios.get(`${APIRoot}/user`, headers(token)),
   login: (model: LoginResponse.builder): AxiosPromise<RegisterResponse.response> => Axios.post(`${APIRoot}/users/login`, { user: model }),
   register: (model: RegisterResponse.builder): AxiosPromise<RegisterResponse.response> => Axios.post(`${APIRoot}/users`, { user: model }),
+  update: (model: UpdateResponse.builder, token: string): AxiosPromise<UpdateResponse.response> => Axios.put(`${APIRoot}/user`, { user: model }, headers(token)),
 };
 
 export default API;

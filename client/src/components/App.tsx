@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { AuthStore, GuiStore } from '../stores';
@@ -36,7 +37,7 @@ class App extends Component<{ authStore: AuthStore, guiStore: GuiStore }> {
     const { authenticated, currentUser } = this.props.authStore;
 
     return (
-      <Router>
+      <BrowserRouter>
         <Fragment>
           <Helmet
             titleTemplate='poestk - %s'
@@ -53,7 +54,7 @@ class App extends Component<{ authStore: AuthStore, guiStore: GuiStore }> {
             {routes.map((pages, index) => <Route key={index} {...pages} />)}
           </Switch>
         </Fragment>
-      </Router>
+      </BrowserRouter>
     );
   }
 }

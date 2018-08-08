@@ -10,6 +10,7 @@ import { BuildStore } from '../stores';
 import Inventory from './Inventory';
 import CharStats from './CharStats';
 import Nav from './Nav';
+import Tooltip from '../common/tooltip/index';
 
 const Container = styled.div`
   display: flex;
@@ -118,12 +119,12 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
         <StatsItem>
           <Label>Character</Label>
           <Row gutter={12}>
-            <Col span={2}>
+            <Col span={12}>
               <Select selected={activeBuild.classID.toString()} onChange={change} model='selectedClass'>
                 {chars}
               </Select>
             </Col>
-            <Col span={2}>
+            <Col span={12}>
               <Select selected='0' onChange={change} model='selectedAscendancy'>
                 <Options value='0'>none</Options>
                 {ascendancies}

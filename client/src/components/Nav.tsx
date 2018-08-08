@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { NavLink as RouterLink, withRouter } from 'react-router-dom';
 import { observer, inject } from 'mobx-react';
@@ -19,7 +19,8 @@ const LinkIcon = styled(RouterLink)`
   font-size: 1.6rem;
 
   &:hover {
-    background: ${colors.main_color_highlight};
+    background: ${colors.main_backdrop};
+    color: #ffffff;
   }
 `;
 
@@ -57,15 +58,19 @@ interface NavProps extends RouteComponentProps<any> {
 const Nav: React.SFC<NavProps> = (props) => {
   const { authStore, location } = props;
 
-  return (
-    <NavStyle>
-      {authStore!.token ?
-        <LinkIcon to='/settings'><Icon name='gearFilled' /></LinkIcon>
-        :
+  if (authStore!.token) {
+    return (
+      <NavStyle>
+        <LinkIcon to='/settings' title='settings'><Icon name='gearFilled' /></LinkIcon>
+      </NavStyle>
+    );
+  } else {
+    return (
+      <NavStyle>
         <LinkText to='/signin'>sign in</LinkText>
-      }
-    </NavStyle>
-  );
+      </NavStyle>
+    );
+  }
 };
 
 export default withRouter(inject('authStore')(observer(Nav)));
