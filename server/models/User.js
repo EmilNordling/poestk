@@ -6,6 +6,7 @@ const secret = require('../config').secret;
 const role = require('../role');
 
 const UserSchema = new mongoose.Schema({
+  linkedAccount: String,
   username: {
     type: String,
     lowercase: true,

@@ -28,6 +28,12 @@ export const colors = {
 
   danger: '#ff5858',
   danger_dimmed: 'rgba(152, 62, 62, 0.4)',
+
+  blue: '#ff9090',
+  red: '#5babff',
+  green: '#5bff96',
+  orange: '#ff995b',
+  pink: '#fe8fff',
 };
 
 export const fontFamily = `

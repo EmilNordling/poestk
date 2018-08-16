@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { colors, fontFamily, media } from '../../constants';
 
 export type FormFieldParams = {
-  label: string,
-  value: string,
+  label?: string,
+  value?: string,
   type: string,
   id?: string,
   errorMessage?: string,
@@ -115,7 +115,7 @@ const Fieldset = styled.fieldset`
 
 const FieldsetItem = ({ label, errorMessage, ...props }: FormFieldParams) => (
   <FieldContent>
-    <Label>{ label }</Label>
+    {label && <Label>{label}</Label>}
     <FieldInput required='required' {...props as any} />
   </FieldContent>
 );

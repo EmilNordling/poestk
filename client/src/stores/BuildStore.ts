@@ -75,6 +75,8 @@ export default class BuildStore {
 
       this.nodes.push(nodeProperties);
 
+      console.log(nodeProperties)
+
       this.activeBuild = updateStat(this.activeBuild, nodeProperties);
     } else {
       const index = this.nodes.findIndex(x => x.index === node.id);

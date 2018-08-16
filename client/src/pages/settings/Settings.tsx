@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { AuthStore } from '../../stores';
-import { Link, Route, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import { colors } from '../../constants';
 import Account from './subPages/Account';
-import { Application } from './subPages/index';
-import NotFound from '../notFound/index';
+import { Application } from './subPages';
+import NotFound from '../notFound';
 
 interface Settings {
   authStore?: AuthStore;
 }
+
+const Aside = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  flex: 1 0 200px;
+  padding: 40px;
+  background: ${colors.main_content_dark};
+  background-image: linear-gradient(90deg, #1b1d23 20%, #282b35);
+`;
 
 const Container = styled.div`
   position: relative;
@@ -18,46 +28,36 @@ const Container = styled.div`
   flex: 1;
   flex-direction: row;
   justify-content: center;
-  background: ${colors.main_content_dark};
-  background-image: linear-gradient(90deg, #1b1d23 20%, #282b35);
+`;
+
+const GrowWrapper = styled.div`
+  display: flex;
+  flex: 1 1 600px;
+  background: #313440;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
   overflow-y: auto;
   overflow-x: hidden;
 `;
 
-const GrowWrapper = styled.div`
-  height: 100%;
-  padding-top: 40px;
-`;
-
 const Content = styled.div`
-  width: 640px;
-  min-height: 100%;
+  max-width: 650px;
+  width: 100%;
   padding: 40px;
-  border: 1px solid #16171b;
   border-bottom: 0;
-  background: #313440;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
 `;
 
 const Nav = styled.nav`
   position: sticky;
-  top: 40px;
-  min-width: 150px;
+  top: 0;
+  min-width: 180px;
   box-sizing: content-box;
-  margin-right: 64px;
   align-self: flex-start;
-`;
-
-const Seperator = styled.div`
-  margin: 15px 0;
-  border-bottom: 1px solid ${colors.main_color_dimmed};
 `;
 
 const Logout = styled.div`
   display: block;
   padding: 6px 12px;
-  margin-top: 4px;
+  margin-top: 20px;
   font-size: 16px;
   border-radius: 4px;
   background: transparent;
@@ -71,7 +71,7 @@ const Logout = styled.div`
   }
 `;
 
-const LinkButton = styled(Link)`
+const LinkButton = styled(NavLink)`
   display: block;
   padding: 6px 12px;
   margin-top: 4px;
@@ -103,18 +103,21 @@ class Setting extends Component<Settings> {
   private logout = () => this.props.authStore!.logout();
 
   render() {
-    const { match } = this.props;
+    const { match, location } = this.props;
+
+    console.log(this.props)
 
     if (this.props.authStore!.currentUser === null) return null;
 
     return (
       <Container>
-        <Nav>
-          <LinkButton className='active' to={`${match.url}`}>Account</LinkButton>
-          <LinkButton to={`${match.url}/application`}>Application</LinkButton>
-          <Seperator />
-          <Logout onClick={this.logout}>Log Out</Logout>
-        </Nav>
+        <Aside>
+          <Nav>
+            <LinkButton exact activeClassName='active' to={`${match.url}`}>Account</LinkButton>
+            <LinkButton exact activeClassName='active' to={`${match.url}/application`}>Application</LinkButton>
+            <Logout onClick={this.logout}>Log Out</Logout>
+          </Nav>
+        </Aside>
 
         <GrowWrapper>
           <Content>

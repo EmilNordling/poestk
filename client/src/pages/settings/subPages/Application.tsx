@@ -6,7 +6,7 @@ class Application extends Component {
   render() {
     return (
       <Helmet
-        title='application'
+        title='Application'
       />
     );
   }

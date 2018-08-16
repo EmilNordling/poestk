@@ -80,6 +80,7 @@ const style = () => injectGlobal`
     height: 100vh;
     width: 100vw;
     color: ${colors.main_color};
+    background-color: #1b1d23;
     background-color: ${colors.main_background};
     overflow: hidden;
   }

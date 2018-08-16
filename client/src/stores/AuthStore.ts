@@ -1,5 +1,6 @@
 import { observable, action, reaction, computed } from 'mobx';
 import auth, { RegisterResponse, LoginResponse, UpdateResponse } from '../services/auth';
+import official from '../services/official';
 import Register from '../pages/register/Register';
 
 export default class AuthStore {
@@ -101,6 +102,8 @@ export default class AuthStore {
       this.loading = false;
     } catch (error) {
       this.loading = false;
+
+      this.logout();
     }
   }
 
@@ -109,5 +112,15 @@ export default class AuthStore {
     this.currentUser = null;
 
     return Promise.resolve();
+  }
+
+  @action public async getCharacters(accountName: string) {
+    try {
+      const data = await official.getCharacters(accountName);
+
+      console.log(data)
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

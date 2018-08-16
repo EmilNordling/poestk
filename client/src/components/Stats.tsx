@@ -10,7 +10,7 @@ import { BuildStore } from '../stores';
 import Inventory from './Inventory';
 import CharStats from './CharStats';
 import Nav from './Nav';
-import Tooltip from '../common/tooltip/index';
+import Tooltip from '../common/tooltip';
 
 const Container = styled.div`
   display: flex;
@@ -62,7 +62,6 @@ const Left = styled.div`
 
 const StatsItem = styled.div`
   padding: 10px;
-  border-bottom: 2px solid ${colors.main_sep};
 
   &:last-of-type {
     border-bottom: none;
@@ -82,16 +81,14 @@ const Value = styled.div`
   margin-left: 10px;
 `;
 
-const StatsDisplay: React.SFC<{ name: string, display: number | null }> = (props) => {
-  if (props.display === null) return null;
-
+const StatsDisplay: React.SFC<{ name: string }> = (props) => {
   return (
     <StatsDisplayStyle>
       <Description>
         <P align='right'>{props.name}:</P>
       </Description>
       <Value>
-        <P align='left'>{props.display}</P>
+        <P align='left'>{props.children}</P>
       </Value>
     </StatsDisplayStyle>
   );
@@ -133,22 +130,24 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
           </Row>
         </StatsItem>
         <StatsItem>
-          <StatsDisplay name='Strength' display={activeBuild.stats.strength.display} />
-          <StatsDisplay name='Dexterity' display={activeBuild.stats.dexterity.display} />
-          <StatsDisplay name='Intelligence' display={activeBuild.stats.intelligence.display} />
-        </StatsItem>
-
-        <StatsItem>
-          <StatsDisplay name='Total Life' display={activeBuild.stats.life.display} />
-          <StatsDisplay name='%Inc Life' display={activeBuild.stats.life.increased} />
+          <StatsDisplay name='Strength'>{activeBuild.stats.strength.display}</StatsDisplay>
+          <StatsDisplay name='Dexterity'>{activeBuild.stats.dexterity.display}</StatsDisplay>
+          <StatsDisplay name='Intelligence'>{activeBuild.stats.intelligence.display}</StatsDisplay>
         </StatsItem>
         <StatsItem>
-          <StatsDisplay name='Total Mana' display={activeBuild.stats.mana.display} />
-          <StatsDisplay name='%Inc Mana' display={activeBuild.stats.mana.increased} />
+          <StatsDisplay name='Total Life'>{activeBuild.stats.life.display}</StatsDisplay>
+          <StatsDisplay name='%Inc Life'>{activeBuild.stats.life.increased}%</StatsDisplay>
         </StatsItem>
         <StatsItem>
-          <StatsDisplay name='Total Energy Shield' display={activeBuild.stats.energyShield.display} />
-          <StatsDisplay name='%Inc Energy Shield' display={activeBuild.stats.energyShield.increased} />
+          <StatsDisplay name='Total Mana'>{activeBuild.stats.mana.display}</StatsDisplay>
+          <StatsDisplay name='%Inc Mana'>{activeBuild.stats.mana.increased}%</StatsDisplay>
+        </StatsItem>
+        <StatsItem>
+          <StatsDisplay name='Total Energy Shield'>{activeBuild.stats.energyShield.display}</StatsDisplay>
+          <StatsDisplay name='%Inc Energy Shield'>{activeBuild.stats.energyShield.increased}%</StatsDisplay>
+        </StatsItem>
+        <StatsItem>
+          <Inventory />
         </StatsItem>
       </Content>
       <Footer>

@@ -1,15 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { H, P } from '../../../common/text/index';
+import { H, P } from '../../../common/text';
 import Row from '../../../common/grid/Row';
 import Col from '../../../common/grid/Col';
-import { ListItem } from './index';
+import { ListItem } from './';
 import { inject, observer } from 'mobx-react';
-import { AuthStore } from '../../../stores/index';
+import { AuthStore } from '../../../stores';
 import formGroup from '../../../utils/formGroup';
-import { FieldsetItem } from '../../../common/fieldAlt/index';
-import Button from '../../../common/button/index';
+import { FieldsetItem } from '../../../common/fieldAlt';
+import Button from '../../../common/button';
 
 interface AccountProps {
   authStore?: AuthStore;
@@ -43,11 +43,11 @@ class Account extends Component<AccountProps> {
         <H size={1}>Account</H>
         <ListItem>
           <Row gutter={20}>
-            <Col span={8}>
+            <Col span={10}>
               <H size={3} margin={10}>Profile</H>
               <P>The email is your identity on Poestk.</P>
             </Col>
-            <Col span={16}>
+            <Col span={14}>
               <FieldsetItem label='Username' type='text' value={this.form.pull('username')} onChange={this.handleUsernameChange}/>
               <FieldsetItem label='Username' type='text' value={this.form.pull('email')} onChange={this.handleEmailChange}/>
             </Col>

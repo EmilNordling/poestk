@@ -1,10 +1,12 @@
-import { Spec } from './parseData';
+import { Spec, Node } from './parseData';
 
 export enum RuleType {
+  special = 'special',
   action = 'action',
   modifier = 'modifier',
   context = 'context',
   condition = 'condition',
+  abstract = 'abstract',
 }
 
 export type Rules = {
@@ -12,21 +14,43 @@ export type Rules = {
 };
 
 export interface Rule {
-  name: string;
-  pattern: RegExp;
-  group: RuleType;
-  parse: (startIndex: number, endIndex: number) => Spec;
+  readonly name: string;
+  readonly pattern: RegExp;
+  readonly group: RuleType;
+  parse: (startIndex: number, endIndex: number, node?: Node) => Spec;
 }
 
 // Going to use multiple classes for each type for now since RegExp Named
 // Capture Groups lacks good implementation for now.
 // https://github.com/tc39/proposal-regexp-named-groups
 
+// Stuff that will be removed when a proper AST is in place
+class AttackAnd implements Rule {
+  readonly name = 'attackSpeed';
+  readonly pattern = /^attack and[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+// Special
+class And implements Rule {
+  readonly name = 'and';
+  readonly pattern = /^and[\s]?/;
+  readonly group = RuleType.special;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
 // Actions
 class AddedFlat implements Rule {
-  public name = 'addedFlat';
-  public pattern = /^[+#0-9]* to[\s]?/;
-  public group = RuleType.action;
+  readonly name = 'addedFlat';
+  readonly pattern = /^[+#0-9]* to[\s]?/;
+  readonly group = RuleType.action;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -34,9 +58,9 @@ class AddedFlat implements Rule {
 }
 
 class Increased implements Rule {
-  public name = 'increased';
-  public pattern = /^[#0-9]*% increased[\s]?/;
-  public group = RuleType.action;
+  readonly name = 'increased';
+  readonly pattern = /^[#0-9]*% increased[\s]?/;
+  readonly group = RuleType.action;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -44,9 +68,9 @@ class Increased implements Rule {
 }
 
 class Of implements Rule {
-  public name = 'of';
-  public pattern = /^[#0-9]*% of[\s]?/;
-  public group = RuleType.action;
+  readonly name = 'of';
+  readonly pattern = /^[#0-9]*% of[\s]?/;
+  readonly group = RuleType.action;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -55,9 +79,9 @@ class Of implements Rule {
 
 // Modifiers
 class FireDamage implements Rule {
-  public name = 'fireDamage';
-  public pattern = /^fire damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'fireDamage';
+  readonly pattern = /^fire damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -65,9 +89,9 @@ class FireDamage implements Rule {
 }
 
 class ColdDamage implements Rule {
-  public name = 'coldDamage';
-  public pattern = /^cold damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'coldDamage';
+  readonly pattern = /^cold damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -75,9 +99,9 @@ class ColdDamage implements Rule {
 }
 
 class LightningDamage implements Rule {
-  public name = 'fireDamage';
-  public pattern = /^lightning damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'fireDamage';
+  readonly pattern = /^lightning damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -85,9 +109,9 @@ class LightningDamage implements Rule {
 }
 
 class ElementalDamage implements Rule {
-  public name = 'elementalDamage';
-  public pattern = /^elemental damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'elementalDamage';
+  readonly pattern = /^elemental damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -95,9 +119,9 @@ class ElementalDamage implements Rule {
 }
 
 class ChaosDamage implements Rule {
-  public name = 'chaosDamage';
-  public pattern = /^chaos damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'chaosDamage';
+  readonly pattern = /^chaos damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -105,9 +129,9 @@ class ChaosDamage implements Rule {
 }
 
 class PhysicalDamage implements Rule {
-  public name = 'physicalDamage';
-  public pattern = /^physical damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'physicalDamage';
+  readonly pattern = /^physical damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -115,9 +139,19 @@ class PhysicalDamage implements Rule {
 }
 
 class AreaDamage implements Rule {
-  public name = 'areaDamage';
-  public pattern = /^area damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'areaDamage';
+  readonly pattern = /^area damage[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+class AreaOfEffect implements Rule {
+  readonly name = 'aoe';
+  readonly pattern = /^area of effect[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -125,9 +159,9 @@ class AreaDamage implements Rule {
 }
 
 class SpellDamage implements Rule {
-  public name = 'spellDamage';
-  public pattern = /^spell damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'spellDamage';
+  readonly pattern = /^spell damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -135,9 +169,9 @@ class SpellDamage implements Rule {
 }
 
 class DoT implements Rule {
-  public name = 'DoT';
-  public pattern = /^damage over time[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'DoT';
+  readonly pattern = /^damage over time[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -145,9 +179,9 @@ class DoT implements Rule {
 }
 
 class CastSpeed implements Rule {
-  public name = 'castSpeed';
-  public pattern = /^cast speed[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'castSpeed';
+  readonly pattern = /^cast speed[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -155,9 +189,9 @@ class CastSpeed implements Rule {
 }
 
 class AttackSpeed implements Rule {
-  public name = 'attackSpeed';
-  public pattern = /^attack speed[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'attackSpeed';
+  readonly pattern = /^attack speed[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -165,9 +199,9 @@ class AttackSpeed implements Rule {
 }
 
 class MovementSpeed implements Rule {
-  public name = 'movementSpeed';
-  public pattern = /^movement speed[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'movementSpeed';
+  readonly pattern = /^movement speed[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -175,9 +209,9 @@ class MovementSpeed implements Rule {
 }
 
 class MaximumLife implements Rule {
-  public name = 'life';
-  public pattern = /^maximum life[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'life';
+  readonly pattern = /^maximum life[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -185,9 +219,9 @@ class MaximumLife implements Rule {
 }
 
 class LifeRegeneratedPerSecond implements Rule {
-  public name = 'lifeRegeneratedPerSecond';
-  public pattern = /^life regenerated per second[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'lifeRegeneratedPerSecond';
+  readonly pattern = /^life regenerated per second[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -195,9 +229,9 @@ class LifeRegeneratedPerSecond implements Rule {
 }
 
 class MaximumMana implements Rule {
-  public name = 'mana';
-  public pattern = /^maximum mana[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'mana';
+  readonly pattern = /^maximum mana[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -205,9 +239,9 @@ class MaximumMana implements Rule {
 }
 
 class ManaRegenerationRate implements Rule {
-  public name = 'manaRegenerationRate';
-  public pattern = /^mana regeneration rate[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'manaRegenerationRate';
+  readonly pattern = /^mana regeneration rate[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -215,9 +249,9 @@ class ManaRegenerationRate implements Rule {
 }
 
 class MaximumEnergyShield implements Rule {
-  public name = 'energyShield';
-  public pattern = /^maximum energy shield[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'energyShield';
+  readonly pattern = /^maximum energy shield[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -225,9 +259,9 @@ class MaximumEnergyShield implements Rule {
 }
 
 class EvasionRating implements Rule {
-  public name = 'evasionRating';
-  public pattern = /^evasion rating[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'evasionRating';
+  readonly pattern = /^evasion rating[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -235,9 +269,9 @@ class EvasionRating implements Rule {
 }
 
 class Damage implements Rule {
-  public name = 'damage';
-  public pattern = /^damage[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'damage';
+  readonly pattern = /^damage[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -245,9 +279,9 @@ class Damage implements Rule {
 }
 
 class Intelligence implements Rule {
-  public name = 'intelligence';
-  public pattern = /^intelligence[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'intelligence';
+  readonly pattern = /^intelligence[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -255,9 +289,9 @@ class Intelligence implements Rule {
 }
 
 class Strength implements Rule {
-  public name = 'strength';
-  public pattern = /^strength[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'strength';
+  readonly pattern = /^strength[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -265,9 +299,69 @@ class Strength implements Rule {
 }
 
 class Dexterity implements Rule {
-  public name = 'dexterity';
-  public pattern = /^dexterity[\s]?/;
-  public group = RuleType.modifier;
+  readonly name = 'dexterity';
+  readonly pattern = /^dexterity[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+class AccuracyRating implements Rule {
+  readonly name = 'accuracyRating';
+  readonly pattern = /^accuracy rating[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+class Ailments implements Rule {
+  readonly name = 'ailmentsFromAttackSkills';
+  readonly pattern = /^with ailments from attack skills[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+class Armour implements Rule {
+  readonly name = 'armour';
+  readonly pattern = /^armour[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+class MineDamage implements Rule {
+  readonly name = 'mineDamage';
+  readonly pattern = /^mine damage[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+class CriticalStrikeChance implements Rule {
+  readonly name = 'criticalStrikeChance';
+  readonly pattern = /^critical strike chance[\s]?/;
+  readonly group = RuleType.modifier;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
+
+class CriticalStrikeMultiplier implements Rule {
+  readonly name = 'criticalStrikeMultiplier';
+  readonly pattern = /^critical strike multiplier[\s]?/;
+  readonly group = RuleType.modifier;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -275,12 +369,20 @@ class Dexterity implements Rule {
 }
 
 // context
-//
+class Minion implements Rule {
+  readonly name = 'minion';
+  readonly pattern = /^minions (have|deal)[\s]?/;
+  readonly group = RuleType.context;
+
+  public parse(startIndex: number, endIndex: number) {
+    return new Spec(null, startIndex, endIndex);
+  }
+}
 
 class Melee implements Rule {
-  public name = 'melee';
-  public pattern = /^melee[\s]?/;
-  public group = RuleType.context;
+  readonly name = 'melee';
+  readonly pattern = /^melee[\s]?/;
+  readonly group = RuleType.context;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -288,9 +390,9 @@ class Melee implements Rule {
 }
 
 class Maces implements Rule {
-  public name = 'maces';
-  public pattern = /^with maces[\s]?/;
-  public group = RuleType.context;
+  readonly name = 'maces';
+  readonly pattern = /^with maces[\s]?/;
+  readonly group = RuleType.context;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -298,9 +400,9 @@ class Maces implements Rule {
 }
 
 class Axes implements Rule {
-  public name = 'axes';
-  public pattern = /^with axes[\s]?/;
-  public group = RuleType.context;
+  readonly name = 'axes';
+  readonly pattern = /^with axes[\s]?/;
+  readonly group = RuleType.context;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -308,9 +410,9 @@ class Axes implements Rule {
 }
 
 class Swords implements Rule {
-  public name = 'swords';
-  public pattern = /^with swords[\s]?/;
-  public group = RuleType.context;
+  readonly name = 'swords';
+  readonly pattern = /^with swords[\s]?/;
+  readonly group = RuleType.context;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -318,9 +420,9 @@ class Swords implements Rule {
 }
 
 class Bows implements Rule {
-  public name = 'bows';
-  public pattern = /^with bows[\s]?/;
-  public group = RuleType.context;
+  readonly name = 'bows';
+  readonly pattern = /^with bows[\s]?/;
+  readonly group = RuleType.context;
 
   public parse(startIndex: number, endIndex: number) {
     return new Spec(null, startIndex, endIndex);
@@ -333,6 +435,9 @@ export default {
   increased: new Increased(),
   of: new Of(),
 
+  // Special
+  and: new And(),
+
   // Modifiers
   // - life n such
   maximumLife: new MaximumLife(),
@@ -341,6 +446,7 @@ export default {
   evasionRating: new EvasionRating(),
   manaRegenerationRate: new ManaRegenerationRate(),
   lifeRegeneratedPerSecond: new LifeRegeneratedPerSecond(),
+  armour: new Armour(),
 
   // - stats
   intelligence: new Intelligence(),
@@ -354,6 +460,7 @@ export default {
 
   // - damage
   areaDamage: new AreaDamage(),
+  areaOfEffect: new AreaOfEffect(),
   spellDamage: new SpellDamage(),
   fireDamage: new FireDamage(),
   coldDamage: new ColdDamage(),
@@ -363,6 +470,15 @@ export default {
   physicalDamage: new PhysicalDamage(),
   dot: new DoT(),
   damage: new Damage(),
+  mineDamage: new MineDamage(),
+  mineLayingSpeed: new MineDamage(),
+  mineDuration: new MineDamage(),
+  trapDamage: new MineDamage(),
+  trapCooldown: new MineDamage(),
+
+  // - misc
+  accuracyRating: new AccuracyRating(),
+  ailmentsFromAttackSkills: new Ailments(),
 
   // Context
   melee: new Melee(),
@@ -370,4 +486,8 @@ export default {
   axes: new Axes(),
   swords: new Swords(),
   bows: new Bows(),
+  minion: new Minion(),
+
+  // TO BE REMOVED
+  attack: new AttackAnd(),
 } as Rules;

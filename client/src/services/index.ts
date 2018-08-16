@@ -7,3 +7,5 @@ export const headers = (token: string) => {
 };
 
 export { default as auth } from './auth';
+
+export { default as official } from './official';

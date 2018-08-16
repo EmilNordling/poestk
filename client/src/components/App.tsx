@@ -9,6 +9,7 @@ import routes from '../routes';
 import { colors } from '../constants';
 import { H } from '../common/text';
 import withGlobalStyles from '../hoc/withGlobalStyles';
+import Modal from './Modal';
 
 const SWUpdate = styled.div`
   display: flex;
@@ -50,6 +51,7 @@ class App extends Component<{ authStore: AuthStore, guiStore: GuiStore }> {
             </SWUpdate>
           }
 
+          <Modal />
           <Switch>
             {routes.map((pages, index) => <Route key={index} {...pages} />)}
           </Switch>

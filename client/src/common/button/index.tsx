@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors, fontFamily, media } from '../../constants';
-import Icon from '../icon/index';
+import Icon from '../icon';
 
 type ButtonType = 'primary' | 'ghost' | 'accent' | 'danger' | 'warning' | 'info' | 'success';
 type ButtonSize = 'small' | 'medium' | 'large';

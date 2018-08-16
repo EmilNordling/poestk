@@ -15,7 +15,7 @@ interface TreeDataNode {
   data: Array<TreeDataNodeData | null>;
 }
 
-class Node {
+export class Node {
   children: Array<Node> | null = null;
   type: string;
   group: RuleType;
@@ -76,6 +76,8 @@ function parse(source: string, SDModifierID: string, value: number) {
     }
 
     if (!foundRule) {
+      console.log(topLevelNodes)
+
       throw new Error(`Could not find rule to match: "${readSpan}"`);
     }
   }
@@ -99,10 +101,11 @@ function parse(source: string, SDModifierID: string, value: number) {
       case RuleType.modifier:
         modiferType = node.type;
         fakeAST.modifier[modiferType] = {};
+
+        fakeAST.modifier[modiferType][action.type] = value;
         break;
     }
   });
-  fakeAST.modifier[modiferType][action.type] = value;
 
   return fakeAST;
 }

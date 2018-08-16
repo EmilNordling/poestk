@@ -6,11 +6,16 @@ const User = mongoose.model('User');
 const BuildSchema = new mongoose.Schema({
   slug: { type: String, lowercase: true, unique: true },
   name: String,
+  ascendancyClass: Number,
+  class: String,
+  classId: Number,
+  experience: Number,
   character: String,
   passives: String,
   items: String,
   bandits: String,
-  author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  readonly: Boolean,
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
 BuildSchema.plugin(uniqueValidator, { message: 'is already taken' });
@@ -35,7 +40,7 @@ BuildSchema.methods.toJSONFor = function(user) {
     passives: this.passives,
     items: this.items,
     bandits: this.bandits,
-    author: this.author.toProfileJSONFor(user),
+    creator: this.author.toProfileJSONFor(user),
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };
