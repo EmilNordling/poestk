@@ -5,6 +5,9 @@ import { Provider } from 'mobx-react';
 import App from './components/App';
 import stores from './stores';
 import setTheme from './theme';
+// import './classes/pstWebGL/render/test';
+// import './classes/pstWebGL/render/sprite';
+// import './classes/pstWebGL';
 
 setTheme();
 

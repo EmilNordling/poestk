@@ -19,6 +19,7 @@
   "dependencies": {
     "animejs": "^2.2.0",
     "axios": "^0.17.1",
+    "d3": "^5.5.0",
     "history": "^4.7.2",
     "lodash.functions": "^4.3.0",
     "lodash.isequal": "^4.5.0",
@@ -39,6 +40,8 @@
     "serve": "^6.4.9",
     "styled-components": "^3.4.2",
     "styled-transition-group": "^1.0.0",
+    "three": "^0.95.0",
+    "three.meshline": "^1.1.0",
     "uuid": "^3.2.1",
     "xmldom": "^0.1.27"
   },
@@ -63,6 +66,7 @@
     "@storybook/addons": "^3.4.10",
     "@storybook/react": "^3.4.10",
     "@types/animejs": "^2.0.0",
+    "@types/d3": "^5.0.0",
     "@types/history": "^4.6.2",
     "@types/jest": "^21.1.8",
     "@types/lodash.functions": "^4.3.3",
@@ -76,6 +80,7 @@
     "@types/react-motion": "^0.0.26",
     "@types/react-router-dom": "^4.2.5",
     "@types/react-transition-group": "^2.0.9",
+    "@types/three": "^0.92.17",
     "@types/uuid": "^3.4.3",
     "@types/webpack-env": "^1.13.5",
     "babel-core": "7.0.0-bridge.0",

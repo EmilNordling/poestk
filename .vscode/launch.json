@@ -5,10 +5,10 @@
       "name": "Launch",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/server/app.js",
+      "program": "${workspaceRoot}/client/src/index.ts",
       "stopOnEntry": true,
       "args": [],
-      "cwd": "${workspaceRoot}/server",
+      "cwd": "${workspaceRoot}/client",
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [
