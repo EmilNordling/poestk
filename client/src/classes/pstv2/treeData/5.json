@@ -1,0 +1,26 @@
+{
+  "name": "Templar",
+  "classes": {
+    "1": {
+      "name": "Inquisitor",
+      "displayName": "Inquisitor",
+      "flavourText": " Truth is elusive, yet God has\nprovided us with all the tools \n necessary to find it.",
+      "flavourTextRect": "335,940,976,429",
+      "flavourTextColour": "207,189,138"
+    },
+    "2": {
+      "name": "Hierophant",
+      "displayName": "Hierophant",
+      "flavourText": "Drink deeply from God's\n chalice, for the faithful\n will never find it empty.",
+      "flavourTextRect": "150,760,976,429",
+      "flavourTextColour": "207,189,138"
+    },
+    "3": {
+      "name": "Guardian",
+      "displayName": "Guardian",
+      "flavourText": "When bound by faith\n and respect, the flock\n will overwhelm the wolf.",
+      "flavourTextRect": "170,780,976,429",
+      "flavourTextColour": "207,189,138"
+    }
+  }
+}

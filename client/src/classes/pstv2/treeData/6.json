@@ -1,0 +1,26 @@
+{
+  "name": "Shadow",
+  "classes": {
+    "1": {
+      "name": "Assassin",
+      "displayName": "Assassin",
+      "flavourText": "Death is a banquet. \n It's up to the murderer \n to write the menu.",
+      "flavourTextRect": "505,845,976,429",
+      "flavourTextColour": "114,129,141"
+    },
+    "2": {
+      "name": "Trickster",
+      "displayName": "Trickster",
+      "flavourText": "  Everyone knows how to die. \n Some just need a little nudge \nto get them started.",
+      "flavourTextRect": "315,150,976,429",
+      "flavourTextColour": "114,129,141"
+    },
+    "3": {
+      "name": "Saboteur",
+      "displayName": "Saboteur",
+      "flavourText": "The artist need not be present \n to make a lasting impression.",
+      "flavourTextRect": "355,970,976,429",
+      "flavourTextColour": "114,129,141"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "classes": {
+    "StrClass": 1,
+    "DexClass": 2,
+    "IntClass": 3,
+    "StrDexClass": 4,
+    "StrIntClass": 5,
+    "DexIntClass": 6,
+    "StrDexIntClass": 0
+  },
+  "characterAttributes": {
+    "Strength": 0,
+    "Dexterity": 1,
+    "Intelligence": 2
+  },
+  "PSSCentreInnerRadius": 130,
+  "skillsPerOrbit": [
+    1,
+    6,
+    12,
+    12,
+    40
+  ],
+  "orbitRadii": [
+    0,
+    82,
+    162,
+    335,
+    493
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "1": {
+    "x": -4076.37,
+    "y": 10.7747,
+    "image": "Art/2DArt/BaseClassIllustrations/Str.png"
+  },
+  "2": {
+    "x": 1498.91,
+    "y": 108.247,
+    "image": "Art/2DArt/BaseClassIllustrations/Dex.png"
+  },
+  "3": {
+    "x": -1533.64,
+    "y": -3304.37,
+    "image": "Art/2DArt/BaseClassIllustrations/Int.png"
+  },
+  "4": {
+    "x": -1956.89,
+    "y": 1209.63,
+    "image": "Art/2DArt/BaseClassIllustrations/StrDex.png"
+  },
+  "5": {
+    "x": -3268.73,
+    "y": -2930.86,
+    "image": "Art/2DArt/BaseClassIllustrations/StrInt.png"
+  },
+  "6": {
+    "x": 1216.35,
+    "y": -3520.57,
+    "image": "Art/2DArt/BaseClassIllustrations/DexInt.png"
+  }
+}

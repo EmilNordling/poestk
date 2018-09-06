@@ -63,6 +63,7 @@ export default class Matrix {
       }
     }
 
+    console.log(visableTiles)
     Logger.log('tiles', visableTiles);
     tileBufferCallback.call(this, tileBuffer, bufferCanvas);
   }
