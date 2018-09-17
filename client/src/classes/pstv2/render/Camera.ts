@@ -6,7 +6,7 @@ const NEAR = 200;
 class Camera {
   private far = FAR;
   private near = NEAR;
-  public position = new Vector3(0, 0, 0.2);
+  public position = new Vector3(89.62564705882353, 191.29376470588235, 4);
 
   constructor() {
 

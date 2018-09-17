@@ -1,7 +1,7 @@
 import PassiveNode from '../parser/PassiveNode';
 import Connection from '../parser/Connection';
 import Vector2 from './Vector2';
-import { STROKE_SIZE, TILE_SIZE } from '../utils/constants';
+import { STROKE_SIZE, DATA_TILE_SIZE } from '../utils/constants';
 
 interface IMatrixPoint<T> {
   position: Vector2;
@@ -9,9 +9,14 @@ interface IMatrixPoint<T> {
   size: number;
 }
 
+interface IMatrixGeometry<T> {
+  positions: [Vector2, Vector2];
+  context: T;
+}
+
 interface MatrixGroup {
   nodes: IMatrixPoint<PassiveNode>[];
-  connections: IMatrixPoint<Connection>[];
+  connections: IMatrixGeometry<Connection>[];
 }
 
 interface Matrix {
@@ -20,8 +25,8 @@ interface Matrix {
 
 const MAX_LENGTH = 19877;
 const MAX_HEIGHT = 16120;
-const MAX_TILE_Y = MAX_LENGTH / TILE_SIZE;
-const MAX_TILE_X = MAX_HEIGHT / TILE_SIZE;
+const MAX_TILE_Y = MAX_LENGTH / DATA_TILE_SIZE;
+const MAX_TILE_X = MAX_HEIGHT / DATA_TILE_SIZE;
 
 export class MatrixPoint<T> implements IMatrixPoint<T> {
   public position: Vector2;
@@ -32,6 +37,16 @@ export class MatrixPoint<T> implements IMatrixPoint<T> {
     this.position = position;
     this.context = context;
     this.size = size;
+  }
+}
+
+export class MatrixGeometry<T> implements IMatrixGeometry<T> {
+  public positions: [Vector2, Vector2];
+  public context: T;
+
+  constructor(positions: [Vector2, Vector2], context: T) {
+    this.positions = positions;
+    this.context = context;
   }
 }
 
@@ -54,18 +69,43 @@ class Scene {
     }
   }
 
+  public _getTiles(start: Vector2, end: Vector2): MatrixGroup[] {
+    const startX = Math.floor(start.x / DATA_TILE_SIZE);
+    const startY = Math.floor(start.y / DATA_TILE_SIZE);
+    const endX = Math.ceil(end.x / DATA_TILE_SIZE);
+    const endY = Math.ceil(end.y / DATA_TILE_SIZE);
+
+    const tiles = [];
+
+    for (let x = startX - 1; x < endX + 1; x += 1) {
+      for (let y = startY - 1; y < endY + 1; y += 1) {
+        const id = `${x}/${y}`;
+
+        if (id in this.matrix) {
+          tiles.push(this.matrix[id]);
+        }
+      }
+    }
+
+    return tiles;
+  }
+
+  public addConnection(geometry: MatrixGeometry<Connection>) {
+    this._getTiles(geometry.positions[0], geometry.positions[1]).forEach(x => x.connections.push(geometry));
+  }
+
   public addNode(point: MatrixPoint<PassiveNode>) {
-    const column = Math.floor(point.position.x / TILE_SIZE);
-    const row = Math.floor(point.position.y / TILE_SIZE);
+    const column = Math.floor(point.position.x / DATA_TILE_SIZE);
+    const row = Math.floor(point.position.y / DATA_TILE_SIZE);
     const matrixID = `${column}/${row}`;
     this.matrix[matrixID].nodes.push(point);
 
     // overlaps
     const halfSize = (point.size / 2) + (STROKE_SIZE * 2);
-    const topX = Math.floor((point.position.x + halfSize) / TILE_SIZE);
-    const topY = Math.floor((point.position.y + halfSize) / TILE_SIZE);
-    const bottomX = Math.floor((point.position.x - halfSize) / TILE_SIZE);
-    const bottomY = Math.floor((point.position.y - halfSize) / TILE_SIZE);
+    const topX = Math.floor((point.position.x + halfSize) / DATA_TILE_SIZE);
+    const topY = Math.floor((point.position.y + halfSize) / DATA_TILE_SIZE);
+    const bottomX = Math.floor((point.position.x - halfSize) / DATA_TILE_SIZE);
+    const bottomY = Math.floor((point.position.y - halfSize) / DATA_TILE_SIZE);
 
     if (topX !== column) {
       this.matrix[`${topX}/${row}`].nodes.push(point);
@@ -84,25 +124,59 @@ class Scene {
     }
   }
 
+  public getData(start: Vector2, end: Vector2, scale: number) {
+    let returnedData = {
+      nodes: {},
+      connections: {},
+    };
+
+    const startX = 0;
+    const startY = 0;
+    const endX = 8;
+    const endY = 8;
+
+    for (let x = startX; x < endX; x += 1) {
+      for (let y = startY; y < endY; y += 1) {
+        if (`${x}/${y}` in this.matrix) {
+          this.matrix[`${x}/${y}`].nodes.forEach((node) => {
+            if (returnedData.nodes[node.context.id]) return;
+
+            returnedData.nodes[node.context.id] = node;
+          });
+
+          this.matrix[`${x}/${y}`].connections.forEach((connection) => {
+            if (returnedData.connections[connection.context.id]) return;
+
+            returnedData.connections[connection.context.id] = connection;
+          });
+        }
+      }
+    }
+
+    return returnedData;
+  }
+
   public getTiles(startX: number, startY: number, endX: number, endY: number) {
     let returnedData = {
       nodes: {},
-      connections: [],
+      connections: {},
     };
 
     if (endX && endY) {
       for (let x = startX; x < endX; x += 1) {
         for (let y = startY; y < endY; y += 1) {
           if (`${x}/${y}` in this.matrix) {
-            // returnedData.nodes.push(...this.matrix[`${x}/${y}`].nodes);
             this.matrix[`${x}/${y}`].nodes.forEach((node) => {
               if (returnedData.nodes[node.context.id]) return;
 
               returnedData.nodes[node.context.id] = node;
             });
 
-            // returnedData.nodes[]
-            returnedData.connections.push(...this.matrix[`${x}/${y}`].connections);
+            this.matrix[`${x}/${y}`].connections.forEach((connection) => {
+              if (returnedData.connections[connection.context.id]) return;
+
+              returnedData.connections[connection.context.id] = connection;
+            });
           }
         }
       }

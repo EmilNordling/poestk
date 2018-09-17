@@ -1,33 +1,70 @@
 import { Node } from '../../calc/parseData';
-import { STROKE_SIZE } from '../../pstWebGL/utils/constants';
 import Camera from './Camera';
 import Scene from './Scene';
 import { image } from '../index';
+import Connection from '../parser/Connection';
+import { STROKE_SIZE } from '../utils/constants';
 
-function drawNode(node: Node, context: CanvasRenderingContext2D, camera: Camera) {
+function drawConnection(connection: Connection, context: CanvasRenderingContext2D, camera: Camera, scale: number) {
+  let cancelBuffer = false;
+  const node = connection.points.a;
+  const outNode = connection.points.b;
+
+  // TODO: add getterss
+  // if (Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id] &&
+  //     Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[outNode.id] &&
+  //    (node.id === Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id].id) &&
+  //    (outNode.id === Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[outNode.id].id)) {
+  //   context.stroke();
+  //   context.strokeStyle = Controller.ClientStore.theme.allocated;
+  //   context.beginPath();
+  //   cancelBuffer = true;
+  // }
+
+
+
+  context.moveTo(
+    (node.x * scale),
+    (node.y * scale),
+  );
+  context.lineTo(
+    (outNode.x * scale),
+    (outNode.y * scale),
+  );
+  context.closePath();
+
+  if (cancelBuffer) {
+    context.stroke();
+
+    context.strokeStyle = '#545662';
+    context.beginPath();
+  }
+}
+
+function drawNode(node: Node, context: CanvasRenderingContext2D, camera: Camera, scale: number) {
   if (node.m === true) return;
 
   let imgNodeSize;
 
   if (node.not === true) {
-    context.lineWidth = camera.scale(STROKE_SIZE * 1.9);
-    imgNodeSize = node.size * 1.6;
+    context.lineWidth = STROKE_SIZE * scale * 1.9;
+    imgNodeSize = node.size * scale * 1.6;
   } else if (node.ks === true) {
-    context.lineWidth = camera.scale(STROKE_SIZE * 3);
-    imgNodeSize = node.size * 1.6;
+    context.lineWidth = STROKE_SIZE * scale * 3;
+    imgNodeSize = node.size * scale * 1.6;
   } else {
-    context.lineWidth = camera.scale(STROKE_SIZE);
-    imgNodeSize = node.size * 1.5;
+    context.lineWidth = STROKE_SIZE * scale;
+    imgNodeSize = node.size * scale * 1.6;
   }
 
   const imgRelativePosition = imgNodeSize / 2;
-  const imgPosition = camera.scale(imgNodeSize);
+  const imgPosition = imgNodeSize;
 
   context.beginPath();
   context.arc(
-    camera.scale(node.x),
-    camera.scale(node.y),
-    camera.scale(node.size),
+    node.x * scale,
+    node.y * scale,
+    node.size * scale,
     0,
     2 * Math.PI,
   );
@@ -41,8 +78,8 @@ function drawNode(node: Node, context: CanvasRenderingContext2D, camera: Camera)
     node.s[1],
     node.s[2],
     node.s[3],
-    camera.scale(node.x - imgRelativePosition),
-    camera.scale(node.y - imgRelativePosition),
+    (node.x * scale - imgRelativePosition),
+    (node.y * scale - imgRelativePosition),
     imgPosition,
     imgPosition,
   );
@@ -52,5 +89,6 @@ function drawNode(node: Node, context: CanvasRenderingContext2D, camera: Camera)
 }
 
 export {
+  drawConnection,
   drawNode,
 };

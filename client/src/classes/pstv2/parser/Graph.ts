@@ -106,8 +106,8 @@ class Graph {
     getPosition.y -= getOrbit * Math.cos(-getAngle);
 
     return {
-      x: getPosition.x,
-      y: getPosition.y,
+      x: (getPosition.x / 85) + 15,
+      y: (getPosition.y / 85) + 40,
       angle: getAngle,
     };
   }

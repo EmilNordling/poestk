@@ -1,12 +1,15 @@
 import PassiveNode from './PassiveNode';
 
+let id = 0;
+
 class Connection {
-  points: { a: PassiveNode, b: PassiveNode };
-  tab = {
+  public points: { a: PassiveNode, b: PassiveNode };
+  public tab = {
     0: {
       headingTo: undefined,
     },
   };
+  public id = id++;
 
   constructor(a, b) {
     this.points = { a, b };

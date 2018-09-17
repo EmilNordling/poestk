@@ -1,9 +1,9 @@
 export const ORBIT_RADIUS = [0, 82, 162, 335, 493];
 export const SKILLS_PER_ORBIT = [1, 6, 12, 12, 40];
 export const NODE_ANGLE = 0.017453293;
-export const NODE_SIZE = 30;
-export const NOTABLE_SIZE = 50;
-export const KEYSTONE_SIZE = 80;
-export const STROKE_SIZE = 8;
-export const RENDER_TILE_SIZE = 256;
-export const TILE_SIZE = 2048;
+export const NODE_SIZE = 0.3;
+export const NOTABLE_SIZE = 0.5;
+export const KEYSTONE_SIZE = 0.8;
+export const STROKE_SIZE = 0.1;
+export const TILE_SIZE = 256;
+export const DATA_TILE_SIZE = 2048;
