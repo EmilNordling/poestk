@@ -1,8 +1,8 @@
 class Canvas {
-  canvas: HTMLCanvasElement;
-  width: any;
-  height: any;
-  scale: any;
+  public canvas: HTMLCanvasElement;
+  public width: any;
+  public height: any;
+  public scale: any;
 
   constructor(width: number, height: number, scale?: number) {
     this.canvas = document.createElement('canvas');

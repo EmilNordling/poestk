@@ -17,10 +17,18 @@ class RenderMatrix {
 
   public _getTiles(pos: Vector2, canvas: HTMLCanvasElement, camera: Camera, tileCallback: (buffer: Tile) => void) {
     const scale = Math.pow(2, Math.floor(camera.position.z));
+    const minColumns = 0;
+    const minRows = 0;
+    const maxColumns = scale;
+    const maxRows = scale;
+
+    const viewPortWidth = canvas.width;
+    const viewPortHeight = canvas.height;
+
+
     const x = pos.x / TILE_SIZE;
     const y = pos.y / TILE_SIZE;
 
-    console.log(pos.x)
     let startCol = Math.floor(x);
     let startRow = Math.floor(y);
 
@@ -39,8 +47,8 @@ class RenderMatrix {
     let column = 0;
     let row = 0;
 
-    for (column = startCol; column <= endCol; column++) {
-      for (row = startRow; row <= endRow; row++) {
+    for (column = 0; column < scale; column++) {
+      for (row = 0; row < scale; row++) {
         visableTiles++;
         tileCallback.call(this, [column, row]);
       }

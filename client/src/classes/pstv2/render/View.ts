@@ -95,7 +95,7 @@ class View {
       drawNode(chunkData.nodes[node].context, context, this.camera, scale);
     }
 
-    this.renderer.renderMatrix._getTiles(new Vector2(Math.abs(translateX), Math.abs(translateY)), this.renderer.domElement, this.camera, (tile: any) => {
+    this.renderer.renderMatrix._getTiles(new Vector2(translateX, translateY), this.renderer.domElement, this.camera, (tile: any) => {
       const x = tile[0] * TILE_SIZE;
       const y = tile[1] * TILE_SIZE;
 

@@ -1,10 +1,5 @@
 class Vector2 implements Vector {
-  public x: number;
-  public y: number;
-
-  constructor(x: number, y: number) {
-    this.set(x, y);
-  }
+  constructor(public x: number, public y: number) {}
 
   public set(x: number, y: number) {
     this.x = x;

@@ -24,25 +24,31 @@ module.exports = storybookBaseConfig => {
                 }
               }],
               '@babel/react',
-              ['@babel/preset-stage-2', { loose: true, decoratorsLegacy: true }],
               '@babel/typescript',
             ],
             plugins: [
-              'preval',
-              'transform-modern-regexp',
-              ['@babel/plugin-proposal-decorators', { legacy: true }],
-              'react-hot-loader/babel',
-              ['module-resolver', {
-                extensions: ['.js', '.jsx', '.ts', '.tsx'],
-                root: ['../stories']
+              "preval",
+              "@babel/plugin-transform-typescript",
+              "transform-modern-regexp",
+              ["@babel/plugin-proposal-decorators", { "legacy": true }],
+              "react-hot-loader/babel",
+              ["module-resolver", {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"],
+                "root": ["./src"]
               }],
-              '@babel/plugin-syntax-dynamic-import',
-              ['@babel/plugin-proposal-class-properties', { loose: true, decoratorsLegacy: true }],
-              '@babel/plugin-proposal-object-rest-spread',
-              '@babel/plugin-transform-runtime',
-              '@babel/plugin-transform-classes',
-              'styled-components',
-              'polished'
+              "@babel/plugin-syntax-dynamic-import",
+              ["@babel/plugin-proposal-class-properties", { "loose": true }],
+              "@babel/plugin-proposal-object-rest-spread",
+              "@babel/plugin-transform-runtime",
+              "@babel/plugin-transform-classes",
+              "@babel/plugin-proposal-function-sent",
+              "@babel/plugin-proposal-export-namespace-from",
+              "@babel/plugin-proposal-numeric-separator",
+              "@babel/plugin-proposal-throw-expressions",
+              "@babel/plugin-syntax-import-meta",
+              "@babel/plugin-proposal-json-strings",
+              "styled-components",
+              "polished"
             ],
           },
         },

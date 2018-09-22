@@ -1,11 +1,5 @@
 class Vector3 implements Vector {
-  public x: number;
-  public y: number;
-  public z: number;
-
-  constructor(x: number, y: number, z: number) {
-    this.set(x, y, z);
-  }
+  constructor(public x: number, public y: number, public z: number) {}
 
   public set(x: number, y: number, z: number) {
     this.x = x;
