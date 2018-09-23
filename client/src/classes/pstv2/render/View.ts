@@ -7,15 +7,28 @@ import Vector2 from './Vector2';
 import { TILE_SIZE, DATA_TILE_SIZE } from '../utils/constants';
 import chunk from './chunk';
 import { drawConnection, drawNode } from './drawUtils';
+import Emitter from '../Emitter';
+import InteractionManager from './InteractionManager';
 
 class View {
   private camera: Camera;
   private renderer: Renderer;
   private scene: Scene;
+  private interaction: InteractionManager;
 
   public init() {
     this.renderer = new Renderer();
     document.body.appendChild(this.renderer.domElement);
+
+    if (devicePixelRatio > 1) {
+      Emitter.listen(this.renderer.canvas.getCanvas(), ['touchmove'], 'touchMove');
+      Emitter.listen(this.renderer.canvas.getCanvas(), ['touchstart'], 'touchStart');
+      Emitter.listen(this.renderer.canvas.getCanvas(), ['touchend'], 'touchEnd');
+    } else {
+      Emitter.listen(this.renderer.canvas.getCanvas(), ['mousemove'], 'touchMove');
+      Emitter.listen(this.renderer.canvas.getCanvas(), ['mousedown'], 'touchStart');
+      Emitter.listen(this.renderer.canvas.getCanvas(), ['mouseup'], 'touchEnd');
+    }
 
     this.scene = new Scene();
     this.camera = new Camera();
@@ -35,11 +48,8 @@ class View {
 
     this.renderer.setRenderFunction(() => this.draw());
 
-    // this.renderer.frameProvider.requestTick();
-    this._draw();
-    // setInterval(() => {
-    //   this._draw();
-    // }, 1000);
+    Emitter.on('draw', () => this.renderer.frameProvider.requestTick());
+    this.renderer.frameProvider.requestTick();
   }
 
   _draw() {
@@ -53,8 +63,8 @@ class View {
       // }
       const scale = Math.pow(2, Math.floor(this.camera.position.z));
 
-      // this.camera.position.x += 0.01 * scale;
-      // this.camera.position.y -= 0.01 * scale;
+      // this.camera.position.x += 0.1;
+      // this.camera.position.y -= 0.1;
       // this.camera.position.z += 0.01;
 
       // this.camera.position.x = this.camera.position.x * this.camera.position.z;
@@ -75,27 +85,24 @@ class View {
   public draw() {
     const context = this.renderer.canvas.getContext()!;
     const scale = Math.pow(2, Math.floor(this.camera.position.z));
-    const translateX = (-this.camera.position.x * scale) + (this.renderer.canvas.width / 2);
-    const translateY = (-this.camera.position.y * scale) + (this.renderer.canvas.height / 2);
+    const translateX = this.camera.position.x * scale;
+    const translateY = this.camera.position.y * scale;
 
     context.setTransform(1, 0, 0, 1, 0, 0);
     this.renderer.canvas.clear();
-    context.translate(translateX, translateY);
+    context.translate(-translateX + (this.renderer.canvas.width * devicePixelRatio / 2), - translateY + (this.renderer.canvas.height * devicePixelRatio / 2));
 
-    const chunkData = this.scene.getData(new Vector2(0, 0), new Vector2(0 + TILE_SIZE, 0 + TILE_SIZE), scale);
-    context.strokeStyle = '#545662';
-    context.lineWidth = 0.1 * scale;
-    context.beginPath();
-    for (const connection in chunkData.connections) {
-      drawConnection(chunkData.connections[connection].context, context, this.camera, scale);
-    }
-    context.stroke();
-
-    for (const node in chunkData.nodes) {
-      drawNode(chunkData.nodes[node].context, context, this.camera, scale);
-    }
-
-    this.renderer.renderMatrix._getTiles(new Vector2(translateX, translateY), this.renderer.domElement, this.camera, (tile: any) => {
+    this.renderer.renderMatrix.getTiles(new Vector2(translateX, translateY), this.renderer.domElement, this.camera, (tile: any) => {
+      context.drawImage(
+        tile.canvas.canvas,
+        (tile.x * TILE_SIZE),
+        (tile.y * TILE_SIZE),
+        TILE_SIZE,
+        TILE_SIZE,
+      );
+    }, (buffer) => {
+      chunk(buffer, scale, this.renderer, this.camera, this.scene);
+    }, (tile) => {
       const x = tile[0] * TILE_SIZE;
       const y = tile[1] * TILE_SIZE;
 
@@ -107,53 +114,6 @@ class View {
       context.fillText(`x: ${tile[0]} y: ${tile[1]}`, x + 10, y + 46);
       context.strokeRect(x + 5, y + 5, TILE_SIZE - 5, TILE_SIZE - 5);
     });
-
-    // const tileSize = 256 * (1 + (this.camera.position.z % 0.1 * 10));
-
-    // this.renderer.renderMatrix.getTiles(tileSize, this.renderer.domElement, this.camera, (tile: any) => {
-    //   context.drawImage(
-    //     tile.canvas.canvas,
-    //     (tile.x * tileSize) + -this.camera.position.x,
-    //     (tile.y * tileSize) + -this.camera.position.y,
-    //     tileSize,
-    //     tileSize,
-    //   );
-    //   // tiles.forEach((coord) => {
-    //   //   context.fillStyle = `hsl(${(10 * (coord.x + coord.y))}, 50%, 50%)`;
-    //   //   context.fillRect(
-    //   //     (coord.x * tileSize) + -this.camera.position.x,
-    //   //     (coord.y * tileSize) + -this.camera.position.y,
-    //   //     tileSize,
-    //   //     tileSize,
-    //   //   );
-    //   // });
-    // }, (buffer) => {
-    //   console.log(buffer.length)
-    //   chunk(tileSize, buffer, context, this.camera, this.scene);
-    // });
-
-    // this.renderer.renderMatrix.getVisableTileCoordiantes(this.renderer.domElement, this.camera,
-    //   (tile) => {
-    //     context.drawImage(
-    //       tile.canvas.canvas,
-    //       (tile.x * TILE_SIZE) + -this.camera.position.x,
-    //       (tile.y * TILE_SIZE) + -this.camera.position.y,
-    //       TILE_SIZE,
-    //       TILE_SIZE,
-    //     );
-    //   },
-    //   (buffer) => {
-    //     chunk(buffer, context, this.camera, this.scene);
-
-    //     // buffer.forEach((tile) => {
-    //     //   context.rect(
-    //     //     (tile.x * TILE_SIZE) + -this.camera.position.x,
-    //     //     (tile.y * TILE_SIZE) + -this.camera.position.y,
-    //     //     TILE_SIZE,
-    //     //     TILE_SIZE,
-    //     //   );
-    //     // });
-    //   });
   }
 }
 

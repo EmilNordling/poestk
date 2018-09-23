@@ -4,8 +4,10 @@ import Camera from './Camera';
 import Canvas from './Canvas';
 import Scene from './Scene';
 import { drawNode, drawConnection } from './drawUtils';
+import Vector2 from './Vector2';
+import Renderer from './Renderer';
 
-function _chunk(_, tileBuffer: Tile[], context2d: CanvasRenderingContext2D, camera: Camera, scene: Scene) {
+function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Camera, scene: Scene) {
   if (tileBuffer.length === 0) return;
 
   let groupWidth = TILE_SIZE;
@@ -32,106 +34,45 @@ function _chunk(_, tileBuffer: Tile[], context2d: CanvasRenderingContext2D, came
   chunkContext.translate(offsetX, offsetY);
 
   const startX = Math.floor(
-    ((firstValue.x * _) / camera.position.z / DATA_TILE_SIZE),
+    ((firstValue.x * TILE_SIZE) / scale / DATA_TILE_SIZE),
   );
   const startY = Math.floor(
-    ((firstValue.y * _) / camera.position.z / DATA_TILE_SIZE),
+    ((firstValue.y * TILE_SIZE) / scale / DATA_TILE_SIZE),
   );
   const endX = Math.ceil(
-    (((lastValue.x + 1) * _) / camera.position.z / DATA_TILE_SIZE),
+    (((lastValue.x + 1) * TILE_SIZE) / scale / DATA_TILE_SIZE),
   );
   const endY = Math.ceil(
-    (((lastValue.y + 1) * _) / camera.position.z / DATA_TILE_SIZE),
+    (((lastValue.y + 1) * TILE_SIZE) / scale / DATA_TILE_SIZE),
   );
 
-  const chunkData = scene.getTiles(startX, startY, endX, endY);
+  console.log(startX, startY, endX, endY);
 
-  chunkContext.lineWidth = camera.scale(10);
+  const chunkData = scene.getData(new Vector2(startX, startY), new Vector2(endX, endY), scale);
+  chunkContext.strokeStyle = '#545662';
+  chunkContext.lineWidth = 0.1 * scale;
   chunkContext.beginPath();
   for (const connection in chunkData.connections) {
-    drawConnection(chunkData.connections[connection].context, chunkContext, camera);
+    drawConnection(chunkData.connections[connection].context, chunkContext, camera, scale);
   }
   chunkContext.stroke();
 
   for (const node in chunkData.nodes) {
-    drawNode(chunkData.nodes[node].context, chunkContext, camera);
+    drawNode(chunkData.nodes[node].context, chunkContext, camera, scale);
   }
 
-  // document.body.appendChild(chunkCanvas.getCanvas())
   tileBuffer.forEach((tile) => {
     tile.cacheTile(TILE_SIZE, chunkContext, offsetX, offsetY);
 
-    // document.body.appendChild(tile.canvas.getCanvas())
-    context2d.drawImage(
-      tile.canvas.canvas,
-      (tile.x * _) + -camera.position.x,
-      (tile.y * _) + -camera.position.y,
-      _,
-      _,
-    );
+    requestAnimationFrame(() =>
+      renderer.canvas.getContext()!.drawImage(
+        tile.canvas.canvas,
+        (tile.x * TILE_SIZE),
+        (tile.y * TILE_SIZE),
+        TILE_SIZE,
+        TILE_SIZE,
+      ));
   });
 }
 
-function chunk(realTileSize: number, tileBuffer: Tile[], context2d: CanvasRenderingContext2D, camera: Camera, scene: Scene): void {
-  if (tileBuffer.length === 0) return;
-
-  let groupWidth = realTileSize;
-  let groupHeight = realTileSize;
-  const firstValue = tileBuffer[0];
-  const lastValue = tileBuffer[tileBuffer.length - 1];
-  const offsetX = -(firstValue.x * realTileSize);
-  const offsetY = -(firstValue.y * realTileSize);
-
-  if (firstValue.x < lastValue.x && firstValue.y === lastValue.y) {
-    groupWidth = (tileBuffer.length) * realTileSize;
-  } else if (firstValue.y < lastValue.y && firstValue.x === lastValue.x) {
-    groupHeight = (tileBuffer.length) * realTileSize;
-  } else {
-    groupHeight = ((lastValue.y - firstValue.y) + 1) * realTileSize;
-    groupWidth = ((lastValue.x - firstValue.x) + 1) * realTileSize;
-  }
-
-  const chunkCanvas = new Canvas(groupWidth, groupHeight);
-  chunkCanvas.updateSize(groupWidth, groupHeight);
-  const chunkContext = chunkCanvas.getContext()!;
-  chunkContext.translate(offsetX, offsetY);
-
-  const startX = Math.floor(
-    ((firstValue.x * realTileSize) / camera.position.z / DATA_TILE_SIZE),
-  );
-  const startY = Math.floor(
-    ((firstValue.y * realTileSize) / camera.position.z / DATA_TILE_SIZE),
-  );
-  const endX = Math.ceil(
-    (((lastValue.x + 1) * realTileSize) / camera.position.z / DATA_TILE_SIZE),
-  );
-  const endY = Math.ceil(
-    (((lastValue.y + 1) * realTileSize) / camera.position.z / DATA_TILE_SIZE),
-  );
-  const chunkData = scene.getTiles(startX, startY, endX, endY);
-  // 703
-
-  chunkContext.lineWidth = camera.scale(10);
-  chunkContext.beginPath();
-  for (const connection in chunkData.connections) {
-    drawConnection(chunkData.connections[connection].context, chunkContext, camera);
-  }
-  chunkContext.stroke();
-
-  for (const node in chunkData.nodes) {
-    drawNode(chunkData.nodes[node].context, chunkContext, camera);
-  }
-
-  tileBuffer.forEach((tile) => {
-    tile.cacheTile(realTileSize, chunkContext, offsetX, offsetY);
-    context2d.drawImage(
-      tile.canvas.canvas,
-      (tile.x * realTileSize) + -camera.position.x,
-      (tile.y * realTileSize) + -camera.position.y,
-      realTileSize,
-      realTileSize,
-    );
-  });
-}
-
-export default _chunk;
+export default chunk;

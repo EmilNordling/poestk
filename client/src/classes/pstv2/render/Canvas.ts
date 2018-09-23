@@ -12,7 +12,7 @@ class Canvas {
   }
 
   clear(x = 0, y = 0, width = this.width, height = this.height) {
-    this.getContext()!.clearRect(x, y, width, height);
+    this.getContext()!.clearRect(x, y, width * this.scale, height * this.scale);
   }
 
   getContext() {

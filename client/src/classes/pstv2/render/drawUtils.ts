@@ -21,8 +21,6 @@ function drawConnection(connection: Connection, context: CanvasRenderingContext2
   //   cancelBuffer = true;
   // }
 
-
-
   context.moveTo(
     (node.x * scale),
     (node.y * scale),

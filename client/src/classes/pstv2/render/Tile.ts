@@ -29,15 +29,15 @@ export default class Tile {
 
   static coords(coord) {
     return {
+      z: coord.z,
       x: coord.x,
       y: coord.y,
-      z: coord.z,
       key: Tile.coordsKey(coord),
     };
   }
 
-  static coordsKey({ x, y, z }) {
-    return `${x}/${y}/${z}`;
+  static coordsKey({ z, x, y }) {
+    return `${z}/${x}/${y}`;
   }
 
   set frameID(newID) {

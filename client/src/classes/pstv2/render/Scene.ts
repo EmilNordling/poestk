@@ -23,8 +23,8 @@ interface Matrix {
   [id: string]: MatrixGroup;
 }
 
-const MAX_LENGTH = 19877;
-const MAX_HEIGHT = 16120;
+const MAX_LENGTH = 256;
+const MAX_HEIGHT = 256;
 const MAX_TILE_Y = MAX_LENGTH / DATA_TILE_SIZE;
 const MAX_TILE_X = MAX_HEIGHT / DATA_TILE_SIZE;
 
@@ -54,11 +54,11 @@ class Scene {
   public matrix: Matrix = {};
 
   constructor() {
-    const gridY = Math.ceil(MAX_TILE_Y) + 1; // TODO: get rid of the + x
-    const gridX = Math.ceil(MAX_TILE_X) + 2; // TODO: get rid of the + x
+    const gridY = Math.ceil(MAX_TILE_Y); // TODO: get rid of the + x
+    const gridX = Math.ceil(MAX_TILE_X); // TODO: get rid of the + x
 
-    for (let x = -1; x < gridX; x += 1) { // TODO: get rid of the - x
-      for (let y = -1; y < gridY; y += 1) { // TODO: get rid of the - x
+    for (let x = 0; x < gridX; x += 1) { // TODO: get rid of the - x
+      for (let y = 0; y < gridY; y += 1) { // TODO: get rid of the - x
         const matrixID = `${x}/${y}`;
 
         this.matrix[matrixID] = {
@@ -130,13 +130,13 @@ class Scene {
       connections: {},
     };
 
-    const startX = 0;
-    const startY = 0;
-    const endX = 8;
-    const endY = 8;
+    const startX = start.x;
+    const startY = start.y;
+    const endX = end.x;
+    const endY = end.y;
 
-    for (let x = startX; x < endX; x += 1) {
-      for (let y = startY; y < endY; y += 1) {
+    for (let x = startX; x < endX; x++) {
+      for (let y = startY; y < endY; y++) {
         if (`${x}/${y}` in this.matrix) {
           this.matrix[`${x}/${y}`].nodes.forEach((node) => {
             if (returnedData.nodes[node.context.id]) return;
@@ -152,6 +152,9 @@ class Scene {
         }
       }
     }
+
+    console.log(this)
+    console.log(returnedData)
 
     return returnedData;
   }

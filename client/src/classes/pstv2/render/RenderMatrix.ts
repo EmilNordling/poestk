@@ -1,6 +1,6 @@
 import Camera from './Camera';
 import Tile from './Tile';
-import { TILE_SIZE } from '../utils/constants';
+import { TILE_SIZE, IS_DEBUG } from '../utils/constants';
 import Vector2 from './Vector2';
 
 interface TileMap {
@@ -15,152 +15,62 @@ class RenderMatrix {
     return 123 * Math.pow(2, Math.floor(1));
   }
 
-  public _getTiles(pos: Vector2, canvas: HTMLCanvasElement, camera: Camera, tileCallback: (buffer: Tile) => void) {
+  public getTiles(pos: Vector2, canvas: HTMLCanvasElement, camera: Camera, tileCallback: (buffer: Tile) => void, tileBufferCallback: (buffer: any[]) => void, debug: (buffer: any) => void) {
+    const zoomLevel = Math.floor(camera.position.z);
     const scale = Math.pow(2, Math.floor(camera.position.z));
-    const minColumns = 0;
-    const minRows = 0;
-    const maxColumns = scale;
-    const maxRows = scale;
-
-    const viewPortWidth = canvas.width;
-    const viewPortHeight = canvas.height;
-
-
-    const x = pos.x / TILE_SIZE;
-    const y = pos.y / TILE_SIZE;
-
+    const halfWidth = canvas.width / 2;
+    const halfHeight = canvas.height / 2;
+    const x = (pos.x - halfWidth) / TILE_SIZE;
+    const y = (pos.y - halfHeight) / TILE_SIZE;
     let startCol = Math.floor(x);
     let startRow = Math.floor(y);
+    let endX = Math.floor(((pos.x - halfWidth) + canvas.width) / TILE_SIZE);
+    let endY = Math.floor(((pos.y - halfHeight) + canvas.height) / TILE_SIZE);
 
-    if (startCol > scale) startCol = 0;
-    if (startRow > scale) startRow = 0;
-
-    let endCol = x + ((canvas.width / devicePixelRatio) / TILE_SIZE);
-    let endRow = y + ((canvas.height / devicePixelRatio) / TILE_SIZE);
-
-    if (endCol > scale) endCol = scale - 1;
-    if (endRow > scale) endRow = scale - 1;
-
-    const tileBuffer = [];
-
-    let visableTiles = 0;
-    let column = 0;
-    let row = 0;
-
-    for (column = 0; column < scale; column++) {
-      for (row = 0; row < scale; row++) {
-        visableTiles++;
-        tileCallback.call(this, [column, row]);
-      }
-    }
-
-    console.log(x, endCol)
-  }
-
-  public getTiles(tileSize: number, canvas: HTMLCanvasElement, camera: Camera, tileCallback: (buffer: Tile) => void, tileBufferCallback: (buffer: any[]) => void) {
-    const cameraSizeX = camera.position.x / tileSize;
-    const cameraSizeY = camera.position.y / tileSize;
-    const startCol = Math.floor(cameraSizeX);
-    const startRow = Math.floor(cameraSizeY);
-    const endCol = (cameraSizeX) + ((canvas.width / devicePixelRatio) / tileSize);
-    const endRow = (cameraSizeY) + ((canvas.height / devicePixelRatio) / tileSize);
-    const normalizeCameraZ = camera.position.z * 10;
-    const cameraDepth = Math.floor(normalizeCameraZ);
+    if (startCol <= 0) startCol = 0;
+    if (startRow <= 0) startRow = 0;
+    if (endX >= scale) endX = scale - 1;
+    if (endY >= scale) endY = scale - 1;
 
     const tileBuffer = [];
 
     if (this.depth === null) {
-      this.depth = cameraDepth;
+      this.depth = scale;
 
-      this.tileMap[cameraDepth] = {};
+      this.tileMap[scale] = {};
     }
 
-    if (this.depth !== cameraDepth) {
-      delete this.tileMap[cameraDepth];
+    if (this.depth !== scale) {
+      delete this.tileMap[scale];
 
-      this.depth = cameraDepth;
+      this.depth = scale;
 
-      // console.log(this.depth)
-
-      this.tileMap[cameraDepth] = {};
+      this.tileMap[scale] = {};
     }
 
+    let visableTiles = 0;
     let column = 0;
     let row = 0;
-    let visableTiles = 0;
 
-    for (column = startCol; column <= endCol; column++) {
-      for (row = startRow; row <= endRow; row++) {
+    for (column = startCol; column <= endX; column++) {
+      for (row = startRow; row <= endY; row++) {
         visableTiles++;
 
         const coords = Tile.coords({
+          z: zoomLevel,
           x: column,
           y: row,
-          z: cameraDepth,
         });
 
-        if (!this.tileMap[cameraDepth][coords.key]) {
-          this.tileMap[cameraDepth][coords.key] = new Tile(coords);
+        if (!this.tileMap[scale][coords.key]) {
+          this.tileMap[scale][coords.key] = new Tile(coords);
 
-          tileBuffer.push(this.tileMap[cameraDepth][coords.key]);
+          tileBuffer.push(this.tileMap[scale][coords.key]);
         } else {
-          tileCallback.call(this, this.tileMap[cameraDepth][coords.key]);
+          tileCallback.call(this, this.tileMap[scale][coords.key]);
         }
-      }
-    }
 
-    tileBufferCallback.call(this, tileBuffer);
-  }
-
-  public getVisableTileCoordiantes(canvas: HTMLCanvasElement, camera: Camera, tileCallback: (buffer: Tile) => void, tileBufferCallback: (buffer: any[]) => void) {
-    const cameraSizeX = camera.position.x / TILE_SIZE;
-    const cameraSizeY = camera.position.y / TILE_SIZE;
-    const startCol = Math.floor(cameraSizeX);
-    const startRow = Math.floor(cameraSizeY);
-    const endCol = (cameraSizeX) + ((canvas.width / devicePixelRatio) / TILE_SIZE);
-    const endRow = (cameraSizeY) + ((canvas.height / devicePixelRatio) / TILE_SIZE);
-    const normalizeCameraZ = camera.position.z * 10;
-    const cameraDepth = Math.floor(normalizeCameraZ);
-
-    const tileBuffer: Tile[] = [];
-
-    if (this.depth === null) {
-      this.depth = cameraDepth;
-
-      this.tileMap[cameraDepth] = {};
-    }
-
-    if (this.depth !== cameraDepth) {
-      delete this.tileMap[cameraDepth];
-
-      this.depth = cameraDepth;
-
-      this.tileMap[cameraDepth] = {};
-    }
-
-    let column = 0;
-    let row = 0;
-    let visableTiles = 0;
-
-    for (column = startCol; column <= endCol; column++) {
-      for (row = startRow; row <= endRow; row++) {
-        visableTiles++;
-
-        const coords = Tile.coords({
-          x: column,
-          y: row,
-          z: cameraDepth,
-        });
-
-        // console.log(coords)
-
-        if (!this.tileMap[cameraDepth][coords.key]) {
-          this.tileMap[cameraDepth][coords.key] = new Tile(coords);
-
-          tileBuffer.push(this.tileMap[cameraDepth][coords.key]);
-        } else {
-          tileCallback.call(this, this.tileMap[cameraDepth][coords.key]);
-        }
+        if (IS_DEBUG) debug.call(this, [column, row]);
       }
     }
 
