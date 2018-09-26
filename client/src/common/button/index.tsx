@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors, fontFamily, media } from '../../constants';
+import { colors, media } from '../../constants';
 import Icon from '../icon';
+import ThemeHolder, { withCSSVar } from '../../utils/ThemeHolder';
 
 type ButtonType = 'primary' | 'ghost' | 'accent' | 'danger' | 'warning' | 'info' | 'success';
 type ButtonSize = 'small' | 'medium' | 'large';
@@ -22,7 +23,7 @@ const ButtonStyle = styled.button`
   vertical-align: top;
   outline: none;
   border-radius: 4px;
-  font-family: ${fontFamily};
+  font-family: ${withCSSVar(ThemeHolder.current.fontFamily)};
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 1em;

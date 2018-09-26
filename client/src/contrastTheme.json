@@ -1,0 +1,20 @@
+{
+  "variables": {
+    "bg": "#000000",
+    "highlight": "#847aff",
+    "input": "#23252b",
+    "color": "hsla(0, 0%, 100%, 0.88)",
+    "content": "#2e313a",
+    "backdrop": "#1e222d",
+    "main": "#000000",
+    "mainDarken": "#0a0a0a",
+    "error": "#ff480e",
+    "danger": "#ff5858",
+    "dangerDimmed": "rgba(152, 62, 62, 0.4)",
+    "borderColor": "#828282",
+    "fontFamily": "'Droid Sans Mono', monospace",
+    "fontSizeBase": "9px"
+  },
+  "borders": true,
+  "borderRadius": false
+}

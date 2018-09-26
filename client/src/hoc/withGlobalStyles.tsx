@@ -1,6 +1,7 @@
 import React from 'react';
 import { injectGlobal } from 'styled-components';
-import { fontFamily, colors } from '../constants';
+import { colors } from '../constants';
+import ThemeHolder, { setCSSVar, withCSSVar } from '../utils/ThemeHolder';
 
 const style = () => injectGlobal`
   ${preval`
@@ -19,9 +20,11 @@ const style = () => injectGlobal`
   }
 
   html {
+    ${Object.keys(ThemeHolder.current).map((variable) => setCSSVar(ThemeHolder.current[variable]))}
+
     box-sizing: border-box;
-    font-family: ${fontFamily};
-    font-size: 10px;
+    font-family: ${withCSSVar(ThemeHolder.current.fontFamily)};
+    font-size: ${withCSSVar(ThemeHolder.current.fontSizeBase)};
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
@@ -44,7 +47,7 @@ const style = () => injectGlobal`
 
   ::selection {
     color: #ffffff;
-    background-color: ${colors.main_color_highlight};
+    background-color: ${colors.highlight};
   }
 
   a {
@@ -79,9 +82,9 @@ const style = () => injectGlobal`
     flex-direction: column;
     height: 100vh;
     width: 100vw;
-    color: ${colors.main_color};
+    color: ${colors.color};
     background-color: #1b1d23;
-    background-color: ${colors.main_background};
+    background-color: ${colors.bg};
     overflow: hidden;
   }
 `;

@@ -18,7 +18,7 @@ const Aside = styled.div`
   justify-content: flex-end;
   flex: 1 0 200px;
   padding: 40px;
-  background: ${colors.main_content_dark};
+  background: ${colors.mainDarken};
   background-image: linear-gradient(90deg, #1b1d23 20%, #282b35);
 `;
 
@@ -67,7 +67,7 @@ const Logout = styled.div`
   color: ${colors.danger};
 
   &:hover {
-    background-color: ${colors.danger_dimmed};
+    background-color: ${colors.dangerDimmed};
   }
 `;
 

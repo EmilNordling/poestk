@@ -46,8 +46,6 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
     (((lastValue.y + 1) * TILE_SIZE) / scale / DATA_TILE_SIZE),
   );
 
-  console.log(startX, startY, endX, endY);
-
   const chunkData = scene.getData(new Vector2(startX, startY), new Vector2(endX, endY), scale);
   chunkContext.strokeStyle = '#545662';
   chunkContext.lineWidth = 0.1 * scale;
@@ -62,7 +60,7 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
   }
 
   tileBuffer.forEach((tile) => {
-    tile.cacheTile(TILE_SIZE, chunkContext, offsetX, offsetY);
+    requestAnimationFrame(() => tile.cacheTile(TILE_SIZE, chunkContext, offsetX, offsetY));
 
     requestAnimationFrame(() =>
       renderer.canvas.getContext()!.drawImage(

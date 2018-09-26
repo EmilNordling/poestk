@@ -18,7 +18,7 @@ const SWUpdate = styled.div`
   height: 50px;
   width: 100%;
   z-index: 1;
-  background: ${colors.main_color_highlight};
+  background: ${colors.highlight};
   color: #ffffff;
   font-weight: bold;
   cursor: pointer;

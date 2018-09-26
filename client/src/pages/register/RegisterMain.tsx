@@ -30,11 +30,11 @@ class RegisterMain extends Component<Props> {
 
     return (
       <Fragment>
-        {this.registerState === RegisterState.register ?
-          <Register onSubmit={this.changeView}/>
+      <Register onSubmit={this.changeView}/>
+        {/* {this.registerState === RegisterState.register ?
         :
           <AddCharacters />
-        }
+        } */}
       </Fragment>
     );
   }

@@ -26,7 +26,7 @@ const Button = styled.button`
   text-align: center;
   text-decoration: none;
   color: #fefefe;
-  background: ${colors.main_background_input};
+  background: ${colors.input};
   cursor: pointer;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
@@ -99,7 +99,7 @@ const Fieldset = styled.fieldset`
   margin-bottom: 20px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  background: ${colors.main_background_input};
+  background: ${colors.input};
   transition: all 0.2s;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 `;

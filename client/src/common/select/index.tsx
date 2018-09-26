@@ -35,7 +35,7 @@ const SelectStyle = transition.div.attrs({
   border: 1px solid rgba(0, 0, 0, 0.3);
   z-index: 1;
   border-radius: 4px;
-  background: ${colors.main_backdrop};
+  background: ${colors.backdrop};
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   transition: opacity 125ms, transform 125ms;
   will-change: transform;
@@ -81,7 +81,7 @@ const SelectItemStyle = styled.div`
 const Wrapper = styled.div`
   position: relative;
   width: ${(props: { width?: number }) => props.width ? `${props.width}px` : '100%' };
-  color: ${colors.main_color};
+  color: ${colors.color};
   user-select: none;
 `;
 
@@ -90,8 +90,8 @@ const Input = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border: 1px solid ${colors.main_backdrop};
-  background: ${colors.main_content_dark};
+  border: 1px solid ${colors.backdrop};
+  background: ${colors.mainDarken};
   border-radius: 4px;
   cursor: pointer;
 
@@ -101,7 +101,7 @@ const Input = styled.div`
 
   &:focus {
     outline: 0;
-    background: ${colors.main_content_dark};
+    background: ${colors.mainDarken};
   }
 
   & svg {

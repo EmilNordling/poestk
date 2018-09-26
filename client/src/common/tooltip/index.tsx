@@ -25,7 +25,7 @@ const Arrow = styled.div`
     height: 0;
     border-style: solid;
     border-width: inherit;
-    border-color: ${colors.main_background};
+    border-color: ${colors.bg};
   }
 
   &::before {
@@ -64,7 +64,7 @@ const TooltipPopout = transition.div.attrs({
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 1.6rem;
-  background-color: ${colors.main_background};
+  background-color: ${colors.bg};
   box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.22);
 
   &:enter {

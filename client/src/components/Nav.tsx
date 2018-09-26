@@ -19,7 +19,7 @@ const LinkIcon = styled(RouterLink)`
   font-size: 1.6rem;
 
   &:hover {
-    background: ${colors.main_backdrop};
+    background: ${colors.backdrop};
     color: #ffffff;
   }
 `;
@@ -38,7 +38,7 @@ const LinkText = styled(RouterLink)`
     bottom: -3px;
     width: 100%;
     height: 3px;
-    background: ${colors.main_color_highlight};
+    background: ${colors.highlight};
     background-image: linear-gradient(90deg, rgba(219, 86, 255, 0.62) -20%, rgba(108, 96, 255, 0.52));
     transition: transform 100ms ease;
     will-change: transform;

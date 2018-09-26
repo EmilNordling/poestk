@@ -42,7 +42,7 @@ const ModalStyle = styled.div`
   max-width: 480px;
   width: 100%;
   padding: 40px;
-  background: ${colors.main_content_alt};
+  background: ${colors.content};
   border-radius: 5px;
   text-align: center;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);

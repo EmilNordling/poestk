@@ -21,7 +21,7 @@ const Inner = transition.div.attrs({
   padding: 7px 10px;
   position: absolute;
   border-radius: 4px;
-  background: ${colors.main_content_dark};
+  background: ${colors.mainDarken};
   transition: opacity ${duration}ms ease;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
   pointer-events: none;
@@ -66,10 +66,14 @@ class HoverNode extends Component<{ guiStore?: GUIStore }> {
   text: { title: string, mods: Array<string> } = { title: '', mods: [] };
 
   set hoverState(value: boolean) {
+    if (typeof this.props === 'undefined') return;
+
     this.props.guiStore!.isHovering = value;
   }
 
   @computed get hoverState() {
+    if (typeof this.props === 'undefined') return false;
+
     return this.props.guiStore!.isHovering;
   }
 

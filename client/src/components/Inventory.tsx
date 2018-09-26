@@ -23,7 +23,7 @@ const Item = styled.div`
   height: ${(props) => props.height}px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  background: ${colors.main_backdrop};
+  background: ${colors.backdrop};
 `;
 
 interface InventorylProps {

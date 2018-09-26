@@ -18,7 +18,7 @@ const Container = styled.div`
   width: 380px;
   height: 100%;
   z-index: 1;
-  background: ${colors.main_content};
+  background: ${colors.main};
   box-shadow: 1px 0 3px rgba(0, 0, 0, 0.2);
 `;
 
@@ -28,7 +28,7 @@ const Header = styled.header`
   height: 30px;
   width: 100%;
   padding: 0 10px;
-  background: ${colors.main_content_dark};
+  background: ${colors.mainDarken};
 `;
 
 const Content = styled.div`
@@ -44,7 +44,7 @@ const Footer = styled.footer`
   height: 18px;
   padding-right: 10px;
   z-index: 1;
-  background: ${colors.main_content_dark};
+  background: ${colors.mainDarken};
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 
   & p {

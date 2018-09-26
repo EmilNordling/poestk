@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { colors, fontFamily, media } from '../../constants';
+import { colors, media } from '../../constants';
+import ThemeHolder, { withCSSVar } from '../../utils/ThemeHolder';
 
 export type FormFieldParams = {
   label?: string,
@@ -20,7 +21,7 @@ const Button = styled.button`
   vertical-align: top;
   outline: none;
   border-radius: 4px;
-  font-family: ${fontFamily};
+  font-family: ${withCSSVar(ThemeHolder.current.fontFamily)};
   font-size: 1.6rem;
   font-weight: 500;
   line-height: 1em;
@@ -43,7 +44,7 @@ const Label = styled.div`
   font-size: 1.6rem;
   transition: all 0.2s;
   pointer-events: none;
-  color: ${colors.main_color};
+  color: ${colors.color};
 `;
 
 const inFocus = () => `
@@ -92,7 +93,7 @@ const Form = styled.form`
   max-width: 480px;
   width: 100%;
   padding: 40px;
-  background: ${colors.main_content_alt};
+  background: ${colors.content};
   border-radius: 5px;
   text-align: center;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
@@ -108,7 +109,7 @@ const Fieldset = styled.fieldset`
   margin-bottom: 20px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  background: ${colors.main_background_input};
+  background: ${colors.input};
   transition: all 0.2s;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 `;
