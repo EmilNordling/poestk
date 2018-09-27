@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { observer, inject } from 'mobx-react';
 import { colors } from '../constants';
 import { Select, Options } from '../common/select';
@@ -11,6 +11,7 @@ import Inventory from './Inventory';
 import CharStats from './CharStats';
 import Nav from './Nav';
 import Tooltip from '../common/tooltip';
+import ThemeHolder, { withCSSVar } from '../utils/ThemeHolder';
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +21,10 @@ const Container = styled.div`
   z-index: 1;
   background: ${colors.main};
   box-shadow: 1px 0 3px rgba(0, 0, 0, 0.2);
+
+  ${(props) => props.useBorder && css`
+    border-right: 1px solid ${colors.borderStrong};
+  `};
 `;
 
 const Header = styled.header`
@@ -107,8 +112,10 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
     <Options key={asc} value={asc}>{characters[activeBuild.classID].classes[asc].name}</Options>
   ));
 
+  const { useBorders } = ThemeHolder;
+
   return (
-    <Container>
+    <Container useBorder={useBorders}>
       <Header>
         <Nav />
       </Header>
@@ -146,9 +153,9 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
           <StatsDisplay name='Total Energy Shield'>{activeBuild.stats.energyShield.display}</StatsDisplay>
           <StatsDisplay name='%Inc Energy Shield'>{activeBuild.stats.energyShield.increased}%</StatsDisplay>
         </StatsItem>
-        <StatsItem>
+        {/* <StatsItem>
           <Inventory />
-        </StatsItem>
+        </StatsItem> */}
       </Content>
       <Footer>
         <div>

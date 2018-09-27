@@ -1,32 +1,51 @@
+import { observable, action } from 'mobx';
 import shortid from 'shortid';
 import defaultTheme from '../defaultTheme.json';
-import testTheme from '../contrastTheme.json';
+import testTheme from '../darkContrastTheme.json';
 import { isUndefined } from './helpers';
 
 enum CSSVariableTypes {
   color = 'COLOR',
+  font = 'FONT',
+}
+
+export interface ICSSColors {
+  bg: string;
+  bgGradientStart: string;
+  bgGradientEnd: string;
+  highlight: string;
+  input: string;
+  inputBackground: string;
+  inputBackdrop: string;
+  color: string;
+  content: string;
+  contentDarken: string;
+  contentLighten: string;
+  backdrop: string;
+  main: string;
+  mainDarken: string;
+  error: string;
+  danger: string;
+  dangerDimmed: string;
+  borderStrong: string;
+  borderLight: string;
+}
+
+interface ICSSVariables extends ICSSColors {
+  // fonts
+  fontFamily: string;
+  fontSizeBase: string;
 }
 
 interface Theme {
-  variables: {
-    bg: string,
-    highlight: string,
-    input: string,
-    color: string,
-    content: string,
-    backdrop: string,
-    main: string,
-    mainDarken: string,
-    error: string,
-    danger: string,
-    dangerDimmed: string,
-    [key: string]: string,
-    fontFamily: string,
-    fontSizeBase: string,
-  };
+  variables: ICSSVariables;
   borders: boolean;
   borderRadius: boolean;
 }
+
+type ICSSValidator = {
+  [key in keyof ICSSVariables]: CSSvar;
+};
 
 class CSSvar {
   public hash = shortid.generate();
@@ -37,63 +56,81 @@ class CSSvar {
   ) {}
 }
 
-interface ICSSVariables {
-  [key: string]: CSSvar;
-}
-
 const setAnonymousCSSVar = (type: string, hash: string, styling: string) => `--${type}-${hash}: ${styling};`;
 export const setCSSVar = (variable: CSSvar) => `--${variable.type}-${variable.hash}: ${variable.styling};`;
 export const getCSSVar = (variable: CSSvar) => `--${variable.type}-${variable.hash}`;
-export const withCSSVar = (variable: CSSvar) => `var(${getCSSVar(variable)});`;
+export const withCSSVar = (variable: CSSvar) => `var(${getCSSVar(variable)})`;
 
 class ThemeHolder {
-  public current: ICSSVariables = {
+  public current: ICSSValidator = {
     bg: new CSSvar(defaultTheme.variables.bg),
+    bgGradientStart: new CSSvar(defaultTheme.variables.bgGradientStart),
+    bgGradientEnd: new CSSvar(defaultTheme.variables.bgGradientEnd),
     highlight: new CSSvar(defaultTheme.variables.highlight),
     input: new CSSvar(defaultTheme.variables.input),
+    inputBackground: new CSSvar(defaultTheme.variables.inputBackground),
+    inputBackdrop: new CSSvar(defaultTheme.variables.inputBackdrop),
     color: new CSSvar(defaultTheme.variables.color),
     content: new CSSvar(defaultTheme.variables.content),
+    contentDarken: new CSSvar(defaultTheme.variables.content),
+    contentLighten: new CSSvar(defaultTheme.variables.content),
     backdrop: new CSSvar(defaultTheme.variables.backdrop),
     main: new CSSvar(defaultTheme.variables.main),
     mainDarken: new CSSvar(defaultTheme.variables.mainDarken),
     error: new CSSvar(defaultTheme.variables.error),
     danger: new CSSvar(defaultTheme.variables.danger),
     dangerDimmed: new CSSvar(defaultTheme.variables.dangerDimmed),
-    borderColor: new CSSvar(defaultTheme.variables.borderColor),
-    fontFamily: new CSSvar(defaultTheme.variables.fontFamily),
-    fontSizeBase: new CSSvar(defaultTheme.variables.fontSizeBase),
+    borderStrong: new CSSvar(defaultTheme.variables.borderStrong),
+    borderLight: new CSSvar(defaultTheme.variables.borderLight),
+    fontFamily: new CSSvar(defaultTheme.variables.fontFamily, CSSVariableTypes.font),
+    fontSizeBase: new CSSvar(defaultTheme.variables.fontSizeBase, CSSVariableTypes.font),
   };
   private styleElement: HTMLStyleElement = document.createElement('style');
+
+  @observable public useBorders: boolean = defaultTheme.borders;
+  @observable public useborderRadius: boolean = defaultTheme.borderRadius;
+  @observable public useRemoveSpacing: boolean = defaultTheme.removeSpacing;
 
   constructor() {
     this.styleElement.appendChild(document.createTextNode(''));
     this.styleElement.type = 'text/css';
     document.head.appendChild(this.styleElement);
 
-    // this.setTheme(testTheme);
+    setTimeout(() => this.setTheme(testTheme), 0);
   }
 
-  public setTheme(theme: Theme) {
+  @action public setTheme(theme: Theme) {
     try {
-      const proxyCheck = (variable: string) => {
+      const proxyCSSVariableCheck = (variable: keyof ICSSVariables): string => {
+        if (isUndefined(this.current[variable])) throw new Error(`"${variable}" is not a valid property`);
+
         const type = this.current[variable].type;
         const hash = this.current[variable].hash;
         const styling = theme.variables[variable];
 
-        if (isUndefined(type) || isUndefined(hash) || isUndefined(styling)) throw new Error('The theme does not match the default');
+        if (styling === '') {
+          if (process.env.NODE_ENV !== 'production') {
+            console.warn(`"${variable}" has no value`);
+          }
+
+          return '';
+        }
 
         return setAnonymousCSSVar(type, hash, styling);
       };
 
       const newCSSVariables = `
         html {
-          ${Object.keys(theme.variables).map((variable) => proxyCheck(variable)).join('')}
+          ${Object.keys(theme.variables).map((variable: keyof ICSSVariables) => proxyCSSVariableCheck(variable)).join('')}
         }
       `;
 
       this.styleElement.innerHTML = newCSSVariables;
+
+      this.useBorders = true;
+      this.useborderRadius = false;
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   }
 }

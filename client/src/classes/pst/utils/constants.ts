@@ -9,8 +9,10 @@ const strokeSize = 8;
 
 const theme = {
   dark: {
-    path: '#545662',
-    allocated: '#f43a46',
+    // path: '#545662',
+    path: '#2b2b2b',
+    // allocated: '#f43a46',
+    allocated: '#9e1313',
     nodeDefault: '#20232a',
     notableDefault: '#fdc163',
     keyStoneDefault: '#c200ff',

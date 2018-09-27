@@ -1,18 +1,26 @@
 import { css } from 'styled-components';
-import ThemeHolder, { withCSSVar } from './utils/ThemeHolder';
+import ThemeHolder, { withCSSVar, ICSSColors } from './utils/ThemeHolder';
 
-export const colors = {
-  input: withCSSVar(ThemeHolder.current.input),
+export const colors: ICSSColors = {
+  bg: withCSSVar(ThemeHolder.current.bg),
+  bgGradientStart: withCSSVar(ThemeHolder.current.bgGradientStart),
+  bgGradientEnd: withCSSVar(ThemeHolder.current.bgGradientEnd),
   highlight: withCSSVar(ThemeHolder.current.highlight),
+  input: withCSSVar(ThemeHolder.current.input),
+  inputBackground: withCSSVar(ThemeHolder.current.inputBackground),
+  inputBackdrop: withCSSVar(ThemeHolder.current.inputBackdrop),
   color: withCSSVar(ThemeHolder.current.color),
-  backdrop: withCSSVar(ThemeHolder.current.backdrop),
   content: withCSSVar(ThemeHolder.current.content),
+  contentDarken: withCSSVar(ThemeHolder.current.contentDarken),
+  contentLighten: withCSSVar(ThemeHolder.current.contentLighten),
+  backdrop: withCSSVar(ThemeHolder.current.backdrop),
   main: withCSSVar(ThemeHolder.current.main),
   mainDarken: withCSSVar(ThemeHolder.current.mainDarken),
   error: withCSSVar(ThemeHolder.current.error),
-  bg: withCSSVar(ThemeHolder.current.bg),
   danger: withCSSVar(ThemeHolder.current.danger),
   dangerDimmed: withCSSVar(ThemeHolder.current.dangerDimmed),
+  borderStrong: withCSSVar(ThemeHolder.current.borderStrong),
+  borderLight: withCSSVar(ThemeHolder.current.borderLight),
 };
 
 const oldColorsButTheyAreNice = {

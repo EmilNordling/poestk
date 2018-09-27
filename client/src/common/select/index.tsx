@@ -6,6 +6,7 @@ import transition from 'styled-transition-group';
 import Icon from '../icon';
 import { P } from '../text';
 import { propTypes } from 'mobx-react';
+import ThemeHolder from '../../utils/ThemeHolder';
 
 export type SelectValue = string;
 
@@ -35,7 +36,7 @@ const SelectStyle = transition.div.attrs({
   border: 1px solid rgba(0, 0, 0, 0.3);
   z-index: 1;
   border-radius: 4px;
-  background: ${colors.backdrop};
+  background: ${colors.inputBackdrop};
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   transition: opacity 125ms, transform 125ms;
   will-change: transform;
@@ -90,9 +91,9 @@ const Input = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border: 1px solid ${colors.backdrop};
-  background: ${colors.mainDarken};
-  border-radius: 4px;
+  border: 1px solid ${colors.borderLight};
+  background: ${colors.inputBackground};
+  border-radius: ${props => props.borders ? '4px' : '0'};
   cursor: pointer;
 
   &:hover {
@@ -222,10 +223,12 @@ export class Select extends Component<SelectProps, any> {
     const { width } = this.props;
     const { isOpen } = this.state;
 
+    const useborderRadius = ThemeHolder.useborderRadius;
+
     return (
       <Wrapper width={width}>
         <div ref={(node: HTMLDivElement) => this.node = node}>
-          <Input tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}>
+          <Input borders={useborderRadius} tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}>
             <P>{this.state.selected}</P>
             <Icon name='exit2' className={(isOpen ? 'open' : 'closed')} />
           </Input>

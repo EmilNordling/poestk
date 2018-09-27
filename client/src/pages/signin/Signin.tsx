@@ -22,6 +22,7 @@ const Background = styled.div`
   padding: 0 10px;
   background: ${colors.mainDarken};
   background-image: linear-gradient(90deg, #1b1d23 20%, #282b35);
+  background-image: linear-gradient(90deg, ${colors.bgGradientStart} 20%, ${colors.bgGradientEnd});
 `;
 
 const SplashBackground = styled.div`

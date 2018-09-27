@@ -1,20 +1,28 @@
 {
   "variables": {
     "bg": "#1b1f2a",
+    "bgGradientStart": "#1b1d23",
+    "bgGradientEnd": "#282b35",
     "highlight": "#847aff",
     "input": "#23252b",
+    "inputBackground": "#282b35",
+    "inputBackdrop": "#1e222d",
     "color": "hsla(0, 0%, 100%, 0.88)",
     "content": "#2e313a",
+    "contentDarken": "",
+    "contentLighten": "",
     "backdrop": "#1e222d",
     "main": "#313440",
     "mainDarken": "#282b35",
     "error": "#ff480e",
     "danger": "#ff5858",
     "dangerDimmed": "rgba(152, 62, 62, 0.4)",
-    "borderColor": "#828282",
+    "borderStrong": "#828282",
+    "borderLight": "#1e222d",
     "fontFamily": "-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica, Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\"",
     "fontSizeBase": "10px"
   },
   "borders": false,
-  "borderRadius": true
+  "borderRadius": true,
+  "removeSpacing": false
 }

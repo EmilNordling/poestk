@@ -44,7 +44,7 @@ function draw(tileBuffer, viewContext) {
   );
   const chunkData = Controller.TreeData.getTiles(startX, startY, endX, endY);
 
-  chunkContext.strokeStyle = '#545662';
+  chunkContext.strokeStyle = Controller.ClientStore.theme.path;
 
   chunkContext.lineWidth = Camera.scale(5);
 
