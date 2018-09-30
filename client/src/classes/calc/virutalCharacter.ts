@@ -50,6 +50,10 @@ export interface VirutalCharacter {
   stats: VirutalStats;
   context: VirutalContexStats;
   resistances: VirutalResistances;
+  name: string | null;
+  isSaved: boolean;
+  isLoading: boolean;
+  isUploaded: boolean;
 }
 
 function getStats(value?: number, pipe?: any): VirutalModifier {
@@ -260,6 +264,10 @@ export function getNewCharacter(character: Characters): VirutalCharacter {
       lightningResistance: [75, 0],
       chaosResistance: [75, 0],
     },
+    name: 'untitled',
+    isLoading: false,
+    isSaved: false,
+    isUploaded: false,
   };
 
   return parseAll(builder);

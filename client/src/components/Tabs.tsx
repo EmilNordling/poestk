@@ -42,13 +42,8 @@ const Shadow = styled.div`
   }
 `;
 
-const Tab = (props) => (
-  <TabStyle {...props}>
-    <P>{props.children}</P>
-  </TabStyle>
-);
-
 const TabStyle = withTheme(styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,20 +54,54 @@ const TabStyle = withTheme(styled.div`
     background: #121315;
     color: white;
   `};
+
+  &:hover {
+    & .tabIcon {
+      opacity: 1;
+    }
+  }
 `);
+
+const TabIcons = styled.div`
+  position: absolute;
+  right: 6px;
+  display: flex;
+  font-size: 0.8rem;
+`;
+
+const TabIcon = styled.div`
+  position: absolute;
+  right: 6px;
+  display: flex;
+  cursor: pointer;
+  font-size: 0.8rem;
+  opacity: 0;
+`;
+
+const Tab = (props) => {
+  const { active, italic } = props;
+
+  return (
+    <TabStyle active={active}>
+      <P italic={italic}>{props.children}</P>
+      <TabIcon className='tabIcon'><Icon name='exitThick' /></TabIcon>
+    </TabStyle>
+  );
+};
+
 
 @inject('buildStore')
 @observer
-class Tabs extends Component<{ buildStore: BuildStore }> {
+class Tabs extends Component<{ buildStore?: BuildStore }> {
   render() {
-    const { loading, activeBuild } = this.props.buildStore;
+    const { loading, activeBuild } = this.props.buildStore!;
 
     if (loading) return <TabsStyle />;
 
     return (
       <TabsStyle>
         <Shadow />
-        <Tab active={true}>{characters[activeBuild.classID].name}</Tab>
+        <Tab active={true} italic={!activeBuild.isUploaded}>{activeBuild.name}</Tab>
       </TabsStyle>
     );
   }

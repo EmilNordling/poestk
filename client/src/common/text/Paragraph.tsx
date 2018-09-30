@@ -1,11 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-interface ParagraphProps {
+export interface ParagraphProps {
   margin?: true | number;
   align?: 'center' | 'left' | 'right';
   weight?: 300 | 400 | 500 | 700 | 800;
   color?: string;
+  italic?: boolean;
 }
 
 const ParagraphStyle = styled.div`
@@ -23,6 +24,10 @@ const ParagraphStyle = styled.div`
 
   ${(props) => props.color && css`
     color: ${props.color};
+  `};
+
+  ${(props) => props.italic && css`
+    font-style: italic;
   `};
 `;
 
