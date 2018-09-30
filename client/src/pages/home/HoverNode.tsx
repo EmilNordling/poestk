@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { computed } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import { TransitionGroup } from 'react-transition-group';
@@ -11,21 +11,28 @@ import setStyle from '../../utils/attrStyleUpdate';
 import GUIStore from '../../stores/GUIStore';
 import { P } from '../../common/text';
 import { Motion, spring } from 'react-motion';
+import withTheme from '../../hoc/withTheme';
+import ThemeHolder from '../../utils/ThemeHolder';
 
-const duration = 100;
+const duration = 250;
 
-const Inner = transition.div.attrs({
+const Inner = withTheme(transition.div.attrs({
   unmountOnExit: true,
   timeout: duration,
 })`
   padding: 7px 10px;
   position: absolute;
-  border-radius: 4px;
+  border-radius: ${() => ThemeHolder.useborderRadius ? '4px' : '0'};
   background: ${colors.mainDarken};
   transition: opacity ${duration}ms ease;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  transition: opacity 125ms, transform 125ms;
   pointer-events: none;
   z-index: 1;
+
+  ${() => ThemeHolder.useBorders && css`
+    border: 1px solid ${colors.borderLight};
+  `};
 
   ${(props: any) => `
     top: ${props.position.y + 10}px;
@@ -45,18 +52,22 @@ const Inner = transition.div.attrs({
   }
 
   &:enter {
-    opacity: 0.01;
+    opacity: 1;
+    transform: scale(1);
   }
   &:enter-active {
     opacity: 1;
+    transform: scale(1);
   }
   &:exit {
     opacity: 1;
+    transform: scale(1);
   }
   &:exit-active {
-    opacity: 0.01;
+    opacity: 0;
+    transform: scale(0.98);
   }
-`;
+`);
 
 @inject('guiStore')
 @observer

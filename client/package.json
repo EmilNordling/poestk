@@ -9,12 +9,12 @@
     "url": "https://github.com/EmilNordling/boilerplate"
   },
   "scripts": {
+    "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*",
     "dev": "webpack-dev-server --config config/webpack.config.dev.js",
+    "story": "start-storybook -p 6006",
     "build": "SET NODE_ENV=production&& webpack --config config/webpack.config.prod.js",
     "build:heroku": "NODE_ENV=production webpack --config config/webpack.config.prod.js",
-    "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build:story": "build-storybook"
   },
   "dependencies": {
     "axios": "^0.17.1",

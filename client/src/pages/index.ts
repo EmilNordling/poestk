@@ -4,7 +4,7 @@ export { default as NotFound } from './notFound';
 
 export { default as Register } from './register';
 
-export { default as Signin } from './signin';
+export { default as Signin } from './_signin';
 
 export { default as Settings } from './settings';
 

@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import Stats from '../../components/Stats';
+import Stats from '../../components/_Stats';
+import Tabbar from '../../components/Tabbar';
 import styled from 'styled-components';
 import Pst from './Pst';
 import HoverNode from './HoverNode';
+import Tabs from '../../components/Tabs';
 
 const Inner = styled.div`
   display: flex;
@@ -29,8 +31,10 @@ const Home = () => (
   <Fragment>
     <HoverNode />
     <Container>
+      <Tabbar />
       <Stats />
       <Inner>
+        <Tabs />
         <Content>
           <Pst />
         </Content>

@@ -7,6 +7,7 @@ import Icon from '../icon';
 import { P } from '../text';
 import { propTypes } from 'mobx-react';
 import ThemeHolder from '../../utils/ThemeHolder';
+import withTheme from '../../hoc/withTheme';
 
 export type SelectValue = string;
 
@@ -86,14 +87,14 @@ const Wrapper = styled.div`
   user-select: none;
 `;
 
-const Input = styled.div`
+const Input = withTheme(styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
   border: 1px solid ${colors.borderLight};
   background: ${colors.inputBackground};
-  border-radius: ${props => props.borders ? '4px' : '0'};
+  border-radius: ${() => ThemeHolder.useborderRadius ? '4px' : '0'};
   cursor: pointer;
 
   &:hover {
@@ -121,7 +122,7 @@ const Input = styled.div`
     stroke-dasharray: 280;
     transform: rotate(-90deg);
   }
-`;
+`);
 
 export class Options extends Component<SelectOptionProps, any> {
   state: any = {
@@ -223,12 +224,10 @@ export class Select extends Component<SelectProps, any> {
     const { width } = this.props;
     const { isOpen } = this.state;
 
-    const useborderRadius = ThemeHolder.useborderRadius;
-
     return (
       <Wrapper width={width}>
         <div ref={(node: HTMLDivElement) => this.node = node}>
-          <Input borders={useborderRadius} tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}>
+          <Input tabIndex={0} onClick={() => this.handleToggle(!this.state.isOpen)}>
             <P>{this.state.selected}</P>
             <Icon name='exit2' className={(isOpen ? 'open' : 'closed')} />
           </Input>

@@ -90,17 +90,8 @@ const FieldInput = styled.input`
 `;
 
 const Form = styled.form`
-  max-width: 480px;
   width: 100%;
-  padding: 40px;
-  background: ${colors.content};
-  border-radius: 5px;
-  text-align: center;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
-
-  ${media.small`
-    padding: 40px 20px;
-  `}
+  height: 100%;
 `;
 
 const Fieldset = styled.fieldset`

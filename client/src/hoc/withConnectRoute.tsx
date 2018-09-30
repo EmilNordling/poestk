@@ -1,6 +1,6 @@
 import React from 'react';
 
-function connectRoute(Component: any) {
+function withConnectRoute(Component: any) {
   return class extends Component {
     shouldComponentUpdate(nextProps) {
       return nextProps.location !== this.props.location;
@@ -12,4 +12,4 @@ function connectRoute(Component: any) {
   };
 }
 
-export default connectRoute;
+export default withConnectRoute;

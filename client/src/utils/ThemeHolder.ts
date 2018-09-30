@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import shortid from 'shortid';
 import defaultTheme from '../defaultTheme.json';
 import testTheme from '../darkContrastTheme.json';
@@ -7,6 +7,13 @@ import { isUndefined } from './helpers';
 enum CSSVariableTypes {
   color = 'COLOR',
   font = 'FONT',
+  icon = 'ICON',
+}
+
+export interface ICSSMisc {
+  fontFamily: string;
+  fontSizeBase: string;
+  iconBaseSize: string;
 }
 
 export interface ICSSColors {
@@ -18,11 +25,13 @@ export interface ICSSColors {
   inputBackground: string;
   inputBackdrop: string;
   color: string;
+  colorHighlight: string;
   content: string;
   contentDarken: string;
   contentLighten: string;
   backdrop: string;
   main: string;
+  mainDarkenAlt: string;
   mainDarken: string;
   error: string;
   danger: string;
@@ -31,11 +40,7 @@ export interface ICSSColors {
   borderLight: string;
 }
 
-interface ICSSVariables extends ICSSColors {
-  // fonts
-  fontFamily: string;
-  fontSizeBase: string;
-}
+interface ICSSVariables extends ICSSColors, ICSSMisc {}
 
 interface Theme {
   variables: ICSSVariables;
@@ -62,6 +67,10 @@ export const getCSSVar = (variable: CSSvar) => `--${variable.type}-${variable.ha
 export const withCSSVar = (variable: CSSvar) => `var(${getCSSVar(variable)})`;
 
 class ThemeHolder {
+  @observable public useBorders: boolean = defaultTheme.borders;
+  @observable public useborderRadius: boolean = defaultTheme.borderRadius;
+  @observable public useRemoveSpacing: boolean = defaultTheme.removeSpacing;
+
   public current: ICSSValidator = {
     bg: new CSSvar(defaultTheme.variables.bg),
     bgGradientStart: new CSSvar(defaultTheme.variables.bgGradientStart),
@@ -71,11 +80,13 @@ class ThemeHolder {
     inputBackground: new CSSvar(defaultTheme.variables.inputBackground),
     inputBackdrop: new CSSvar(defaultTheme.variables.inputBackdrop),
     color: new CSSvar(defaultTheme.variables.color),
+    colorHighlight: new CSSvar(defaultTheme.variables.colorHighlight),
     content: new CSSvar(defaultTheme.variables.content),
     contentDarken: new CSSvar(defaultTheme.variables.content),
     contentLighten: new CSSvar(defaultTheme.variables.content),
     backdrop: new CSSvar(defaultTheme.variables.backdrop),
     main: new CSSvar(defaultTheme.variables.main),
+    mainDarkenAlt: new CSSvar(defaultTheme.variables.mainDarkenAlt),
     mainDarken: new CSSvar(defaultTheme.variables.mainDarken),
     error: new CSSvar(defaultTheme.variables.error),
     danger: new CSSvar(defaultTheme.variables.danger),
@@ -84,12 +95,9 @@ class ThemeHolder {
     borderLight: new CSSvar(defaultTheme.variables.borderLight),
     fontFamily: new CSSvar(defaultTheme.variables.fontFamily, CSSVariableTypes.font),
     fontSizeBase: new CSSvar(defaultTheme.variables.fontSizeBase, CSSVariableTypes.font),
+    iconBaseSize: new CSSvar(defaultTheme.variables.iconBaseSize, CSSVariableTypes.icon),
   };
   private styleElement: HTMLStyleElement = document.createElement('style');
-
-  @observable public useBorders: boolean = defaultTheme.borders;
-  @observable public useborderRadius: boolean = defaultTheme.borderRadius;
-  @observable public useRemoveSpacing: boolean = defaultTheme.removeSpacing;
 
   constructor() {
     this.styleElement.appendChild(document.createTextNode(''));
@@ -119,13 +127,15 @@ class ThemeHolder {
         return setAnonymousCSSVar(type, hash, styling);
       };
 
+      const sheet = this.styleElement.sheet as CSSStyleSheet;
+
       const newCSSVariables = `
         html {
           ${Object.keys(theme.variables).map((variable: keyof ICSSVariables) => proxyCSSVariableCheck(variable)).join('')}
         }
       `;
 
-      this.styleElement.innerHTML = newCSSVariables;
+      sheet.insertRule(newCSSVariables, sheet.cssRules.length);
 
       this.useBorders = true;
       this.useborderRadius = false;

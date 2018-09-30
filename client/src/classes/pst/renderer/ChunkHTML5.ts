@@ -46,7 +46,7 @@ function draw(tileBuffer, viewContext) {
 
   chunkContext.strokeStyle = Controller.ClientStore.theme.path;
 
-  chunkContext.lineWidth = Camera.scale(5);
+  chunkContext.lineWidth = Camera.scale(10);
 
   chunkContext.beginPath();
   chunkData.connections.forEach(c => drawConnection(c, chunkContext));

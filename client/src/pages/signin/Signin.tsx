@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import { AuthStore } from '../../stores';
 import { Form, Fieldset, FieldsetItem, Button } from '../../common/fieldAlt';
@@ -10,6 +10,7 @@ import { colors } from '../../constants';
 import Icon from '../../common/icon';
 import { Helmet } from 'react-helmet';
 import { History } from 'history';
+import ThemeHolder from '../../utils/ThemeHolder';
 
 interface Props {
   authStore?: AuthStore;
@@ -21,7 +22,6 @@ const Background = styled.div`
   flex: 1;
   padding: 0 10px;
   background: ${colors.mainDarken};
-  background-image: linear-gradient(90deg, #1b1d23 20%, #282b35);
   background-image: linear-gradient(90deg, ${colors.bgGradientStart} 20%, ${colors.bgGradientEnd});
 `;
 
@@ -68,6 +68,8 @@ class Register extends Component<Props> {
 
   render() {
     const { loading } = this.props.authStore!;
+
+    const { useBorders } = ThemeHolder;
 
     return (
       <Fragment>

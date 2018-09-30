@@ -20,7 +20,8 @@ const Container = styled.div`
   height: 100%;
   z-index: 1;
   background: ${colors.main};
-  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 20px 8px ${colors.bg};
 
   ${(props) => props.useBorder && css`
     border-right: 1px solid ${colors.borderStrong};
@@ -34,6 +35,10 @@ const Header = styled.header`
   width: 100%;
   padding: 0 10px;
   background: ${colors.mainDarken};
+
+  ${(props) => props.useBorder && css`
+    border-bottom: 1px solid ${colors.borderStrong};
+  `};
 `;
 
 const Content = styled.div`
@@ -68,9 +73,9 @@ const Left = styled.div`
 const StatsItem = styled.div`
   padding: 10px;
 
-  &:last-of-type {
-    border-bottom: none;
-  }
+  ${(props) => props.useBorder && css`
+    border-bottom: 1px solid ${colors.borderStrong};
+  `};
 `;
 
 const StatsDisplayStyle = styled.div`
@@ -116,11 +121,11 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
 
   return (
     <Container useBorder={useBorders}>
-      <Header>
+      <Header useBorder={useBorders}>
         <Nav />
       </Header>
       <Content>
-        <StatsItem>
+        <StatsItem useBorder={useBorders}>
           <Label>Character</Label>
           <Row gutter={12}>
             <Col span={12}>
@@ -149,7 +154,7 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
           <StatsDisplay name='Total Mana'>{activeBuild.stats.mana.display}</StatsDisplay>
           <StatsDisplay name='%Inc Mana'>{activeBuild.stats.mana.increased}%</StatsDisplay>
         </StatsItem>
-        <StatsItem>
+        <StatsItem useBorder={useBorders}>
           <StatsDisplay name='Total Energy Shield'>{activeBuild.stats.energyShield.display}</StatsDisplay>
           <StatsDisplay name='%Inc Energy Shield'>{activeBuild.stats.energyShield.increased}%</StatsDisplay>
         </StatsItem>

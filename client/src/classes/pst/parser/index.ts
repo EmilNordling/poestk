@@ -6,8 +6,6 @@ async function init(nodeData) {
   await graph(nodeData);
   await popularizeTiles();
 
-  console.log(controller.NodeData.nodes)
-
   Emitter.emit('__PARSE__FINISHED__');
 }
 

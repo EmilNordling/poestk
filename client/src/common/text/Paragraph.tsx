@@ -5,6 +5,7 @@ interface ParagraphProps {
   margin?: true | number;
   align?: 'center' | 'left' | 'right';
   weight?: 300 | 400 | 500 | 700 | 800;
+  color?: string;
 }
 
 const ParagraphStyle = styled.div`
@@ -18,6 +19,10 @@ const ParagraphStyle = styled.div`
 
   ${(props) => props.align && css`
     text-align: ${props.align};
+  `};
+
+  ${(props) => props.color && css`
+    color: ${props.color};
   `};
 `;
 
