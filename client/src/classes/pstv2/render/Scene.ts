@@ -101,7 +101,7 @@ class Scene {
     this.matrix[matrixID].nodes.push(point);
 
     // overlaps
-    const halfSize = (point.size / 2) + (STROKE_SIZE * 2);
+    const halfSize = (point.size / 2) + 1.5;
     const topX = Math.floor((point.position.x + halfSize) / DATA_TILE_SIZE);
     const topY = Math.floor((point.position.y + halfSize) / DATA_TILE_SIZE);
     const bottomX = Math.floor((point.position.x - halfSize) / DATA_TILE_SIZE);
@@ -135,6 +135,9 @@ class Scene {
     const endX = end.x;
     const endY = end.y;
 
+    console.log(startX, startY, endX, endY)
+    console.log(this)
+
     for (let x = startX; x < endX; x++) {
       for (let y = startY; y < endY; y++) {
         if (`${x}/${y}` in this.matrix) {
@@ -152,9 +155,6 @@ class Scene {
         }
       }
     }
-
-    console.log(this)
-    console.log(returnedData)
 
     return returnedData;
   }

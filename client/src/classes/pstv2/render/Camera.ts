@@ -2,7 +2,7 @@ import Vector3 from './Vector3';
 import Emitter from '../Emitter';
 
 class Camera {
-  public position = new Vector3(89.62564705882353, 191.29376470588235, 5);
+  public position = new Vector3(89.62564705882353, 191.29376470588235, 4);
   pastData: any;
   isMoving = false;
 
@@ -51,8 +51,8 @@ class Camera {
       const deltaX = touchPointX - this.pastData.x;
       const deltaY = touchPointY - this.pastData.y;
 
-      this.position.x -= (deltaX / scale) * devicePixelRatio;
-      this.position.y -= (deltaY / scale) * devicePixelRatio;
+      this.position.x -= (deltaX / scale);
+      this.position.y -= (deltaY / scale);
     }
 
     this.isMoving = true;

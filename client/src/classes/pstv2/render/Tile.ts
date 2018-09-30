@@ -56,5 +56,9 @@ export default class Tile {
     this.context.putImageData(imageData, 0, 0);
 
     this.state = true;
+
+    this.canvas.canvas.setAttribute('pst-tile', this.key);
+
+    return this.canvas.canvas;
   }
 }

@@ -55,21 +55,25 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
   }
   chunkContext.stroke();
 
+  console.log(Object.keys(chunkData.connections).length);
+
   for (const node in chunkData.nodes) {
     drawNode(chunkData.nodes[node].context, chunkContext, camera, scale);
   }
 
-  tileBuffer.forEach((tile) => {
-    requestAnimationFrame(() => tile.cacheTile(TILE_SIZE, chunkContext, offsetX, offsetY));
+  console.log(Object.keys(chunkData.nodes).length);
 
-    requestAnimationFrame(() =>
-      renderer.canvas.getContext()!.drawImage(
-        tile.canvas.canvas,
-        (tile.x * TILE_SIZE),
-        (tile.y * TILE_SIZE),
-        TILE_SIZE,
-        TILE_SIZE,
-      ));
+  tileBuffer.forEach((tile) => {
+    requestAnimationFrame(() => {
+      tile.cacheTile(TILE_SIZE, chunkContext, offsetX, offsetY);
+    });
+
+    requestAnimationFrame(() => {
+      const cachedTile = tile.canvas.canvas;
+      renderer.plane.appendChild(cachedTile);
+      cachedTile.style.position = 'absolute';
+      cachedTile.style.transform = `translate3d(${tile.x * TILE_SIZE}px, ${tile.y * TILE_SIZE}px, 0px)`;
+    });
   });
 }
 

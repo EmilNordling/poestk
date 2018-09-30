@@ -75,6 +75,8 @@ class Graph {
 
       if (typeof outNode.out !== 'undefined') {
         outNode.out.forEach((out) => {
+          if (this.nodes[out].ascendancyName && !outNode.ascendancyName) return;
+
           this.nodes[out].connection[outNode.id] = outNode;
           outNode.connection[out] = this.nodes[out];
 

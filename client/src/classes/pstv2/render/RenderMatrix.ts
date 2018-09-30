@@ -11,21 +11,19 @@ class RenderMatrix {
   private depth: number | null = null;
   private tileMap: TileMap = {};
 
-  getPixelCoord() {
-    return 123 * Math.pow(2, Math.floor(1));
-  }
-
-  public getTiles(pos: Vector2, canvas: HTMLCanvasElement, camera: Camera, tileCallback: (buffer: Tile) => void, tileBufferCallback: (buffer: any[]) => void, debug: (buffer: any) => void) {
+  public getTiles(pos: Vector2, canvas: HTMLDivElement, camera: Camera, tileCallback: (buffer: { [tile: string]: Tile }) => void, tileBufferCallback: (buffer: any[]) => void, debug: (buffer: any) => void) {
+    const width = canvas.clientWidth * devicePixelRatio;
+    const height = canvas.clientHeight * devicePixelRatio;
     const zoomLevel = Math.floor(camera.position.z);
     const scale = Math.pow(2, Math.floor(camera.position.z));
-    const halfWidth = canvas.width / 2;
-    const halfHeight = canvas.height / 2;
+    const halfWidth = width / 2;
+    const halfHeight = height / 2;
     const x = (pos.x - halfWidth) / TILE_SIZE;
     const y = (pos.y - halfHeight) / TILE_SIZE;
     let startCol = Math.floor(x);
     let startRow = Math.floor(y);
-    let endX = Math.floor(((pos.x - halfWidth) + canvas.width) / TILE_SIZE);
-    let endY = Math.floor(((pos.y - halfHeight) + canvas.height) / TILE_SIZE);
+    let endX = Math.floor(((pos.x - halfWidth) + width) / TILE_SIZE);
+    let endY = Math.floor(((pos.y - halfHeight) + height) / TILE_SIZE);
 
     if (startCol <= 0) startCol = 0;
     if (startRow <= 0) startRow = 0;
@@ -33,6 +31,7 @@ class RenderMatrix {
     if (endY >= scale) endY = scale - 1;
 
     const tileBuffer = [];
+    const cachedTiles: { [tile: string]: Tile } = {};
 
     if (this.depth === null) {
       this.depth = scale;
@@ -67,13 +66,14 @@ class RenderMatrix {
 
           tileBuffer.push(this.tileMap[scale][coords.key]);
         } else {
-          tileCallback.call(this, this.tileMap[scale][coords.key]);
+          cachedTiles[coords.key] = this.tileMap[scale][coords.key];
         }
 
         if (IS_DEBUG) debug.call(this, [column, row]);
       }
     }
 
+    tileCallback.call(this, cachedTiles);
     tileBufferCallback.call(this, tileBuffer);
   }
 }
