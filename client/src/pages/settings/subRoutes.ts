@@ -12,6 +12,12 @@ const routes = [
     key: v4(),
     to: '/register',
     exact: true,
+    component: page.Appearance,
+  },
+  {
+    key: v4(),
+    to: '/register',
+    exact: true,
     component: page.Application,
   },
 ];

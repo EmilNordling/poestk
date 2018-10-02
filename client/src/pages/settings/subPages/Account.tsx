@@ -8,7 +8,7 @@ import { ListItem } from './';
 import { inject, observer } from 'mobx-react';
 import { AuthStore } from '../../../stores';
 import formGroup from '../../../utils/formGroup';
-import { FieldsetItem } from '../../../common/fieldAlt';
+import { FieldsetItem } from '../../../common/_field';
 import Button from '../../../common/button';
 
 interface AccountProps {

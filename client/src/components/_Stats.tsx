@@ -31,7 +31,6 @@ const Container = withTheme(styled.div`
   height: 100%;
   z-index: 1;
   background: ${colors.main};
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 20px 8px ${colors.bg};
 
   ${() => ThemeHolder.useBorders && css`
@@ -81,7 +80,9 @@ const Stats: React.SFC<{ buildStore?: BuildStore }> = (props) => {
 
   return (
     <Container>
-      <Header />
+      <Header>
+        <Nav />
+      </Header>
       <Section>
         <Label>Character</Label>
         <Row gutter={12}>

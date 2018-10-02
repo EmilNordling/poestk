@@ -18,7 +18,7 @@ export interface ButtonProps {
 
 const ButtonStyle = styled.button`
   display: inline-block;
-  padding: 15px 24px;
+  padding: 8px 14px 9px;
   border: 1px solid #1d1f24;
   vertical-align: top;
   outline: none;

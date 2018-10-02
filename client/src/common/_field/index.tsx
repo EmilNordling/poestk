@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { colors, media } from '../../constants';
 import ThemeHolder, { withCSSVar } from '../../utils/ThemeHolder';
+import withTheme from '../../hoc/withTheme';
 
 export type FormFieldParams = {
   label?: string,
@@ -75,19 +76,19 @@ const FieldContent = styled.div`
   }
 `;
 
-const FieldInput = styled.input`
+const FieldInput = withTheme(styled.input`
   display: block;
   width: 100%;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 3px;
+  border: 1px solid ${() => ThemeHolder.useBorders ? colors.borderStrong : 'rgba(0, 0, 0, 0.3)'};
+  border-radius: ${() => ThemeHolder.useborderRadius ? '4px' : '0'};
   outline: none;
   background: rgba(0, 0, 0, 0.1);
   font-size: 1.6rem;
   transition: transform 0.2s;
   transition: background-color 0.2s;
   color: #fefefe;
-`;
+`);
 
 const Form = styled.form`
   width: 100%;

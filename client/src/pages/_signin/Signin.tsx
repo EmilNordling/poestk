@@ -60,7 +60,23 @@ class Register extends Component<Props> {
             </IconWrapper>
               <Card width={480}>
                 <Form onSubmit={this.handleSubmitForm}>
-                  qwe
+                  <H size={2} margin={20}>Welcome back!</H>
+                  <FieldsetItem
+                    label='email'
+                    type='Email'
+                    value={this.form.pull('email')}
+                    onChange={this.handleEmailChange}
+                  />
+                  <FieldsetItem
+                    label='password'
+                    type='Password'
+                    value={this.form.pull('password')}
+                    onChange={this.handlePasswordChange}
+                  />
+
+                  <Button type='submit' disabled={loading}>
+                    sign in
+                  </Button>
                 </Form>
               </Card>
           </Content>
