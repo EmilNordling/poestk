@@ -1,42 +1,63 @@
-import { observable } from 'mobx';
+import { observable, intercept } from 'mobx';
 
-type reactionValue = string | [string, (change: string) => string];
-type IReactionGroup = {
-  [item: string]: reactionValue;
-};
-type IReactionObject = {
-  [key: string]: {
-    value: string,
-    valid: boolean,
-    touched: boolean,
-  };
-};
-
-function seperateValue(value: reactionValue) {
-  if (Array.isArray(value)) {
-    return value[0];
-  }
-
-  return value;
+type IFormValue = string | number;
+type IFormControl = (value: IFormValue, validators?: any[]) => IFormControlGroup;
+interface IFormControlGroup {
+  value: IFormValue;
+  valid: boolean;
+  touched: boolean;
+  validators: ((value: IFormValue) => boolean)[];
+}
+interface IFormGroupBuilder {
+  [item: string]: IFormValue | IFormControlGroup;
 }
 
-function formGroup<T extends IReactionGroup>(group: T) {
-  const builder: IReactionObject = {};
+function formControl(defaultValue: IFormValue, ...validators: any[]): IFormControlGroup {
+  return {
+    value: defaultValue === null ? '' : defaultValue,
+    valid: false,
+    touched: false,
+    validators: [...validators],
+  };
+}
 
-  Object.keys(group).forEach((key) => {
-    builder[key] = {
-      value: seperateValue(group[key]),
-      valid: true,
-      touched: false,
-    };
-  });
+function formGroup<T extends IFormGroupBuilder>(group: T) {
+  const builder: any = {}; // TODO: add interface to this
+
+  for (const key in group) {
+    const value = group[key];
+
+    if (typeof value !== 'string' && typeof value !== 'number') {
+      builder[key] = value;
+    } else {
+      builder[key] = formControl(value);
+    }
+  }
 
   const state = observable(builder);
 
-  return {
-    observer: state,
+  const form = {
+    stateValueIsValid: (key: string, value: any): boolean => {
+      const stateTarget = state[key];
+
+      const validators = stateTarget.validators;
+
+      if (validators.length === 0) return true;
+
+      const isValid = validators.every((validator) => validator(value));
+
+      if (!isValid) {
+        return false;
+      }
+
+      return true;
+    },
     pull: (key: string) => state[key].value,
-    push: (key: string, value: any) => state[key].value = value,
+    push: (key: string, value: any) => {
+      state[key].value = value;
+
+      state[key].valid = form.stateValueIsValid(key, value);
+    },
     currentState: () => {
       let builder = {};
 
@@ -46,12 +67,20 @@ function formGroup<T extends IReactionGroup>(group: T) {
 
       return builder as T;
     },
-    validateAll: () => {
-      const values = observable.map(state).values();
+    isValid: () => {
+      const currentState = form.currentState();
 
-      console.log(values);
+      const isValid = Object.entries(currentState).every((entry) => form.stateValueIsValid(entry[0], entry[1]));
+
+      return isValid;
     },
   };
+
+  return form;
 }
+
+export {
+  formControl,
+};
 
 export default formGroup;

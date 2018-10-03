@@ -130,8 +130,6 @@ class Setting extends Component<Settings> {
   render() {
     const { match, location } = this.props;
 
-    console.log(this.props)
-
     if (this.props.authStore!.currentUser === null) return null;
 
     return (
@@ -142,7 +140,7 @@ class Setting extends Component<Settings> {
             <StaleLinkButton size={1} margin={10}>User settings</StaleLinkButton>
             <LinkButton exact activeClassName='active' to={`${match.url}`}>Account & Profile</LinkButton>
             <StaleLinkButton size={1} margin={10}>App settings</StaleLinkButton>
-            <LinkButton exact activeClassName='active' to={`${match.url}/appearance`}>appearance</LinkButton>
+            <LinkButton exact activeClassName='active' to={`${match.url}/appearance`}>Appearance</LinkButton>
             <Logout onClick={this.logout}>Log Out</Logout>
           </Nav>
         </Aside>
