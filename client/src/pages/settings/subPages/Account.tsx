@@ -7,7 +7,7 @@ import Col from '../../../common/grid/Col';
 import { inject, observer } from 'mobx-react';
 import { AuthStore } from '../../../stores';
 import formGroup, { formControl } from '../../../utils/formGroup';
-import { FieldsetItem } from '../../../common/_field';
+import { FieldsetItem, Field } from '../../../common/_field';
 import Button from '../../../common/button';
 import EditField, { ListItem } from '../EditField';
 
@@ -39,9 +39,9 @@ class Account extends Component<AccountProps> {
         <H size={1}>Account</H>
 
         <EditField onClick={this.handleSubmitForm} info={{ title: 'Profile', description: 'The email is your identity on Poestk.' }}>
-          <FieldsetItem label='Username' type='text' value={this.accountForm.pull('username')} onChange={(event: React.FormEvent<HTMLInputElement>) => this.accountForm.push('username', event.currentTarget.value)}/>
-          <FieldsetItem label='Username' type='text' value={this.accountForm.pull('email')} onChange={(event: React.FormEvent<HTMLInputElement>) => this.accountForm.push('email', event.currentTarget.value)}/>
-          <FieldsetItem label='Password' type='text' value={this.accountForm.pull('password')} onChange={(event: React.FormEvent<HTMLInputElement>) => this.accountForm.push('password', event.currentTarget.value)}/>
+          <Field label='Username' type='text' formGroup={this.accountForm} property='username'/>
+          <Field label='Email' type='text' formGroup={this.accountForm} property='email' />
+          <Field label='Password' type='text' formGroup={this.accountForm} property='password' />
         </EditField>
       </Fragment>
     );

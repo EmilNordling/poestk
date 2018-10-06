@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { colors, media } from '../../constants';
 import ThemeHolder, { withCSSVar } from '../../utils/ThemeHolder';
 import withTheme from '../../hoc/withTheme';
+import { IFormGroup } from '../../utils/formGroup';
+import { observer } from 'mobx-react';
 
-export type FormFieldParams = {
+export type FormFieldParams<T> = {
   label?: string,
   value?: string,
   type: string,
   id?: string,
   errorMessage?: string,
   name?: string,
+  formControlName?: string,
+  formGroup?: IFormGroup<T>,
+  property?: string,
   onChange?: (event: React.FormEvent<HTMLInputElement>) => void,
 };
 
@@ -106,16 +111,33 @@ const Fieldset = styled.fieldset`
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 `;
 
-const FieldsetItem = ({ label, errorMessage, ...props }: FormFieldParams) => (
-  <FieldContent>
-    {label && <Label>{label}</Label>}
-    <FieldInput required='required' {...props as any} />
-  </FieldContent>
-);
+function FieldsetItem<T>({ label, errorMessage, ...props }: FormFieldParams<T>) {
+  return (
+    <FieldContent>
+      {label && <Label>{label}</Label>}
+      <FieldInput required='required' {...props as any} />
+    </FieldContent>
+  );
+}
+
+@observer
+class Field<T> extends Component<FormFieldParams<T>> {
+  render() {
+    const { label, errorMessage, formGroup, property, ...props } = this.props;
+
+    return (
+      <FieldContent>
+        {label && <Label>{label}</Label>}
+        <FieldInput required='required' value={formGroup.pull(property)} onChange={(event: React.FormEvent<HTMLInputElement>) => formGroup.push(property, event.currentTarget.value)} {...props as any} />
+      </FieldContent>
+    );
+  }
+}
 
 export {
   FieldsetItem,
   Fieldset,
+  Field,
   Form,
   Button,
 };

@@ -11,6 +11,13 @@ interface IFormControlGroup {
 interface IFormGroupBuilder {
   [item: string]: IFormValue | IFormControlGroup;
 }
+export interface IFormGroup<T> {
+  stateValueIsValid: (key: string, value: any) => boolean;
+  pull: (key: string) => any;
+  push: (key: string, value: any) => void;
+  currentState: () => T;
+  isValid: () => boolean;
+}
 
 function formControl(defaultValue: IFormValue, ...validators: any[]): IFormControlGroup {
   return {
@@ -21,7 +28,7 @@ function formControl(defaultValue: IFormValue, ...validators: any[]): IFormContr
   };
 }
 
-function formGroup<T extends IFormGroupBuilder>(group: T) {
+function formGroup<T extends IFormGroupBuilder>(group: T): IFormGroup<T> {
   const builder: any = {}; // TODO: add interface to this
 
   for (const key in group) {
