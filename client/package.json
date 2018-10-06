@@ -59,7 +59,8 @@
     "three": "^0.95.0",
     "three.meshline": "^1.1.0",
     "uuid": "^3.2.1",
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.1.27",
+    "electron-is-dev": "^1.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
@@ -124,7 +125,6 @@
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.3",
     "electron": "^3.0.2",
-    "electron-is-dev": "^1.0.1",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "jest": "21.3.0-beta.9",
