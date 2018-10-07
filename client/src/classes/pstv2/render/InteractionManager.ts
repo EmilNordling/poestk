@@ -1,145 +1,130 @@
 import Camera from './Camera';
 import Emitter from '../Emitter';
-import { STROKE_SIZE } from '../utils/constants';
+import { STROKE_SIZE, TILE_SIZE } from '../utils/constants';
+import Renderer from './Renderer';
+import State from '../State';
+import Scene from './Scene';
+import Vector2 from './Vector2';
 
 let clientX = 0;
 let clientY = 0;
 
 // TODO: separate desktop and mobile
 class InteractionManager {
-  constructor() {
-    // Emitter.on('touchMove', InteractionManager.move.bind(this));
-    // Emitter.on('touchStart', InteractionManager.touchStart.bind(this));
-    // Emitter.on('touchEnd', InteractionManager.touchEnd.bind(this));
+  constructor(
+    private camera: Camera,
+    private renderer: Renderer,
+    private scene: Scene,
+  ) {
+    Emitter.on('touchMove', this.move.bind(this));
+    Emitter.on('touchStart', this.touchStart.bind(this));
+    Emitter.on('touchEnd', this.touchEnd.bind(this));
   }
 
-  // static touchStart(event) {
-  //   if (devicePixelRatio === 1) return;
+  touchStart(event) {
+    if (devicePixelRatio === 1) return;
 
-  //   clientX = event.changedTouches[0].pageX;
-  //   clientY = event.changedTouches[0].pageY;
+    clientX = event.changedTouches[0].pageX;
+    clientY = event.changedTouches[0].pageY;
 
-  //   // TODO: make it into one function it's used below
-  //   let chunkData;
-  //   const relativeX = Camera.position.x + clientX;
-  //   const relativeY = Camera.position.y + clientY;
+    // TODO: make it into one function it's used below
+    let chunkData;
+    const scale = this.camera.getScale();
+    const translateX = this.camera.position.x * scale;
+    const translateY = this.camera.position.y * scale;
 
-  //   const dataX = Math.floor(relativeX / Camera.zoomLevel / Controller.TreeData.tileSize);
-  //   const dataY = Math.floor(relativeY / Camera.zoomLevel / Controller.TreeData.tileSize);
-  //   const coordString = `${dataX}/${dataY}`;
+    const relativePosition = new Vector2(
+      ((translateX + clientX) - ((this.renderer.canvas.clientWidth * devicePixelRatio / 2))) / scale,
+      ((translateY + clientY) - ((this.renderer.canvas.clientHeight * devicePixelRatio / 2))) / scale,
+    );
 
-  //   if (coordString === Controller.ClientStore.activeCoords) {
-  //     chunkData = Controller.ClientStore.activeCoordsData;
-  //   } else {
-  //     chunkData = Controller.TreeData.getTiles(dataX, dataY);
-  //     Controller.ClientStore.activeCoords = coordString;
-  //     Controller.ClientStore.activeCoordsData = chunkData;
+    chunkData = this.scene.getTile(relativePosition);
 
-  //     Logger.log('coords', coordString);
-  //   }
+    const node = chunkData.nodes.find((node) => this.pointIsInCircle(
+      relativePosition.x,
+      relativePosition.y,
+      node.position.x,
+      node.position.y,
+      (node.context.size + STROKE_SIZE),
+    ));
 
-  //   // TODO: change to while and break when match is found
-  //   // TODO: add to array and check which one is closest
-  //   chunkData.nodes.forEach((n) => {
-  //     const node = Controller.NodeData.nodes[n];
-  //     const gotNode = InteractionManager.pointIsInCircle(
-  //       relativeX,
-  //       relativeY,
-  //       Camera.scale(node.x),
-  //       Camera.scale(node.y),
-  //       Camera.scale(node.size * devicePixelRatio),
-  //     );
+    if (node) {
+      Emitter.emit('allocate', node.context);
+    }
+  }
 
-  //     if (gotNode) {
-  //       Emitter.emit('allocate', node);
-  //     }
-  //   });
-  // }
+  touchEnd() {
+    if (State.isHovering) {
+      Emitter.emit('allocate', State.isHovering.context);
+    }
+  }
 
-  // static touchEnd() {
-  //   if (Controller.ClientStore.isHovering) {
-  //     Emitter.emit('allocate', Controller.ClientStore.isHovering);
-  //   }
-  // }
+  move(event) {
+    if (this.camera.isMoving === true) return;
 
-  // static move(event) {
-  //   if (Controller.ClientStore.isMoving === true) return;
+    this.hoveringNode(
+      {
+        x: event.clientX,
+        y: event.clientY,
+      },
+    );
+  }
 
-  //   InteractionManager.hoveringNode(
-  //     {
-  //       x: event.clientX,
-  //       y: event.clientY,
-  //     },
-  //   );
-  // }
+  pointIsInCircle(mouseX, mouseY, nodeX, nodeY, radius = 10) {
+    const deltaX = mouseX - nodeX;
+    const deltaY = mouseY - nodeY;
+    const squared = (deltaX * deltaX) + (deltaY * deltaY);
 
-  // static pointIsInCircle(mouseX, mouseY, nodeX, nodeY, radius = 10) {
-  //   const deltaX = mouseX - nodeX;
-  //   const deltaY = mouseY - nodeY;
-  //   const squared = (deltaX * deltaX) + (deltaY * deltaY);
+    return squared <= radius * radius;
+  }
 
-  //   return squared <= radius * radius;
-  // }
+  hoveringNode(position) {
+    if (devicePixelRatio > 1) return;
 
-  // static hoveringNode(position) {
-  //   // TODO: replace with mobile device check
-  //   if (devicePixelRatio > 1) return;
-  //   // TODO: make it into one function it's used above
-  //   let chunkData;
-  //   const relativeX = Camera.position.x + position.x;
-  //   const relativeY = Camera.position.y + position.y;
+    const scale = this.camera.getScale();
+    let chunkData;
 
-  //   if (Controller.ClientStore.isHovering) {
-  //     const stillHovering = InteractionManager.pointIsInCircle(
-  //       relativeX,
-  //       relativeY,
-  //       Camera.scale(Controller.ClientStore.isHovering.x),
-  //       Camera.scale(Controller.ClientStore.isHovering.y),
-  //       Camera.scale(Controller.ClientStore.isHovering.size + strokeSize),
-  //     );
+    const translateX = this.camera.position.x * scale;
+    const translateY = this.camera.position.y * scale;
 
-  //     if (!stillHovering) {
-  //       Controller.ClientStore.isHovering = false;
-  //       Emitter.emit('hoverOut', position, false);
-  //       Logger.log('hover', Controller.ClientStore.isHovering);
-  //     }
+    const relativePosition = new Vector2(
+      ((translateX + position.x) - ((this.renderer.canvas.clientWidth * devicePixelRatio / 2))) / scale,
+      ((translateY + position.y) - ((this.renderer.canvas.clientHeight * devicePixelRatio / 2))) / scale,
+    );
 
-  //     return;
-  //   }
+    if (State.isHovering) {
+      const stillHovering = this.pointIsInCircle(
+        relativePosition.x,
+        relativePosition.y,
+        State.isHovering.position.x,
+        State.isHovering.position.y,
+        (State.isHovering.context.size + STROKE_SIZE),
+      );
 
-  //   const dataX = Math.floor(relativeX / Camera.zoomLevel / Controller.TreeData.tileSize);
-  //   const dataY = Math.floor(relativeY / Camera.zoomLevel / Controller.TreeData.tileSize);
-  //   const coordString = `${dataX}/${dataY}`;
+      if (!stillHovering) {
+        State.isHovering = null;
+        Emitter.emit('hoverOut', position, false);
+      }
 
-  //   if (coordString === Controller.ClientStore.activeCoords) {
-  //     chunkData = Controller.ClientStore.activeCoordsData;
-  //   } else {
-  //     chunkData = Controller.TreeData.getTiles(dataX, dataY);
+      return;
+    }
 
-  //     Controller.ClientStore.activeCoords = coordString;
-  //     Controller.ClientStore.activeCoordsData = chunkData;
+    // const coordString = `${zoomLevel}/${dataX}/${dataY}`;
+    chunkData = this.scene.getTile(relativePosition);
 
-  //     Logger.log('coords', coordString);
-  //   }
+    const node = chunkData.nodes.find((node) => this.pointIsInCircle(
+      relativePosition.x,
+      relativePosition.y,
+      node.position.x,
+      node.position.y,
+      (node.context.size + STROKE_SIZE),
+    ));
 
-  //   // TODO: change to while and break when match is found
-  //   chunkData.nodes.forEach((n) => {
-  //     const node = Controller.NodeData.nodes[n];
-  //     const isHovering = InteractionManager.pointIsInCircle(
-  //       relativeX,
-  //       relativeY,
-  //       Camera.scale(node.x),
-  //       Camera.scale(node.y),
-  //       Camera.scale(node.size + strokeSize),
-  //     );
-
-  //     if (isHovering) {
-  //       Controller.ClientStore.isHovering = node;
-  //       Emitter.emit('hoverOver', position, node);
-  //       Logger.log('hover', Controller.ClientStore.isHovering.id);
-  //     }
-  //   });
-  // }
+    if (node) {
+      State.isHovering = node;
+      Emitter.emit('hoverOver', position, node);
+    }
+  }
 }
 
 export default InteractionManager;

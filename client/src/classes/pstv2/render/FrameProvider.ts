@@ -1,9 +1,13 @@
+import State from '../State';
+
 class FrameProvider {
   public frameReady: boolean;
   public pendingTick: boolean;
   public currentTab: () => void;
 
   requestTick() {
+    if (State.selectedTab === null) return;
+
     if (this.frameReady === false) {
       this.pendingTick = true;
 

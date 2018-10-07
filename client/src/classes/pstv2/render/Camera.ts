@@ -44,8 +44,12 @@ class Camera {
     }
   }
 
+  getScale() {
+    return Math.pow(2, Math.floor(this.position.z));
+  }
+
   move(touchPointX, touchPointY) {
-    const scale = Math.pow(2, Math.floor(this.position.z));
+    const scale = this.getScale();
 
     if (this.pastData.x && this.pastData.y) {
       const deltaX = touchPointX - this.pastData.x;

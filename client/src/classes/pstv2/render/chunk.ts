@@ -55,13 +55,9 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
   }
   chunkContext.stroke();
 
-  console.log(Object.keys(chunkData.connections).length);
-
   for (const node in chunkData.nodes) {
     drawNode(chunkData.nodes[node].context, chunkContext, camera, scale);
   }
-
-  console.log(Object.keys(chunkData.nodes).length);
 
   tileBuffer.forEach((tile) => {
     requestAnimationFrame(() => {
@@ -72,6 +68,7 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
       const cachedTile = tile.canvas.canvas;
       renderer.plane.appendChild(cachedTile);
       cachedTile.style.position = 'absolute';
+      cachedTile.style['pointer-events'] = 'none';
       cachedTile.style.transform = `translate3d(${tile.x * TILE_SIZE}px, ${tile.y * TILE_SIZE}px, 0px)`;
     });
   });

@@ -4,22 +4,27 @@ import Scene from './Scene';
 import { image } from '../index';
 import Connection from '../parser/Connection';
 import { STROKE_SIZE } from '../utils/constants';
+import State from '../State';
 
 function drawConnection(connection: Connection, context: CanvasRenderingContext2D, camera: Camera, scale: number) {
   let cancelBuffer = false;
   const node = connection.points.a;
   const outNode = connection.points.b;
 
+  const tab = State.tabs[State.selectedTab!];
+
   // TODO: add getterss
-  // if (Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id] &&
-  //     Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[outNode.id] &&
-  //    (node.id === Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[node.id].id) &&
-  //    (outNode.id === Controller.ClientStore.treeState[Controller.ClientStore.viewTab].allocated[outNode.id].id)) {
-  //   context.stroke();
-  //   context.strokeStyle = Controller.ClientStore.theme.allocated;
-  //   context.beginPath();
-  //   cancelBuffer = true;
-  // }
+  if (tab.allocated[node.id] &&
+      tab.allocated[outNode.id] &&
+     (node.id === tab.allocated[node.id].id) &&
+     (outNode.id === tab.allocated[outNode.id].id)) {
+    context.stroke();
+    context.strokeStyle = '#ff0000';
+    context.beginPath();
+    context.lineWidth = 0.1 * scale;
+
+    cancelBuffer = true;
+  }
 
   context.moveTo(
     (node.x * scale),
@@ -42,6 +47,7 @@ function drawConnection(connection: Connection, context: CanvasRenderingContext2
 function drawNode(node: Node, context: CanvasRenderingContext2D, camera: Camera, scale: number) {
   if (node.m === true) return;
 
+  const tab = State.tabs[State.selectedTab!];
   let imgNodeSize;
 
   if (node.not === true) {
@@ -82,7 +88,7 @@ function drawNode(node: Node, context: CanvasRenderingContext2D, camera: Camera,
     imgPosition,
   );
 
-  context.strokeStyle = '#545662';
+  context.strokeStyle = tab.allocated[node.id] ? '#ff0000' : '#545662';
   context.stroke();
 }
 

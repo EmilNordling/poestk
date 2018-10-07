@@ -70,10 +70,18 @@ class Scene {
   }
 
   public _getTiles(start: Vector2, end: Vector2): MatrixGroup[] {
-    const startX = Math.floor(start.x / DATA_TILE_SIZE);
-    const startY = Math.floor(start.y / DATA_TILE_SIZE);
-    const endX = Math.ceil(end.x / DATA_TILE_SIZE);
-    const endY = Math.ceil(end.y / DATA_TILE_SIZE);
+    let startX = Math.floor(start.x / DATA_TILE_SIZE);
+    let startY = Math.floor(start.y / DATA_TILE_SIZE);
+    let endX = Math.ceil(end.x / DATA_TILE_SIZE);
+    let endY = Math.ceil(end.y / DATA_TILE_SIZE);
+
+    if (startY > endY) {
+      [startY, endY] = [endY, startY];
+    }
+
+    if (startX > startX) {
+      [startX, endX] = [endX, startX];
+    }
 
     const tiles = [];
 
@@ -124,6 +132,13 @@ class Scene {
     }
   }
 
+  public getTile(position: Vector2) {
+    const x = Math.floor(position.x / DATA_TILE_SIZE);
+    const y = Math.floor(position.y / DATA_TILE_SIZE);
+
+    return this.matrix[`${x}/${y}`] || { nodes: [], connections: [] };
+  }
+
   public getData(start: Vector2, end: Vector2, scale: number) {
     let returnedData = {
       nodes: {},
@@ -134,9 +149,6 @@ class Scene {
     const startY = start.y;
     const endX = end.x;
     const endY = end.y;
-
-    console.log(startX, startY, endX, endY)
-    console.log(this)
 
     for (let x = startX; x < endX; x++) {
       for (let y = startY; y < endY; y++) {

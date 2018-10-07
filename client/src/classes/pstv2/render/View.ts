@@ -4,18 +4,38 @@ import Camera from './Camera';
 import Renderer from './Renderer';
 import Scene, { MatrixPoint, MatrixGeometry } from './Scene';
 import Vector2 from './Vector2';
-import { TILE_SIZE, DATA_TILE_SIZE } from '../utils/constants';
+import { TILE_SIZE, DATA_TILE_SIZE, STROKE_SIZE } from '../utils/constants';
 import chunk from './chunk';
 import { drawConnection, drawNode } from './drawUtils';
 import Emitter from '../Emitter';
 import InteractionManager from './InteractionManager';
 import Tile from './Tile';
+import Allocate from '../Allocate';
+import State from '../State';
+import { v4 } from 'uuid';
+import PassiveNode from '../parser/PassiveNode';
 
 class View {
   private camera: Camera;
   private renderer: Renderer;
   private scene: Scene;
   private interaction: InteractionManager;
+  private allocate: Allocate;
+
+  public newTab() {
+    const tabId = v4();
+
+    State.tabs[tabId] = {
+      startClass: 0,
+      ascendancy: 0,
+      allocated: {},
+    };
+
+    State.tabCount++;
+    State.selectedTab = tabId;
+
+    this.renderer.frameProvider.requestTick();
+  }
 
   public init() {
     this.renderer = new Renderer();
@@ -31,8 +51,13 @@ class View {
       Emitter.listen(this.renderer.canvas, ['mouseup'], 'touchEnd');
     }
 
+    Emitter.on('allocated', this.allocateNode.bind(this));
+    Emitter.on('deallocated', this.allocateNode.bind(this));
+
     this.scene = new Scene();
     this.camera = new Camera();
+    this.interaction = new InteractionManager(this.camera, this.renderer, this.scene);
+    this.allocate = new Allocate();
 
     Object.values(Graph.nodes).forEach((node) => {
       const vector = new Vector2(node.x, node.y);
@@ -50,7 +75,40 @@ class View {
     this.renderer.setRenderFunction(() => this.draw());
 
     Emitter.on('draw', () => this.renderer.frameProvider.requestTick());
-    this.renderer.frameProvider.requestTick();
+
+    this.newTab();
+  }
+
+  public allocateNode(target: PassiveNode) {
+    const scale = Math.pow(2, Math.floor(this.camera.position.z));
+    let lowestX = target.x - target.size;
+    let lowestY = target.y - target.size;
+    let highestX = target.x + target.size;
+    let highestY = target.y + target.size;
+
+    Object.keys(target.connection).forEach((connection) => {
+      const node = target.connection[connection];
+      console.log(node)
+      const nodeSize = node.size + (STROKE_SIZE * 2);
+
+      if (node.x - nodeSize < lowestX) lowestX = node.x - nodeSize;
+      if (node.y - nodeSize < lowestY) lowestY = node.y - nodeSize;
+      if (node.x + nodeSize > highestX) highestX = node.x + nodeSize;
+      if (node.y + nodeSize > highestY) highestY = node.y + nodeSize;
+    });
+
+    const start = new Vector2(lowestX, lowestY);
+    const end = new Vector2(highestX, highestY);
+
+    this.renderer.renderMatrix.getTiles(start, end, this.camera, (tiles) => {
+      tiles.forEach(tile => {
+        const DOMTile = tile.canvas.canvas;
+
+        DOMTile.remove();
+      });
+
+      chunk(tiles, scale, this.renderer, this.camera, this.scene);
+    });
   }
 
   public draw() {
@@ -61,7 +119,7 @@ class View {
     const context = this.renderer.plane;
     context.style.transform = `translate3d(${-translateX + (this.renderer.canvas.clientWidth * devicePixelRatio / 2)}px, ${-translateY + (this.renderer.canvas.clientHeight * devicePixelRatio / 2)}px, 0px)`;
 
-    this.renderer.renderMatrix.getTiles(new Vector2(translateX, translateY), this.renderer.domElement, this.camera, (tiles) => {
+    this.renderer.renderMatrix.getVisables(new Vector2(translateX, translateY), this.renderer.domElement, this.camera, (tiles) => {
       this.renderer.plane.childNodes.forEach((tile) => {
         const attribute = (tile as HTMLElement).getAttribute('pst-tile');
 
