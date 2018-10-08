@@ -22,7 +22,7 @@
     },
     "win": {
       "target": "NSIS"
-   }
+    }
   },
   "scripts": {
     "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*",
@@ -38,6 +38,7 @@
   "dependencies": {
     "axios": "^0.17.1",
     "d3": "^5.5.0",
+    "electron-is-dev": "^1.0.1",
     "history": "^4.7.2",
     "mitt": "^1.1.3",
     "mobx": "^4.2.1",
@@ -59,8 +60,7 @@
     "three": "^0.95.0",
     "three.meshline": "^1.1.0",
     "uuid": "^3.2.1",
-    "xmldom": "^0.1.27",
-    "electron-is-dev": "^1.0.1"
+    "xmldom": "^0.1.27"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
@@ -72,6 +72,7 @@
     "@babel/plugin-proposal-function-sent": "^7.1.0",
     "@babel/plugin-proposal-numeric-separator": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.01",
+    "@babel/plugin-proposal-optional-catch-binding": "^7.0.0",
     "@babel/plugin-proposal-throw-expressions": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-syntax-import-meta": "^7.0.0",
@@ -125,6 +126,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.3",
     "electron": "^3.0.2",
+    "electron-builder": "^20.28.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "jest": "21.3.0-beta.9",
@@ -145,8 +147,7 @@
     "webpack": "^3.10.0",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^2.9.7",
-    "webpack-fail-plugin": "^2.0.0",
-    "electron-builder": "^20.28.4"
+    "webpack-fail-plugin": "^2.0.0"
   },
   "resolutions": {
     "babel-core": "^7.0.0-bridge.0"
