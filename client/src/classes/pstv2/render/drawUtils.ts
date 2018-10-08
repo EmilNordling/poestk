@@ -6,12 +6,18 @@ import Connection from '../parser/Connection';
 import { STROKE_SIZE } from '../utils/constants';
 import State from '../State';
 
+function getRandomColor() {
+  return "#"+((1<<24)*Math.random()|0).toString(16);
+}
+
 function drawConnection(connection: Connection, context: CanvasRenderingContext2D, camera: Camera, scale: number) {
   let cancelBuffer = false;
   const node = connection.points.a;
   const outNode = connection.points.b;
 
   const tab = State.tabs[State.selectedTab!];
+
+  context.strokeStyle = getRandomColor();
 
   // TODO: add getterss
   if (tab.allocated[node.id] &&
@@ -20,7 +26,7 @@ function drawConnection(connection: Connection, context: CanvasRenderingContext2
      (outNode.id === tab.allocated[outNode.id].id)) {
     context.stroke();
     context.strokeStyle = '#ff0000';
-    context.beginPath();
+    // context.beginPath();
     context.lineWidth = 0.1 * scale;
 
     cancelBuffer = true;
@@ -39,7 +45,8 @@ function drawConnection(connection: Connection, context: CanvasRenderingContext2
   if (cancelBuffer) {
     context.stroke();
 
-    context.strokeStyle = '#545662';
+    // context.strokeStyle = '#545662';
+    context.strokeStyle = getRandomColor();
     context.beginPath();
   }
 }

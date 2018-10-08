@@ -65,9 +65,20 @@ class View {
       this.scene.addNode(new MatrixPoint(vector, node, node.size));
     });
 
+    const test = {};
+
     Object.values(Graph.connections).forEach((connection) => {
       const start = new Vector2(connection.points.a.x, connection.points.a.y);
       const end = new Vector2(connection.points.b.x, connection.points.b.y);
+
+      const id = `${connection.points.a.id}/${connection.points.b.id}`;
+      const idR = `${connection.points.b.id}/${connection.points.a.id}`;
+
+      if (id in test || id in test) {
+        console.log('??')
+      } else {
+        test[id] = [];
+      }
 
       this.scene.addConnection(new MatrixGeometry([start, end], connection));
     });

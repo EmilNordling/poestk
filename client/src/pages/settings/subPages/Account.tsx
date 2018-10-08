@@ -1,15 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { H, P } from '../../../common/text';
-import Row from '../../../common/grid/Row';
-import Col from '../../../common/grid/Col';
 import { inject, observer } from 'mobx-react';
+import { H } from '../../../common/text';
 import { AuthStore } from '../../../stores';
-import formGroup, { formControl } from '../../../utils/formGroup';
-import { FieldsetItem, Field } from '../../../common/_field';
-import Button from '../../../common/button';
-import EditField, { ListItem } from '../EditField';
+import formGroup from '../../../utils/formGroup';
+import { Field } from '../../../common/_field';
+import EditField from '../EditField';
 
 interface AccountProps {
   authStore?: AuthStore;

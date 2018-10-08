@@ -26,10 +26,6 @@ const ListItem = styled.div`
   padding: 20px 0;
 `;
 
-export {
-  ListItem,
-};
-
 @observer
 class EditField extends Component<EditFieldProps> {
   @observable public isOpen = false;
@@ -65,5 +61,9 @@ class EditField extends Component<EditFieldProps> {
     );
   }
 }
+
+export {
+  ListItem,
+};
 
 export default EditField;
