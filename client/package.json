@@ -27,6 +27,7 @@
   "scripts": {
     "clear:cache": "rimraf -rf ./node_modules/.cache/babel-loader/* && rimraf -rf ./.cache-loader/*",
     "dev": "concurrently \"SET BROWSER=none && yarn dev:wds\" \"wait-on http://localhost:5001 && electron .\"",
+    "mdev": "concurrently \"BROWSER=none && yarn dev:wds\" \"wait-on http://localhost:5001 && electron .\"",
     "dev:wds": "webpack-dev-server --config config/webpack.config.dev.js",
     "story": "start-storybook -p 6006",
     "build": "SET NODE_ENV=production&& webpack --config config/webpack.config.prod.js",
