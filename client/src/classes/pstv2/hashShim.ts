@@ -204,7 +204,7 @@ class Hash {
   }
 }
 
-export function generateHash(startClass: number, ascendancy: number, nodes: Array<any>): string {
+function encodeTree(startClass: number, ascendancy: number, nodes: Array<any>): string {
   const encode = new ByteEncode();
 
   encode.appendInt(version);
@@ -223,7 +223,7 @@ export function generateHash(startClass: number, ascendancy: number, nodes: Arra
   return link;
 }
 
-export async function decodeHash(HASHSTRING: string) {
+async function decodeTree(HASHSTRING: string) {
   const hashString = HASHSTRING.replace(/-/g, '+').replace(/_/g, '/');
   let decoded;
 
@@ -251,3 +251,8 @@ export async function decodeHash(HASHSTRING: string) {
     allocated: decodedAllocatedNodes,
   };
 }
+
+export {
+  encodeTree,
+  decodeTree,
+};

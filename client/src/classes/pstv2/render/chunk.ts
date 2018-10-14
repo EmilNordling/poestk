@@ -28,8 +28,6 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
     groupWidth = ((lastValue.x - firstValue.x) + 1) * TILE_SIZE;
   }
 
-  console.log(groupHeight)
-
   const chunkCanvas = new Canvas(groupWidth, groupHeight);
   chunkCanvas.updateSize(groupWidth, groupHeight);
   const chunkContext = chunkCanvas.getContext()!;
@@ -47,8 +45,6 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
   const endY = Math.ceil(
     (((lastValue.y + 1) * TILE_SIZE) / scale / DATA_TILE_SIZE),
   );
-
-
 
   const chunkData = scene.getData(new Vector2(startX, startY), new Vector2(endX, endY), scale);
   chunkContext.strokeStyle = '#545662';

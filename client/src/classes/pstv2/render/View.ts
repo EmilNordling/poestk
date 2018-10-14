@@ -23,7 +23,7 @@ class View {
   private allocate: Allocate;
 
   public newTab() {
-    const tabId = v4();
+    const tabId = v4() as TabGuid;
 
     State.tabs[tabId] = {
       startClass: 0,
@@ -39,7 +39,6 @@ class View {
 
   public init() {
     this.renderer = new Renderer();
-    document.body.appendChild(this.renderer.domElement);
 
     if (devicePixelRatio > 1) {
       Emitter.listen(this.renderer.canvas, ['touchmove'], 'touchMove');
@@ -88,6 +87,10 @@ class View {
     Emitter.on('draw', () => this.renderer.frameProvider.requestTick());
 
     this.newTab();
+
+    if (State.selectedTab !== null) {
+      State.decodeTree('AAAABAAAACHDV-GQ1vll', State.selectedTab);
+    }
   }
 
   public allocateNode(target: PassiveNode) {
@@ -99,7 +102,6 @@ class View {
 
     Object.keys(target.connection).forEach((connection) => {
       const node = target.connection[connection];
-      console.log(node)
       const nodeSize = node.size + (STROKE_SIZE * 2);
 
       if (node.x - nodeSize < lowestX) lowestX = node.x - nodeSize;
@@ -154,6 +156,15 @@ class View {
       const x = tile[0] * TILE_SIZE;
       const y = tile[1] * TILE_SIZE;
     });
+  }
+
+  public mountCanvas(parent: HTMLElement) {
+    this.renderer.parent = parent;
+
+    parent.appendChild(this.renderer.canvas);
+    this.renderer.canvas.appendChild(this.renderer.plane);
+
+    State.redraw();
   }
 }
 

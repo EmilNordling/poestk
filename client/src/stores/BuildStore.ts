@@ -1,11 +1,13 @@
 import { observable, computed, action } from 'mobx';
 import { changeClass } from '../classes/pst/publicAPI';
 import getNewCharacter, { VirutalCharacter, updateStat } from '../classes/calc/virutalCharacter';
-import { renderer, loader } from '../classes/pst';
-import { Characters } from '../classes/pst/characters';
-import Emitter from '../classes/pst/Emitter';
+import load from '../classes/pstv2';
+import View from '../classes/pstv2/render/View';
+import { Characters } from '../classes/pstv2/characters';
+import Emitter from '../classes/pstv2/Emitter';
 import { parseTreeData, TreeDataNode } from '../classes/calc/parseData';
-import { AllocationEmitState } from '../classes/pst/AllocationObservable';
+import { AllocationEmitState } from '../classes/pstv2/Allocate';
+import State from '../classes/pstv2/State';
 
 type builds = {
   [build: string]: VirutalCharacter;
@@ -14,7 +16,8 @@ type builds = {
 export default class BuildStore {
   @observable public loading = true;
   @observable public currentTab = 0;
-  public nodes: Array<TreeDataNode> = [];
+
+  public nodes: TreeDataNode[] = [];
   public builds: builds = {};
 
   @observable private _activeBuild: VirutalCharacter;
@@ -34,15 +37,17 @@ export default class BuildStore {
   public async load(mountIn: HTMLElement) {
     if (mountIn === null) return;
 
-    if (!this.activeBuild) {
-      await loader.start();
+    if (!State.isLoaded) {
+      await load();
 
       this.newCharacter(Characters.scion, false);
 
       this.loading = false;
     }
 
-    renderer.mountCanvas(mountIn);
+    View.mountCanvas(mountIn);
+
+    State.redraw();
   }
 
   @action

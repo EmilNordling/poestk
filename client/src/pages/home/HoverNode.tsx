@@ -5,7 +5,7 @@ import { observer, inject } from 'mobx-react';
 import { TransitionGroup } from 'react-transition-group';
 import transition from 'styled-transition-group';
 import { colors } from '../../constants';
-import Emitter from '../../classes/pst/Emitter';
+import Emitter from '../../classes/pstv2/Emitter';
 import { scheme } from '../../../../mod';
 import setStyle from '../../utils/attrStyleUpdate';
 import GUIStore from '../../stores/GUIStore';
@@ -13,6 +13,7 @@ import { P } from '../../common/text';
 import { Motion, spring } from 'react-motion';
 import withTheme from '../../hoc/withTheme';
 import ThemeHolder from '../../utils/ThemeHolder';
+import { MatrixPoint } from '../../classes/pstv2/render/Scene';
 
 const duration = 250;
 
@@ -105,7 +106,9 @@ class HoverNode extends Component<{ guiStore?: GUIStore }> {
     Emitter.removeListener('hoverOut', this.hoverOut);
   }
 
-  hover(position: { x: number, y: number }, node: any) {
+  hover(position: { x: number, y: number }, point: MatrixPoint<PassiveNode>) {
+    const node = point.context;
+
     this.text.title = node.dn;
     this.text.mods = [];
 
