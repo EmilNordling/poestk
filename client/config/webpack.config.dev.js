@@ -16,7 +16,7 @@ const proxyPort = 5000
 
 module.exports = {
   ...base,
-  devtool: 'cheap-module-inline-source-map',
+  devtool: 'source-map',
   entry: {
     app: [
       require.resolve('react-hot-loader/patch'),

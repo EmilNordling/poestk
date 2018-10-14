@@ -2,21 +2,19 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch",
-      "type": "node",
+      "name": "launch",
+      "type": "chrome",
       "request": "launch",
-      "program": "${workspaceRoot}/client/src/index.ts",
-      "stopOnEntry": true,
-      "args": [],
-      "cwd": "${workspaceRoot}/client",
-      "preLaunchTask": null,
-      "runtimeExecutable": null,
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-    },
+      "url": "http://localhost:5001",
+      "webRoot": "${workspaceRoot}/client/src",
+      "breakOnLoad": true,
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///*": "${webRoot}/../*",
+        "webpack:///./*": "${webRoot}/../*",
+        "webpack:///client/src/*": "${webRoot}/../src/*",
+        "webpack:///./~/*": "${webRoot}/../node_modules/*"
+      }
+    }
   ]
 }
