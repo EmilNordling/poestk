@@ -46,8 +46,6 @@ export default class BuildStore {
     }
 
     View.mountCanvas(mountIn);
-
-    State.redraw();
   }
 
   @action
@@ -79,8 +77,6 @@ export default class BuildStore {
       Object.keys(node.sd).forEach((modiferKey) => nodeProperties.data.push(parseTreeData(modiferKey, node.sd![modiferKey])));
 
       this.nodes.push(nodeProperties);
-
-      console.log(nodeProperties)
 
       this.activeBuild = updateStat(this.activeBuild, nodeProperties);
     } else {

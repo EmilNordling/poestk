@@ -9,6 +9,7 @@ interface Assets {
 }
 
 interface Tab {
+  name: string,
   startClass: number;
   ascendancy: number;
   allocated: {};
@@ -66,7 +67,7 @@ class State {
 
   }
 
-  public async decodeTree(hash: string, tabId: TabGuid) {
+  public async decodeTree(hash: string, tabId: TabGuid, draw = true) {
     try {
       const tab = this.tabById(tabId);
 
@@ -84,7 +85,7 @@ class State {
 
       this.changeClass(tab.startClass);
 
-      if (this.isCurrentTab(tabId)) {
+      if (this.isCurrentTab(tabId) && draw) {
         this.redraw();
       }
 

@@ -59,6 +59,10 @@ export default class Tile {
 
     this.canvas.canvas.setAttribute('pst-tile', this.key);
 
+    // if (this.key === '5/17/22') {
+    //   console.log((this.x * tileSizeDPI) + (offsetX * devicePixelRatio), (this.y * tileSizeDPI) + (offsetY * devicePixelRatio))
+    // }
+
     return this.canvas.canvas;
   }
 }

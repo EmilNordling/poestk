@@ -21,8 +21,6 @@ class Graph {
 
     nodes.forEach((node) => this.addNode(node.id.toString(), node));
 
-    console.log('??')
-
     // TODO: pre parse most of this
     Object.entries(groups).forEach((entry) => {
       const key = entry[0];

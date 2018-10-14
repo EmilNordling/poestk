@@ -16,7 +16,6 @@ function drawConnection(connection: Connection, context: CanvasRenderingContext2
 
   const tab = State.tabs[State.selectedTab!];
 
-  // context.strokeStyle = getRandomColor();
 
   // TODO: add getterss
   if (tab.allocated[node.id] &&
@@ -26,7 +25,6 @@ function drawConnection(connection: Connection, context: CanvasRenderingContext2
     context.stroke();
     context.strokeStyle = '#ff0000';
     context.beginPath();
-    context.lineWidth = 0.1 * scale;
 
     cancelBuffer = true;
   }
@@ -45,7 +43,6 @@ function drawConnection(connection: Connection, context: CanvasRenderingContext2
     context.stroke();
 
     context.strokeStyle = '#545662';
-    // context.strokeStyle = getRandomColor();
     context.beginPath();
   }
 }

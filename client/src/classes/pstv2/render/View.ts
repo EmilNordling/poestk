@@ -26,6 +26,7 @@ class View {
     const tabId = v4() as TabGuid;
 
     State.tabs[tabId] = {
+      name: 'untitled',
       startClass: 0,
       ascendancy: 0,
       allocated: {},
@@ -33,8 +34,6 @@ class View {
 
     State.tabCount++;
     State.selectedTab = tabId;
-
-    this.renderer.frameProvider.requestTick();
   }
 
   public init() {
@@ -89,7 +88,7 @@ class View {
     this.newTab();
 
     if (State.selectedTab !== null) {
-      State.decodeTree('AAAABAAAACHDV-GQ1vll', State.selectedTab);
+      State.decodeTree('AAAABAAAACHDV-GQ1vll', State.selectedTab, false);
     }
   }
 

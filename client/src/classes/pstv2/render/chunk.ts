@@ -68,6 +68,7 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
       const cachedTile = tile.canvas.canvas;
       renderer.plane.appendChild(cachedTile);
       cachedTile.style.position = 'absolute';
+      // cachedTile.style.opacity = '0.1';
       cachedTile.style['pointer-events'] = 'none';
       cachedTile.style.transform = `translate3d(${tile.x * TILE_SIZE}px, ${tile.y * TILE_SIZE}px, 0px)`;
     });
