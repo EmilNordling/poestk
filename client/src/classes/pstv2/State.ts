@@ -9,7 +9,7 @@ interface Assets {
 }
 
 interface Tab {
-  name: string,
+  name: string;
   startClass: number;
   ascendancy: number;
   allocated: {};
@@ -51,8 +51,44 @@ class State {
 
   }
 
-  public changeClass(character: number) {
+  public changeClass(changeTo: number, destructive = false, newFrame = false) {
+    if (!this.selectedTab) return;
 
+    const tab = this.tabById(this.selectedTab);
+
+    if (!tab) return;
+
+    if (destructive) tab.allocated = {};
+
+    switch (changeTo) {
+      case 0:
+        tab.allocated[58833] = Graph.nodes[58833];
+        break;
+      case 1:
+        tab.allocated[47175] = Graph.nodes[47175];
+        break;
+      case 2:
+        tab.allocated[50459] = Graph.nodes[50459];
+        break;
+      case 3:
+        tab.allocated[54447] = Graph.nodes[54447];
+        break;
+      case 4:
+        tab.allocated[50986] = Graph.nodes[50986];
+        break;
+      case 5:
+        tab.allocated[61525] = Graph.nodes[61525];
+        break;
+      case 6:
+        tab.allocated[44683] = Graph.nodes[44683];
+        break;
+      default:
+        throw new Error('invalid');
+    }
+
+    tab.startClass = changeTo;
+
+    if (newFrame) this.redraw();
   }
 
   public redraw() {

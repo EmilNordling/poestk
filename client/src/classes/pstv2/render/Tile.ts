@@ -51,6 +51,9 @@ export default class Tile {
 
     this.canvas.updateSize(tileSize, tileSize);
     this.context = this.canvas.getContext();
+    this.context.webkitImageSmoothingEnabled = false;
+    this.context.mozImageSmoothingEnabled = false;
+    this.context.imageSmoothingEnabled = false;
 
     const imageData = context.getImageData((this.x * tileSizeDPI) + (offsetX * devicePixelRatio), (this.y * tileSizeDPI) + (offsetY * devicePixelRatio), tileSizeDPI, tileSizeDPI);
     this.context.putImageData(imageData, 0, 0);
@@ -58,10 +61,6 @@ export default class Tile {
     this.state = true;
 
     this.canvas.canvas.setAttribute('pst-tile', this.key);
-
-    // if (this.key === '5/17/22') {
-    //   console.log((this.x * tileSizeDPI) + (offsetX * devicePixelRatio), (this.y * tileSizeDPI) + (offsetY * devicePixelRatio))
-    // }
 
     return this.canvas.canvas;
   }

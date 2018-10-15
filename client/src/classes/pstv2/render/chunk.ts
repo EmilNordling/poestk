@@ -31,7 +31,10 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
   const chunkCanvas = new Canvas(groupWidth, groupHeight);
   chunkCanvas.updateSize(groupWidth, groupHeight);
   const chunkContext = chunkCanvas.getContext()!;
-  chunkContext.translate(offsetX, offsetY);
+  chunkContext.translate(offsetX + 0.5, offsetY + 0.5);
+  chunkContext.webkitImageSmoothingEnabled = false;
+  chunkContext.mozImageSmoothingEnabled = false;
+  chunkContext.imageSmoothingEnabled = false;
 
   const startX = Math.floor(
     ((firstValue.x * TILE_SIZE) / scale / DATA_TILE_SIZE),
@@ -70,6 +73,12 @@ function chunk(tileBuffer: Tile[], scale: number, renderer: Renderer, camera: Ca
       cachedTile.style.position = 'absolute';
       // cachedTile.style.opacity = '0.1';
       cachedTile.style['pointer-events'] = 'none';
+      cachedTile.style['image-rendering'] = 'optimizeSpeed';
+      cachedTile.style['image-rendering'] = '-moz-crisp-edges';
+      cachedTile.style['image-rendering'] = '-webkit-optimize-contrast';
+      cachedTile.style['image-rendering'] = '-o-crisp-edges';
+      cachedTile.style['image-rendering'] = 'optimize-contrast';
+      cachedTile.style['-ms-interpolation-mode'] = 'nearest-neighbor';
       cachedTile.style.transform = `translate3d(${tile.x * TILE_SIZE}px, ${tile.y * TILE_SIZE}px, 0px)`;
     });
   });

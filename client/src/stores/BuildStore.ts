@@ -1,5 +1,4 @@
 import { observable, computed, action } from 'mobx';
-import { changeClass } from '../classes/pst/publicAPI';
 import getNewCharacter, { VirutalCharacter, updateStat } from '../classes/calc/virutalCharacter';
 import load from '../classes/pstv2';
 import View from '../classes/pstv2/render/View';
@@ -90,13 +89,9 @@ export default class BuildStore {
     }
   }
 
-  test() {
-    getNewCharacter(Characters.duelist);
-  }
-
   private newCharacter(character: Characters, destructive = true) {
     this.builds[this.currentTab] = getNewCharacter(character);
     this.activeBuild = this.builds[this.currentTab];
-    changeClass(character, destructive, destructive);
+    State.changeClass(character, destructive, destructive);
   }
 }
