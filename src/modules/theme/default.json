@@ -1,0 +1,13 @@
+{
+	"colors": {
+		"background": "#0f0f0f",
+		"border": "#232323",
+		"borderFocus": "#1d1d1d",
+		"foreground": "#313131",
+		"sandbox.background": "#1d1d1d",
+		"sandbox.foreground": "#0f0f0f",
+		"sandbox.navigationBar.background": "#0c0c0c",
+		"sandbox.sidePanel.background": "#0f0f0f",
+		"sandbox.bottomBar.background": "#111111"
+	}
+}

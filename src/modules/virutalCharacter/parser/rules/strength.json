@@ -1,0 +1,15 @@
+{
+  "name": "strength",
+  "pattern": "/^strength[\\s]?/",
+  "group": "modifier",
+  "type": "LIMIT",
+  "tags": ["defence"],
+  "displayAs": "# %",
+  "dependantOn": ["strength"],
+  "pipes": [
+    {
+      "get": "strength",
+      "use": "ADDED_FLAT"
+    }
+  ]
+}
