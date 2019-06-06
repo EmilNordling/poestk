@@ -1,35 +1,33 @@
 import styled from 'styled-components';
 import { colors } from '../../../../modules/theme/colors';
+import BaseButton from '../../../../ui/base/BaseButton';
 
 const Header = styled.div`
 	display: flex;
-	flex-direction: column;
 	width: 100%;
-	border-bottom: 1px solid #000000;
 	flex-shrink: 0;
 	margin-bottom: 30px;
-	background: #0c0c0c;
-	box-shadow: 0 0px 4px rgba(0, 0, 0, 0.82);
-`;
-
-const HeaderItemRow = styled.div`
-	display: flex;
-	background: #1b1b1b;
 	border-bottom: 1px solid #000000;
 `;
 
-const HeaderItem = styled.div`
-	padding: 5px 15px;
+const HeaderItem = styled(BaseButton)`
+	flex: 1;
+	text-align: center;
+	padding: 8px 15px;
 	box-sizing: border-box;
 	font-size: 0.8rem;
 	text-transform: capitalize;
-	user-select: none;
 	cursor: pointer;
 	color: rgba(255, 255, 255, 0.64);
+	border-right: 1px solid #000000;
 
 	&.active {
 		background: #272727;
 		color: #ffffff;
+	}
+
+	&:last-of-type {
+		border-right: none;
 	}
 `;
 
@@ -37,7 +35,7 @@ const Content = styled.div`
 	display: flex;
 	width: 350px;
 	background: ${colors['sandbox.sidePanel.background']};
-	border-right: 1px solid ${colors.border};
+	border-right: 1px solid #000000;
 	align-items: flex-start;
 	flex-direction: column;
 	overflow: hidden;
@@ -75,7 +73,6 @@ const Value = styled.div`
 `;
 
 export default {
-	HeaderItemRow,
 	HeaderItem,
 	Header,
 	InnerContainer,

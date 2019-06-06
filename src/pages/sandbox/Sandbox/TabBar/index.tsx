@@ -15,7 +15,7 @@ const TabBar: React.FC<TabBarComponent.Props> = () => {
 	};
 
 	const handleContextMenu = (event: React.MouseEvent) => {
-		event.preventDefault();
+
 	};
 
 	return (
@@ -23,6 +23,7 @@ const TabBar: React.FC<TabBarComponent.Props> = () => {
 			{BuildStore.builds.map((build) => {
 				return (
 					<style.Button
+						type='button'
 						draggable
 						tabIndex={0}
 						key={shortid.generate()}

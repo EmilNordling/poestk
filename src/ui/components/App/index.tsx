@@ -9,6 +9,9 @@ import style from './style';
 import Selection from '../Selection';
 import BuildStore from '../../../stores/BuildStore';
 import translate from '../../../pipes/translate';
+import decode from '../../../modules/passiveTree/decode';
+
+decode('AAAABAMAABFQGdcbJR1PMFs1uUuubRl_xpUgoqOnK60zwfPZW9-K6QI=');
 
 const App: React.FC = () => {
 	return (
@@ -24,6 +27,7 @@ const App: React.FC = () => {
 							},
 							description: translate('explorer.build.newBuild'),
 							shortcut: 'ctrl+n',
+							key: 'a',
 						},
 					],
 					[
@@ -31,6 +35,7 @@ const App: React.FC = () => {
 							action: () => { console.log('open build') },
 							description: translate('explorer.build.openBuild'),
 							shortcut: 'ctrl+o',
+							key: 'b',
 						},
 						{
 							action: () => { },
@@ -39,6 +44,7 @@ const App: React.FC = () => {
 								action: () => { console.log('test') },
 								description: 'test',
 							}],
+							key: 'c',
 						},
 					],
 					[
@@ -46,11 +52,13 @@ const App: React.FC = () => {
 							action: () => { console.log('save') },
 							description: translate('explorer.build.save'),
 							shortcut: 'ctrl+s',
+							key: 'd',
 						},
 						{
 							action: () => { console.log('save as') },
 							description: `${translate('explorer.build.saveAs')}...`,
 							shortcut: 'ctrl+shift+s',
+							key: 'e',
 						},
 					],
 				]} />

@@ -93,6 +93,10 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
     transition: background-color ease 200ms;
   }
+
+	*:focus {
+		outline: 1px solid #0095ff;
+	}
 `;
 
 export default GlobalStyle;

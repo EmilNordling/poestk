@@ -7706,6 +7706,11 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
+phenomenon@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/phenomenon/-/phenomenon-1.5.1.tgz#1639ed48947087f130364e51f3132ae7425cf096"
+  integrity sha512-+WTR6N423bjTz4BtiDOuy2/upojvRq7JNMuAXxB5e9Uu8x5V09Ovx6NRASVpNgG3AB0i7IHE7WQvs3mNXxEpbg==
+
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import style from './style';
 import { SelectionComponent } from './types';
 import shortid from 'shortid';
+import { CSSTransition } from 'react-transition-group';
+import GuiStore from '../../../stores/GuiStore';
+import isFocused from '../../../helpers/isFocused';
 
 type ItemProps = {
 	index: number,
@@ -23,6 +26,8 @@ const Item: React.FC<SelectionComponent.Item & ItemProps> = ({
 			onClick={action}
 			isFocused={index === currentSelectedIndex}
 			onMouseMove={() => setCurrentSelectedIndex(index)}
+			onFocus={() => setCurrentSelectedIndex(index)}
+			onBlur={() => setCurrentSelectedIndex(-1)}
 		>
 			<style.ItemGroup>
 				{description}
@@ -37,6 +42,8 @@ const Item: React.FC<SelectionComponent.Item & ItemProps> = ({
 const Selection: React.FC<SelectionComponent.Props> = ({ actions }) => {
 	let numberOfSeparators = 0;
 	let itemIndex = 0;
+
+	const showSelection = GuiStore.selections.length !== 0;
 
 	const [currentSelectedIndex, setCurrentSelectedIndex] = useState(-1);
 
@@ -56,7 +63,7 @@ const Selection: React.FC<SelectionComponent.Props> = ({ actions }) => {
 		});
 
 		if (index !== actions.length - 1) {
-			jsxGroup.push(<style.Separator key={shortid.generate()} />);
+			jsxGroup.push(<style.Separator key={`__sep__${numberOfSeparators}`} />);
 			numberOfSeparators++;
 		}
 
@@ -65,8 +72,6 @@ const Selection: React.FC<SelectionComponent.Props> = ({ actions }) => {
 
 	useEffect(() => {
 		const downHandler = (event: KeyboardEvent) => {
-			event.stopPropagation();
-
 			let newIndex = currentSelectedIndex;
 			const itemListLength = itemList.length - 1 - numberOfSeparators;
 
@@ -88,15 +93,15 @@ const Selection: React.FC<SelectionComponent.Props> = ({ actions }) => {
 					break;
 			}
 
+			if (document.activeElement) (document.activeElement as HTMLElement).blur();
+
 			setCurrentSelectedIndex(newIndex);
 		};
 
 		const upHandler = (event: KeyboardEvent) => {
-			event.stopPropagation();
-
 			switch (event.key) {
 				case 'Enter':
-					if (currentSelectedIndex !== -1) {
+					if (currentSelectedIndex !== -1 && !isFocused(event)) {
 						const { action } = actions.flatMap(item => item)[currentSelectedIndex];
 
 						if (action) action(event);
@@ -116,11 +121,21 @@ const Selection: React.FC<SelectionComponent.Props> = ({ actions }) => {
 	}, [currentSelectedIndex]);
 
 	return (
-		<style.Container onMouseLeave={() => setCurrentSelectedIndex(-1)}>
-			<div>
-				{itemList}
-			</div>
-		</style.Container>
+		<CSSTransition
+			in={true}
+			timeout={300}
+			unmountOnExit={true}
+			classNames='animation'
+		>
+			<style.Container
+				blocksUserInput={true}
+				onMouseLeave={() => setCurrentSelectedIndex(-1)}
+			>
+				<div>
+					{itemList}
+				</div>
+			</style.Container>
+		</CSSTransition>
 	);
 };
 

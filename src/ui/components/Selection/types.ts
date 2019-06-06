@@ -8,11 +8,14 @@ export namespace SelectionComponent {
 		description: string;
 		shortcut?: string;
 		group?: Group;
+		key: string,
 	}
 
 	export interface Props {
 		actions: Specification;
 	}
 
-	export interface Style { }
+	export interface Style {
+		blocksUserInput: boolean;
+	}
 }
