@@ -3,7 +3,10 @@ import style from './style';
 import { StatsComponent } from './types';
 import Paragraph from '../../../../ui/common/Paragraph';
 
-const Stat: React.FC<{ description: string, value: string }> = ({ description, value }) => {
+const Stat: React.FC<{ description: string; value: string }> = ({
+	description,
+	value,
+}) => {
 	return (
 		<style.StatsDisplayStyle>
 			<style.Description>
@@ -17,23 +20,26 @@ const Stat: React.FC<{ description: string, value: string }> = ({ description, v
 };
 
 const Stats: React.FC<StatsComponent.Props> = ({ character }) => {
-	const attributes = Object.entries(character.getStats()).map(([tag, stats]) => {
-		const jsxStatList = stats.map((stat) => {
-			return useMemo(() => <Stat key={stat.raw.hash} description={stat.raw.property} value={stat.transpiled} />, []);
-		});
+	const attributes = Object.entries(character.getStats()).map(
+		([tag, stats]) => {
+			const jsxStatList = stats.map(stat => {
+				return useMemo(
+					() => (
+						<Stat
+							key={stat.raw.hash}
+							description={stat.raw.property}
+							value={stat.transpiled}
+						/>
+					),
+					[]
+				);
+			});
 
-		return (
-			<style.StatItem key={tag}>
-				{jsxStatList}
-			</style.StatItem>
-		);
-	});
-
-	return (
-		<Fragment>
-			{attributes}
-		</Fragment>
+			return <style.StatItem key={tag}>{jsxStatList}</style.StatItem>;
+		}
 	);
+
+	return <Fragment>{attributes}</Fragment>;
 };
 
 export default Stats;

@@ -23,7 +23,6 @@ function TextField<T>({
 	return (
 		<TextFieldStyle fixedWidth={fixedWidth}>
 			<InputWrapper>
-
 				<InputStyle
 					placeholder={placeholder && example}
 					type={type || 'text'}
@@ -35,20 +34,17 @@ function TextField<T>({
 
 				<Border />
 
-				{placeholder &&
+				{placeholder && (
 					<Label htmlFor={hash}>
 						<Paragraph>
-							{required && '*'}{placeholder}
+							{required && '*'}
+							{placeholder}
 						</Paragraph>
 					</Label>
-				}
+				)}
 			</InputWrapper>
 
-			{helperText &&
-				<HelperText>
-					{helperText}
-				</HelperText>
-			}
+			{helperText && <HelperText>{helperText}</HelperText>}
 		</TextFieldStyle>
 	);
 }

@@ -7,9 +7,9 @@ import GuiStore from '../../../stores/GuiStore';
 import isFocused from '../../../helpers/isFocused';
 
 type ItemProps = {
-	index: number,
-	currentSelectedIndex: number,
-	setCurrentSelectedIndex: React.Dispatch<React.SetStateAction<number>>,
+	index: number;
+	currentSelectedIndex: number;
+	setCurrentSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const Item: React.FC<SelectionComponent.Item & ItemProps> = ({
@@ -29,12 +29,8 @@ const Item: React.FC<SelectionComponent.Item & ItemProps> = ({
 			onFocus={() => setCurrentSelectedIndex(index)}
 			onBlur={() => setCurrentSelectedIndex(-1)}
 		>
-			<style.ItemGroup>
-				{description}
-			</style.ItemGroup>
-			<style.ItemGroup>
-				{shortcut}
-			</style.ItemGroup>
+			<style.ItemGroup>{description}</style.ItemGroup>
+			<style.ItemGroup>{shortcut}</style.ItemGroup>
 		</style.Item>
 	);
 };
@@ -48,7 +44,7 @@ const Selection: React.FC<SelectionComponent.Props> = ({ actions }) => {
 	const [currentSelectedIndex, setCurrentSelectedIndex] = useState(-1);
 
 	const itemList = actions.flatMap((group, index) => {
-		const jsxGroup: JSX.Element[] = group.map((item) => {
+		const jsxGroup: JSX.Element[] = group.map(item => {
 			itemIndex++;
 
 			return (
@@ -121,19 +117,9 @@ const Selection: React.FC<SelectionComponent.Props> = ({ actions }) => {
 	}, [currentSelectedIndex]);
 
 	return (
-		<CSSTransition
-			in={true}
-			timeout={300}
-			unmountOnExit={true}
-			classNames='animation'
-		>
-			<style.Container
-				blocksUserInput={true}
-				onMouseLeave={() => setCurrentSelectedIndex(-1)}
-			>
-				<div>
-					{itemList}
-				</div>
+		<CSSTransition in={true} timeout={300} unmountOnExit={true} classNames='animation'>
+			<style.Container blocksUserInput={true} onMouseLeave={() => setCurrentSelectedIndex(-1)}>
+				<div>{itemList}</div>
 			</style.Container>
 		</CSSTransition>
 	);

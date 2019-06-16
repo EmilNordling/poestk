@@ -49,7 +49,7 @@ const Container = styled.div<SelectionComponent.Style>`
   `};
 `;
 
-const Item = styled(BaseButton)<{ isFocused: boolean }>`
+const Item = styled(BaseButton) <{ isFocused: boolean }>`
 	width: 100%;
 	display: flex;
 	justify-content: space-between;

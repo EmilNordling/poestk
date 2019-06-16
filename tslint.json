@@ -1,3 +1,8 @@
 {
-  "extends": "tslint-config-visibacare"
+  "extends": [
+		"tslint-config-visibacare"
+	],
+	"rules": {
+    "prettier": true
+  }
 }

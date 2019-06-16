@@ -12,7 +12,9 @@ const Workbench: React.FC<WorkbenchComponent.Props> = () => {
 	if (BuildStore.selectedIndex === undefined) {
 		return (
 			<style.MissingBuild>
-				<Paragraph italic color='rgba(255, 255, 255, 0.2)'>(ง'̀-'́)ง</Paragraph>
+				<Paragraph italic color='rgba(255, 255, 255, 0.2)'>
+					(ง'̀-'́)ง
+				</Paragraph>
 				{/* <SplashBackground /> */}
 			</style.MissingBuild>
 		);
@@ -22,7 +24,9 @@ const Workbench: React.FC<WorkbenchComponent.Props> = () => {
 		<Fragment>
 			<TabBar />
 			<style.Content>
-				<SidePanel character={BuildStore.builds[BuildStore.selectedIndex - 1].character} />
+				<SidePanel
+					character={BuildStore.builds[BuildStore.selectedIndex - 1].character}
+				/>
 				<PassiveTreePortal />
 			</style.Content>
 		</Fragment>

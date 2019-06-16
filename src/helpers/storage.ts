@@ -1,4 +1,4 @@
-type StoreType =  'session' | 'local';
+type StoreType = 'session' | 'local';
 
 interface StorageSpecification {
 	prefix?: string;

@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes, useRef, useState } from 'react';
 import style from './style';
 import { BaseButtonComponent } from './types';
 
-const BaseButton: React.FC<BaseButtonComponent.Props> = (props) => {
+const BaseButton: React.FC<BaseButtonComponent.Props> = props => {
 	const {
 		// Takes out these values to be used as variables here.
 		children,
@@ -59,22 +59,14 @@ const BaseButton: React.FC<BaseButtonComponent.Props> = (props) => {
 
 	// Keyboard events
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-		console.log(event)
+		console.log(event);
 	};
-	const handleKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-
-	};
+	const handleKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) => {};
 
 	// Touch events
-	const handleTouchStart = (event: React.TouchEvent<HTMLButtonElement>) => {
-
-	};
-	const handleTouchEnd = (event: React.TouchEvent<HTMLButtonElement>) => {
-
-	};
-	const handleTouchMove = (event: React.TouchEvent<HTMLButtonElement>) => {
-
-	};
+	const handleTouchStart = (event: React.TouchEvent<HTMLButtonElement>) => {};
+	const handleTouchEnd = (event: React.TouchEvent<HTMLButtonElement>) => {};
+	const handleTouchMove = (event: React.TouchEvent<HTMLButtonElement>) => {};
 
 	return (
 		<style.BaseButton

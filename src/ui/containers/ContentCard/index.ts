@@ -5,7 +5,7 @@ interface Props {
 	marginBottom?: number;
 }
 
-const ContentCard = styled('div')<Props>`
+const ContentCard = styled('div') <Props>`
   background: #ffffff;
   padding: ${({ padding }) => typeof padding === 'number' ? padding : 45}px;
   border-radius: 4px;
@@ -13,7 +13,7 @@ const ContentCard = styled('div')<Props>`
   max-width: 1024px;
 	width: 100%;
   margin: 0 auto;
-	${({ marginBottom }) => marginBottom && `margin-bottom: ${marginBottom}px` }
+	${({ marginBottom }) => marginBottom && `margin-bottom: ${marginBottom}px`}
 `;
 
 export default ContentCard;

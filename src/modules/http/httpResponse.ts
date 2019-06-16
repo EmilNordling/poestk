@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-export interface HttpResponse<T> extends AxiosResponse<T> {}
+export interface HttpResponse<T> extends AxiosResponse<T> { }
 
 export interface HttpError {
 	data: null;

@@ -2,67 +2,67 @@ const jsonfile = require('jsonfile');
 const { parseMods } = require('../../mod');
 
 function findMatches(sd) {
-  const builder = {};
+	const builder = {};
 
-  sd.forEach((testAgainst) => {
-    const newData = parseMods(testAgainst);
+	sd.forEach(testAgainst => {
+		const newData = parseMods(testAgainst);
 
-    if (newData !== null) {
-      builder[newData[0]] = newData[1];
-    }
-  });
+		if (newData !== null) {
+			builder[newData[0]] = newData[1];
+		}
+	});
 
-  return builder;
+	return builder;
 }
 
 function nodeSdParse(nodes) {
-  const newEntry = Object.values(nodes);
+	const newEntry = Object.values(nodes);
 
-  newEntry.forEach((node) => {
-    if (typeof node.sd === 'undefined') return;
-    const newSd = findMatches(node.sd);
+	newEntry.forEach(node => {
+		if (typeof node.sd === 'undefined') return;
+		const newSd = findMatches(node.sd);
 
-    if (Object.keys(newSd).length === node.sd.length) {
-      node.sd = newSd;
-    } else {
-      console.log(node.sd)
-    }
-  });
+		if (Object.keys(newSd).length === node.sd.length) {
+			node.sd = newSd;
+		} else {
+			console.log(node.sd);
+		}
+	});
 
-  return newEntry;
+	return newEntry;
 }
 
 function nodeSkillSpriteParse(nodes) {
-  return new Promise((resolve, reject) => {
-    const newEntry = Object.values(nodes);
+	return new Promise((resolve, reject) => {
+		const newEntry = Object.values(nodes);
 
-    jsonfile.readFile('dist/skillSprites.json', (err, skillSpritesData) => {
-      if (err) reject(err);
+		jsonfile.readFile('dist/skillSprites.json', (err, skillSpritesData) => {
+			if (err) reject(err);
 
-      newEntry.forEach((node) => {
-        let constrains;
+			newEntry.forEach(node => {
+				let constrains;
 
-        if (node.not === true) {
-          constrains = skillSpritesData.notableActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
-        } else if (node.ks === true) {
-          constrains = skillSpritesData.keystoneActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
-        } else if (node.m === true) {
-          constrains = skillSpritesData.mastery[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
-        } else {
-          constrains = skillSpritesData.normalActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
-        }
+				if (node.not === true) {
+					constrains = skillSpritesData.notableActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+				} else if (node.ks === true) {
+					constrains = skillSpritesData.keystoneActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+				} else if (node.m === true) {
+					constrains = skillSpritesData.mastery[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+				} else {
+					constrains = skillSpritesData.normalActive[2].coords[`Art/2DArt/SkillIcons/passives/${node.ni}.png`];
+				}
 
-        if (typeof constrains === 'undefined') console.log(node);
+				if (typeof constrains === 'undefined') console.log(node);
 
-        node['s'] = Object.values(constrains);
-      });
+				node['s'] = Object.values(constrains);
+			});
 
-      resolve(newEntry);
-    });
-  });
+			resolve(newEntry);
+		});
+	});
 }
 
 module.exports = {
-  nodeSdParse,
-  nodeSkillSpriteParse,
+	nodeSdParse,
+	nodeSkillSpriteParse,
 };

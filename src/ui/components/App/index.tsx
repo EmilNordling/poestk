@@ -19,49 +19,61 @@ const App: React.FC = () => {
 			<Fragment>
 				<GlobalStyle />
 				<Modal />
-				<Selection actions={[
-					[
-						{
-							action: () => {
-								BuildStore.newCharacter();
+				<Selection
+					actions={[
+						[
+							{
+								action: () => {
+									BuildStore.newCharacter();
+								},
+								description: translate('explorer.build.newBuild'),
+								shortcut: 'ctrl+n',
+								key: 'a',
 							},
-							description: translate('explorer.build.newBuild'),
-							shortcut: 'ctrl+n',
-							key: 'a',
-						},
-					],
-					[
-						{
-							action: () => { console.log('open build') },
-							description: translate('explorer.build.openBuild'),
-							shortcut: 'ctrl+o',
-							key: 'b',
-						},
-						{
-							action: () => { },
-							description: 'group test',
-							group: [{
-								action: () => { console.log('test') },
-								description: 'test',
-							}],
-							key: 'c',
-						},
-					],
-					[
-						{
-							action: () => { console.log('save') },
-							description: translate('explorer.build.save'),
-							shortcut: 'ctrl+s',
-							key: 'd',
-						},
-						{
-							action: () => { console.log('save as') },
-							description: `${translate('explorer.build.saveAs')}...`,
-							shortcut: 'ctrl+shift+s',
-							key: 'e',
-						},
-					],
-				]} />
+						],
+						[
+							{
+								action: () => {
+									console.log('open build');
+								},
+								description: translate('explorer.build.openBuild'),
+								shortcut: 'ctrl+o',
+								key: 'b',
+							},
+							{
+								action: () => {},
+								description: 'group test',
+								group: [
+									{
+										action: () => {
+											console.log('test');
+										},
+										description: 'test',
+									},
+								],
+								key: 'c',
+							},
+						],
+						[
+							{
+								action: () => {
+									console.log('save');
+								},
+								description: translate('explorer.build.save'),
+								shortcut: 'ctrl+s',
+								key: 'd',
+							},
+							{
+								action: () => {
+									console.log('save as');
+								},
+								description: `${translate('explorer.build.saveAs')}...`,
+								shortcut: 'ctrl+shift+s',
+								key: 'e',
+							},
+						],
+					]}
+				/>
 				<style.Content>
 					<InjectRoutes url='' routes={routes} />
 				</style.Content>

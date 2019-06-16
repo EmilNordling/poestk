@@ -131,7 +131,7 @@ function ph(canvas: HTMLCanvasElement) {
 		canvas,
 		settings: {
 			clearColor: [29 / 255, 29 / 255, 29 / 255, 1],
-			position: {x: 0, y: 0, z: 1.2 },
+			position: { x: 0, y: 0, z: 1.2 },
 			shouldRender: true
 		}
 	});

@@ -6,15 +6,8 @@ import { NotFound } from '../../../pages/index';
 const InjectRoutes: React.FC<InjectRoutesComponent.Props> = ({ routes, url }) => {
 	return (
 		<Switch>
-			{routes.map((route) => {
-				const {
-					exact,
-					path,
-					key,
-					strict,
-					routes,
-					component: Component,
-				} = route;
+			{routes.map(route => {
+				const { exact, path, key, strict, routes, component: Component } = route;
 
 				return (
 					<Route

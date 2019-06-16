@@ -15,9 +15,7 @@ class HttpOptions<T extends Object> {
 		queryParam?: T,
 		cancelToken?: CancelTokenSource,
 		withCredentials?: boolean,
-	} = {
-		withCredentials: true,
-	}) {
+	} = { withCredentials: true }) {
 		this.queryParam = config.queryParam;
 		this.cancelToken = config.cancelToken;
 		this.requestConfig.withCredentials = config.withCredentials;

@@ -54,19 +54,27 @@ function InputBase<T>({
 		const key = formKey as Extract<keyof T, string>;
 
 		return (
-			<Observer render={() => {
-				const value = formGroup.pull(key);
+			<Observer
+				render={() => {
+					const value = formGroup.pull(key);
 
-				if (hook) hook(value);
+					if (hook) hook(value);
 
-				return (
-					<InputStyle type={type} value={value} checked={type === 'checkbox' ? value : undefined} onChange={(event) => {
-						handleFormChange<T>(event, formGroup, key);
+					return (
+						<InputStyle
+							type={type}
+							value={value}
+							checked={type === 'checkbox' ? value : undefined}
+							onChange={event => {
+								handleFormChange<T>(event, formGroup, key);
 
-						if (onChange) onChange(event);
-					}} {...props} />
-				);
-			}} />
+								if (onChange) onChange(event);
+							}}
+							{...props}
+						/>
+					);
+				}}
+			/>
 		);
 	}
 
@@ -80,11 +88,11 @@ function InputBase<T>({
 
 	// Else it'll return a plain input without style.
 	return (
-		<Observer render={() => {
-			return (
-				<InputStyle type={type} {...props} value={state.value} onChange={interceptOnChange} />
-			);
-		}} />
+		<Observer
+			render={() => {
+				return <InputStyle type={type} {...props} value={state.value} onChange={interceptOnChange} />;
+			}}
+		/>
 	);
 }
 

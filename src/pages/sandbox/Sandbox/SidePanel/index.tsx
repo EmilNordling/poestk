@@ -17,13 +17,14 @@ const SidePanel: React.FC<SidePanelComponent.Props> = ({ character }) => {
 	const handleMouseDown = (event: React.MouseEvent, newView: Views) => {
 		const which = event.nativeEvent.which;
 
-		if (which === 1) { // Left click
+		if (which === 1) {
+			// Left click
 			setView(newView);
 		}
 	};
 
 	const handleMouseClick = (event: React.MouseEvent, newView: Views) => {
-		console.log(newView)
+		console.log(newView);
 
 		if (view !== newView) {
 			setView(newView);
@@ -50,14 +51,12 @@ const SidePanel: React.FC<SidePanelComponent.Props> = ({ character }) => {
 					items
 				</style.HeaderItem>
 			</style.Header>
-			{view === Views.stats &&
-				<Stats character={character} />
-			}
-			{view === Views.items &&
+			{view === Views.stats && <Stats character={character} />}
+			{view === Views.items && (
 				<style.InnerContainer>
 					<ItemArea />
 				</style.InnerContainer>
-			}
+			)}
 		</style.Content>
 	);
 };

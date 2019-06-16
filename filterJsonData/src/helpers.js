@@ -1,16 +1,16 @@
 function has(property, key) {
-  if (property === undefined) return false;
+	if (property === undefined) return false;
 
-  return Object.hasOwnProperty.call(property, key);
+	return Object.hasOwnProperty.call(property, key);
 }
 
 function each(object, callback) {
-  Object.keys(object).forEach(callback);
+	Object.keys(object).forEach(callback);
 
-  return object;
+	return object;
 }
 
 module.exports = {
-  has,
-  each,
+	has,
+	each,
 };

@@ -37,14 +37,16 @@ function Toggle<T>({
 		}
 	};
 
-	const updatePosition = (element: HTMLDivElement) => element.style.transform = `translateX(${position}%)`;
+	const updatePosition = (element: HTMLDivElement) =>
+		(element.style.transform = `translateX(${position}%)`);
 
 	const ref = useDrag({
 		startHandler: () => {
 			ref.current.classList.add('js-dragging');
 		},
 		dragHandler: (event, { current }) => {
-			position = (((event.pageX - parentRef.current!.offsetLeft) - 10) / 20) * 100;
+			position =
+				((event.pageX - parentRef.current!.offsetLeft - 10) / 20) * 100;
 
 			if (position < 0) {
 				position = 0;
@@ -68,33 +70,45 @@ function Toggle<T>({
 			ref.current.classList.remove('js-dragging');
 
 			// timeout to fix race condition with onClick event.
-			setTimeout(() => blockClick = false);
+			setTimeout(() => (blockClick = false));
 		},
 	});
 
 	return (
-		<style.ToggleStyle ref={parentRef} onClick={() => {
-			if (blockClick) return;
+		<style.ToggleStyle
+			ref={parentRef}
+			onClick={() => {
+				if (blockClick) return;
 
-			position = position > 50 ? 0 : 100;
-
-			updateValue();
-
-			updatePosition(ref.current);
-		}}>
-			<style.InputStyle formGroup={formGroup} formKey={formKey} type='checkbox' {...props} hook={(newValue) => {
-				if (newValue === value) return;
-
-				position = newValue ? 100 : 0;
+				position = position > 50 ? 0 : 100;
 
 				updateValue();
 
-				updatePosition(ref.current!);
-			}} />
+				updatePosition(ref.current);
+			}}
+		>
+			<style.InputStyle
+				formGroup={formGroup}
+				formKey={formKey}
+				type='checkbox'
+				{...props}
+				hook={newValue => {
+					if (newValue === value) return;
+
+					position = newValue ? 100 : 0;
+
+					updateValue();
+
+					updatePosition(ref.current!);
+				}}
+			/>
 			<style.Bar />
-			<style.Dragger style={{
-				transform: `translateX(${position}%)`,
-			}} ref={ref} />
+			<style.Dragger
+				style={{
+					transform: `translateX(${position}%)`,
+				}}
+				ref={ref}
+			/>
 		</style.ToggleStyle>
 	);
 }

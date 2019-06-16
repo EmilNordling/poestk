@@ -6,7 +6,7 @@ import style from './style';
 import { CSSTransition } from 'react-transition-group';
 
 // Stores a copy of the last element so the exit animation can be used.
-let preservedChild: JSX.Element | null = null;
+let preservedChild: JSX.Element | null = null;
 
 function createChild(modals: JSX.Element[]) {
 	if (modals.length > 0) {

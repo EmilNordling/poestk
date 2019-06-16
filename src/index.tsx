@@ -7,10 +7,7 @@ import App from './ui/components/App';
  * Application renderer.
  */
 const render = (Component: React.FC) => {
-	ReactDOM.render(
-		<Component />,
-		document.getElementById('app'),
-	);
+	ReactDOM.render(<Component />, document.getElementById('app'));
 };
 
 /**

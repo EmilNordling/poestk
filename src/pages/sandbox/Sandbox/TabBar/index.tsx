@@ -9,18 +9,17 @@ const TabBar: React.FC<TabBarComponent.Props> = () => {
 	const handleMouseDown = (event: React.MouseEvent, tabIndex: number) => {
 		const which = event.nativeEvent.which;
 
-		if (which === 1) { // Left click
+		if (which === 1) {
+			// Left click
 			BuildStore.selectIndex(tabIndex);
 		}
 	};
 
-	const handleContextMenu = (event: React.MouseEvent) => {
-
-	};
+	const handleContextMenu = (event: React.MouseEvent) => {};
 
 	return (
 		<style.TabBar>
-			{BuildStore.builds.map((build) => {
+			{BuildStore.builds.map(build => {
 				return (
 					<style.Button
 						type='button'
@@ -29,7 +28,9 @@ const TabBar: React.FC<TabBarComponent.Props> = () => {
 						key={shortid.generate()}
 						onMouseDown={event => handleMouseDown(event, build.tabIndex)}
 						onContextMenu={handleContextMenu}
-						className={build.tabIndex === BuildStore.selectedIndex ? 'active' : ''}
+						className={
+							build.tabIndex === BuildStore.selectedIndex ? 'active' : ''
+						}
 					>
 						{build.name}
 					</style.Button>

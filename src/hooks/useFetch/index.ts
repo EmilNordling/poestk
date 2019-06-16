@@ -37,7 +37,7 @@ function useFetch<T, R extends Array<any>>(
 
 		const source = Axios.CancelToken.source();
 
-		const httpOptionsArgument: HttpOptions<any> | undefined = args[args.length - 1] as any;
+		const httpOptionsArgument: HttpOptions<any> | undefined = args[args.length - 1] as any;
 
 		if (!httpOptionsArgument || !(httpOptionsArgument instanceof HttpOptions)) {
 			// This is to force a HttpOptions to always be included with a cancelToken
