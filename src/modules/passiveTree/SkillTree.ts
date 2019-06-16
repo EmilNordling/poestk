@@ -1,10 +1,6 @@
-// class SkillTree {
-
-// }
-
-// export default SkillTree;
-
 import Phenomenon from 'phenomenon';
+import Matrix from './core/Matrix';
+
 
 function ph(canvas: HTMLCanvasElement) {
 	const multiplier = 6;
@@ -156,4 +152,10 @@ function ph(canvas: HTMLCanvasElement) {
 
 }
 
-export default ph;
+function init() {
+	const m = new Matrix();
+
+	m.popularize();
+}
+
+export default init;

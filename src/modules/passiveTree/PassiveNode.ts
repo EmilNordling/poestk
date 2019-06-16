@@ -8,51 +8,49 @@ type TempData = {
 };
 
 class PassiveNode {
+	public readonly id: number;
 	// rendering
-	public x: number;
-	public y: number;
-	public arc: number;
-	public skillSprite: Passive.SkillSprite;
+	public readonly x: number;
+	public readonly y: number;
+	public readonly arc: number;
+	public readonly skillSprite: Passive.SkillSprite;
 
 	// node status
-	public isKeyStone: boolean | undefined;
-	public isNoteable: boolean | undefined;
-	public isMastery: boolean | undefined;
-	public isJewelSocket: boolean | undefined;
-	public isMultipleChoice: boolean | undefined;
-	public isMultipleChoiceOption: boolean | undefined;
-	public isAscendancyStart: boolean | undefined;
-	public isAscendancy: boolean | undefined;
+	public readonly isKeyStone: boolean | undefined;
+	public readonly isNoteable: boolean | undefined;
+	public readonly isMastery: boolean | undefined;
+	public readonly isJewelSocket: boolean | undefined;
+	public readonly isMultipleChoice: boolean | undefined;
+	public readonly isMultipleChoiceOption: boolean | undefined;
+	public readonly isAscendancyStart: boolean | undefined;
+	public readonly isAscendancy: boolean | undefined;
 
 	// texts
-	public name: string | undefined;
-	public ascendancyName: string | undefined;
-	public reminderText: string | undefined;
-	public flavourText: string[] | undefined;
-	public statDescriptions: Passive.TextValue[] | undefined;
+	public readonly name: string | undefined;
+	public readonly ascendancyName: string | undefined;
+	public readonly reminderText: string | undefined;
+	public readonly flavourText: string[] | undefined;
+	public readonly statDescriptions: Passive.TextValue[] | undefined;
 
 	// TODO: remove these
-	public groupId: number | undefined;
-	public passivePointsGranted: number | undefined;
-	public strengthGain: number | undefined;
-	public intelligenceGain: number | undefined;
-	public dexterityGain: number | undefined;
+	public readonly groupId: number | undefined;
+	public readonly passivePointsGranted: number | undefined;
+	public readonly strengthGain: number | undefined;
+	public readonly intelligenceGain: number | undefined;
+	public readonly dexterityGain: number | undefined;
 
 	// references
-	public classStartingNode: PassiveNode[];
-	public children: PassiveNode[];
-	public parents: PassiveNode[];
-
-	// DOM
-	public domReference: SVGElement;
+	public classStartingNode: PassiveNode[] = [];
+	public children: PassiveNode[] = [];
+	public parents: PassiveNode[] = [];
 
 	// misc
 	private tempData: TempData;
 
 	constructor(
-		public readonly id: number,
 		data: Passive.Node,
 	) {
+		this.id = data.a;
 		// rendering
 		const [x, y, arc] = data.A;
 		this.x = x;

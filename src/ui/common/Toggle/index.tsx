@@ -3,12 +3,7 @@ import { ToggleComponent } from './types';
 import style from './style';
 import useDrag from '../../../hooks/useDrag/index';
 
-function Toggle<T>({
-	formGroup,
-	formKey,
-	onChange,
-	...props
-}: ToggleComponent.Props<T>) {
+function Toggle<T>({ formGroup, formKey, onChange, ...props }: ToggleComponent.Props<T>) {
 	const parentRef = useRef(null) as React.RefObject<HTMLDivElement>;
 
 	let value = formGroup ? formGroup.pull(formKey as string) : false;
@@ -37,16 +32,14 @@ function Toggle<T>({
 		}
 	};
 
-	const updatePosition = (element: HTMLDivElement) =>
-		(element.style.transform = `translateX(${position}%)`);
+	const updatePosition = (element: HTMLDivElement) => (element.style.transform = `translateX(${position}%)`);
 
 	const ref = useDrag({
 		startHandler: () => {
 			ref.current.classList.add('js-dragging');
 		},
 		dragHandler: (event, { current }) => {
-			position =
-				((event.pageX - parentRef.current!.offsetLeft - 10) / 20) * 100;
+			position = ((event.pageX - parentRef.current!.offsetLeft - 10) / 20) * 100;
 
 			if (position < 0) {
 				position = 0;
