@@ -1,44 +1,32 @@
 import React, { ButtonHTMLAttributes, useRef, useState } from 'react';
-import styled from 'styled-components';
+import style from './style';
+import { BaseButtonComponent } from './types';
 
-const Style = styled.button`
-	border: none;
-	margin: 0;
-	padding: 0;
-	width: auto;
-	overflow: visible;
-	background: transparent;
-	color: inherit;
-	font: inherit;
-	line-height: normal;
-	-webkit-font-smoothing: inherit;
-	-moz-osx-font-smoothing: inherit;
-	-webkit-appearance: none;
-	cursor: pointer;
-`;
-
-const BaseButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) => {
+const BaseButton: React.FC<BaseButtonComponent.Props> = (props) => {
 	const {
+		// Takes out these values to be used as variables here.
 		children,
 		className,
 		disabled,
-
+		// Takes out focus events for override.
 		onBlur,
 		onFocus,
-
+		// Takes out mouse events for override.
 		onClick,
 		onMouseDown,
 		onMouseUp,
 		onMouseLeave,
-
+		// Takes out keyboard events for override.
 		onKeyUp,
 		onKeyDown,
-
+		// Takes out touch events for override.
 		onTouchEnd,
 		onTouchMove,
 		onTouchStart,
+		// defaults.
 		tabIndex = 0,
 		type = 'button',
+		// Spreads anything else.
 		...rest
 	} = props;
 
@@ -89,7 +77,7 @@ const BaseButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) =>
 	};
 
 	return (
-		<Style
+		<style.BaseButton
 			ref={buttonRef}
 			className={className}
 			disabled={disabled}
@@ -109,7 +97,7 @@ const BaseButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = (props) =>
 			{...rest}
 		>
 			{children}
-		</Style>
+		</style.BaseButton>
 	);
 };
 
