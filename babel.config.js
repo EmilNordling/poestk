@@ -1,4 +1,4 @@
-const { babelConfig } = require('ve-react-cli');
+const { getBabelConfig } = require('ve-react-cli');
 
 // Exposes ve-react-cli's babel config.
-module.exports = babelConfig;
+module.exports = getBabelConfig();

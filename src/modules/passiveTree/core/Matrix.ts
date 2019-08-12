@@ -4,6 +4,7 @@ import { PassiveApiResponse } from './types';
 
 class Matrix {
 	public readonly nodes = new Map<number, PassiveNode>();
+	public nodeIds: number[] = [];
 
 	public async popularize() {
 		try {
@@ -12,9 +13,11 @@ class Matrix {
 			const { groups, nodes } = response.data;
 
 			nodes.forEach(node => this.nodes.set(node.a, new PassiveNode(node)));
-		} catch (error) {
 
-		}
+			this.nodeIds = [...this.nodes.keys()];
+
+			console.log(this.nodeIds);
+		} catch (error) {}
 	}
 }
 
