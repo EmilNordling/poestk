@@ -1,8 +1,0 @@
-{
-  "extends": [
-		"tslint-config-visibacare"
-	],
-	"rules": {
-    "prettier": true
-  }
-}

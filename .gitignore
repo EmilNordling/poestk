@@ -3,6 +3,5 @@ node_modules
 yarn-error.log
 .DS_Store
 .DS_Store?
-.docz
-
-scripts/PTDP/dist/*
+dist
+tsconfig.tsbuildinfo

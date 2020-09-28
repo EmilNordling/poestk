@@ -1,0 +1,25 @@
+{
+  "name": "skill-tree",
+  "version": "1.0.0",
+  "description": "",
+  "repository": "",
+  "author": "me@emilnordling.com",
+  "private": true,
+  "peer-dependencies": {
+    "@kira/instantiation": "../kira/packages/instantiation",
+    "@kira/logger": "../kira/packages/logger",
+    "@kira/std": "../kira/packages/std",
+    "@kira/ui": "../kira/packages/ui",
+    "@kira/id": "../kira/packages/id",
+    "react": "17.0.0-rc.2",
+    "react-dom": "17.0.0-rc.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8"
+  },
+  "dependencies": {
+    "react-three-fiber": "^5.0.1",
+    "three": "^0.120.1"
+  }
+}

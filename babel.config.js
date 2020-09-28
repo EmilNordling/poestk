@@ -1,4 +1,4 @@
-const { getBabelConfig } = require('ve-react-cli');
+/* eslint-disable */
 
-// Exposes ve-react-cli's babel config.
-module.exports = getBabelConfig();
+// To get Jest to work Babel is needed
+module.exports = require('@kira/bundler').create_babelrc_for_test();

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="description" content="" />
+    <meta name="theme-color" content="" />
+    <meta name="google-site-verification" content="" />
+    <link rel="icon" href="../assets/icon-192.png" sizes="192x192" />
+    <title>poestk</title>
+    <style>
+      :root {
+        /* Global */
+        --global-background: #1d1d1d;
+        --global-foreground: #111111;
+        --global-text: rgb(238, 238, 238);
+        --global-tint: #0099ff;
+        --global-empty-shape: #181818;
+        --global-divider: #222222;
+
+        /* Component */
+        /* noop */
+
+        /* Routes */
+        /* └── S */
+        --sandbox-background: #181818;
+
+        /* Kira overrides */
+        --kira_shimmer_bg_from: #181818;
+        --kira_shimmer_bg_to: #151515;
+      }
+
+      html {
+        overflow-x: hidden;
+        overflow-y: initial;
+        min-height: 100vh;
+        color: var(--global-text);
+        background-color: var(--global-background);
+      }
+
+      html[data-wait-for-action='true'] {
+        cursor: wait;
+      }
+
+      html,
+      body,
+      #root {
+        height: 100%;
+        width: 100%;
+      }
+
+      .noScript {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>This application requires JavaScript to be enabled.</noscript>
+
+    <div id="root"></div>
+  </body>
+</html>
