@@ -1,9 +1,9 @@
-import { Service } from '@kira/instantiation';
+import { Singleton } from '@kira/instantiation';
 import { StorageService } from './storage_service';
 
 interface User {}
 
-@Service()
+@Singleton()
 export class AuthService {
   public static readonly ctor_name = Symbol('AuthService');
   protected user: null | User = null;

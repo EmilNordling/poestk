@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ResetCss } from '@kira/ui';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-function lazyLoadSandbox() {
+function lazyLoadSandbox(): JSX.Element {
   const LazyComponent = React.lazy(() =>
     import('./routes/sandbox.component/mod').then((module) => ({ default: module['Sandbox']['h'] })),
   );
@@ -15,7 +15,7 @@ function lazyLoadSandbox() {
   );
 }
 
-function render() {
+function render(): void {
   ReactDOM.render(
     <Fragment>
       <ResetCss.h />

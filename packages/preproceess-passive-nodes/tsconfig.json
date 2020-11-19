@@ -1,13 +1,14 @@
 {
-  "include": ["src"],
-  "exclude": ["src/main.tsx", "src/doc"],
   "extends": "../../tsconfig.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.json",
+  ],
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "lib",
-    "jsx": "react",
-    "types": ["react", "jest"],
-    "lib": ["DOM", "esnext"],
+    "types": ["node", "jest"],
+    "lib": ["esnext"],
     "moduleResolution": "node",
     "strict": true,
     "allowJs": false,

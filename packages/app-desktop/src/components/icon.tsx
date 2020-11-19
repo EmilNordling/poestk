@@ -126,6 +126,16 @@ export namespace Icon {
     );
   };
 
+  export const eva_menu: React.FC<PropsEva> = function eva_menu({ ...rest }) {
+    return (
+      <BaseIcon.h viewBox='0 0 24 24' {...rest}>
+        <rect x='3' y='3' width='18' height='2' />
+        <rect x='3' y='11' width='18' height='2' />
+        <rect x='3' y='19' width='18' height='2' />
+      </BaseIcon.h>
+    );
+  };
+
   export const eva_expand: React.FC<PropsEva> = function eva_expand({ ...rest }) {
     return (
       <BaseIcon.h viewBox='0 0 24 24' {...rest}>

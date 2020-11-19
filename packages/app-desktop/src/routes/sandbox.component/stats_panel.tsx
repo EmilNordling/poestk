@@ -17,8 +17,6 @@ export namespace StatsPanel {
       flex-direction: column;
       flex-shrink: 0;
       height: 100%;
-      padding: 0 10px;
-
       --kira-text-p-size: 0.9rem;
     `,
     row: styled.div`
@@ -29,6 +27,7 @@ export namespace StatsPanel {
     label: styled.div`
       text-overflow: ellipsis;
       flex: 1;
+      padding-left: 14px;
     `,
   };
 

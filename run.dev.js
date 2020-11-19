@@ -3,7 +3,7 @@
 const inquirer = require('inquirer');
 const { package_choices, run } = require('./run');
 
-process.env.PORT = '8001';
+process.env.PORT = '8002';
 
 // For user
 inquirer

@@ -59,6 +59,17 @@ export namespace CharacterItemDisplay {
     `,
     item: styled.div`
       background: var(--global-empty-shape);
+      box-shadow: 0 0 2px 0px var(--rare);
+      overflow: hidden;
+      border-radius: 4px;
+      padding: 1px;
+
+      &:hover {
+        filter: brightness(120%) hue-rotate(2deg);
+      }
+    `,
+    itemLoading: styled.div`
+      background: var(--global-empty-shape);
       border: 1px solid var(--global-divider);
       overflow: hidden;
       border-radius: 4px;
@@ -70,46 +81,46 @@ export namespace CharacterItemDisplay {
     return (
       <elements.content>
         <elements.itemContainer>
-          <elements.item className='helmet'>
+          <elements.itemLoading className='helmet'>
             <Shimmer.h height={71} width={71} />
-          </elements.item>
-          <elements.item className='armour'>
+          </elements.itemLoading>
+          <elements.itemLoading className='armour'>
             <Shimmer.h height={114} width={71} />
-          </elements.item>
-          <elements.item className='belt'>
+          </elements.itemLoading>
+          <elements.itemLoading className='belt'>
             <Shimmer.h height={28} width={71} />
-          </elements.item>
-          <elements.item className='boots'>
+          </elements.itemLoading>
+          <elements.itemLoading className='boots'>
             <Shimmer.h height={71} width={71} />
-          </elements.item>
-          <elements.item className='gloves'>
+          </elements.itemLoading>
+          <elements.itemLoading className='gloves'>
             <Shimmer.h height={71} width={71} />
-          </elements.item>
-          <elements.item className='weapon1'>
+          </elements.itemLoading>
+          <elements.itemLoading className='weapon1'>
             <Shimmer.h height={156} width={71} />
-          </elements.item>
-          <elements.item className='weapon2'>
+          </elements.itemLoading>
+          <elements.itemLoading className='weapon2'>
             <Shimmer.h height={156} width={71} />
-          </elements.item>
-          <elements.item className='ring1'>
+          </elements.itemLoading>
+          <elements.itemLoading className='ring1'>
             <Shimmer.h height={28} width={28} />
-          </elements.item>
-          <elements.item className='ring2'>
+          </elements.itemLoading>
+          <elements.itemLoading className='ring2'>
             <Shimmer.h height={28} width={28} />
-          </elements.item>
-          <elements.item className='amulet'>
+          </elements.itemLoading>
+          <elements.itemLoading className='amulet'>
             <Shimmer.h height={28} width={28} />
-          </elements.item>
-          <elements.item className='belts'>
+          </elements.itemLoading>
+          <elements.itemLoading className='belts'>
             <Shimmer.h height={71} width={241} />
-          </elements.item>
+          </elements.itemLoading>
         </elements.itemContainer>
       </elements.content>
     );
   };
 
   export const h: React.FC<Props> = function CharacterItemDisplay() {
-    const [isLoading] = useState(true);
+    const [isLoading] = useState(false);
 
     return (
       <Fragment>

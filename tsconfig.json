@@ -1,13 +1,11 @@
 {
-	"exclude": ["node_modules", "dist", "lib"],
-	"files":  [],
+  "exclude": ["node_modules", "dist", "lib"],
 	"compilerOptions": {
-		"rootDir": ".",
-		"baseUrl": ".",
-		"outDir": "lib",
 		"jsx": "react",
 		"target": "es2019", /* Jest does not work with anything above this right now */
-		"module": "esnext",
+    "module": "esnext",
+    "rootDir": ".",
+    "baseUrl": ".",
 		"moduleResolution": "node",
 		"strict": true,
 		"sourceMap": true,
@@ -34,5 +32,6 @@
 	"references": [
     { "path": "packages/app-desktop" },
     { "path": "packages/skill-tree" },
+    { "path": "packages/preproceess-passive-nodes" },
 	],
 }

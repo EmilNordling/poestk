@@ -1,11 +1,11 @@
-import { Service } from '@kira/instantiation';
+import { Singleton } from '@kira/instantiation';
 import { ApplicationStorage } from '@kira/std';
 
 type LocalDict = {
   auth: any;
 };
 
-@Service()
+@Singleton()
 export class StorageService {
   public static readonly ctor_name = Symbol('StorageService');
   public local = new ApplicationStorage<LocalDict>('local', '__stk__');

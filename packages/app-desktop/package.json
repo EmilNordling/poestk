@@ -5,6 +5,9 @@
   "repository": "",
   "author": "me@emilnordling.com",
   "private": true,
+  "scripts": {
+    "dev": "node run.dev"
+  },
   "dependencies": {
     "@kira/application-state": "../kira/packages/application-state",
     "@kira/helper-filesystem": "../kira/packages/helper-filesystem",
@@ -15,7 +18,7 @@
     "@kira/ui": "../kira/packages/ui",
     "@kira/ui-std": "../kira/packages/ui-std",
     "axios": "^0.20.0",
-    "framer-motion": "^2.7.5",
+    "framer-motion": "^2.9.1",
     "react": "17.0.0-rc.2",
     "react-dom": "17.0.0-rc.2",
     "react-is": "^16.13.1",
@@ -26,13 +29,13 @@
   },
   "devDependencies": {
     "@testing-library/react": "^11.0.4",
-    "@types/react": "^16.9.49",
+    "@types/react": "^16.9.52",
     "@types/react-axe": "^3.1.0",
     "@types/react-dev-utils": "^9.0.4",
     "@types/react-dom": "^16.9.8",
     "@types/react-test-renderer": "^16.9.3",
     "@types/shortid": "^0.0.29",
-    "@types/styled-components": "5.1.3",
-    "react-axe": "^3.5.3"
+    "@types/styled-components": "5.1.4",
+    "react-axe": "^3.5.4"
   }
 }
