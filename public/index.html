@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="description" content="" />
+    <meta name="theme-color" content="" />
+    <meta name="google-site-verification" content="" />
+    <link rel="icon" href="../assets/icon-192.png" sizes="192x192" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet" />
+    <title>One Atom</title>
+    <style>
+      :root {
+        /* font-size: 30px; */
+        /* Global */
+        --global-background: #1d1d1d;
+        --global-foreground: #111111;
+        --global-text: #fff;
+        --global-text-dimmed: rgb(170, 170, 170);
+        --global-tint: #0099ff;
+        --global-divider: #252525;
+        --global-empty-shape: #252525;
+
+        /* --global-background: #fff;
+        --global-foreground: #f6f6f6;
+        --global-text: #000; */
+
+        /* Kira overrides */
+        --kira_shimmer_bg_from: #181818;
+        --kira_shimmer_bg_to: #151515;
+
+        --kira-text-color-heading: var(--global-text);
+
+        /* todo error */
+        /* --kira-button-action-bg: #d66565;
+        --kira-button-action-bg-hover: #da7878;
+        --kira-button-action-bg-active: #d66565; */
+      }
+
+      html {
+        overflow-x: hidden;
+        overflow-y: initial;
+        min-height: 100vh;
+        color: var(--global-text);
+        background-color: var(--global-background);
+      }
+
+      html[data-wait-for-action='true'] {
+        cursor: wait;
+      }
+
+      html,
+      body,
+      #root {
+        height: 100%;
+        width: 100%;
+      }
+
+      #root {
+        display: flex;
+      }
+
+      html {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+          'Segoe UI Emoji', 'Segoe UI Symbol' !important;
+      }
+
+      .noScript {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <noscript>This application requires JavaScript to be enabled.</noscript>
+
+    <div id="root"></div>
+  </body>
+</html>

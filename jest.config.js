@@ -1,16 +1,16 @@
+/* eslint-disable */
+
 module.exports = {
-  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  preset: 'ts-jest',
+  // Allows jest to go into node_modules
+  transformIgnorePatterns: [],
   transform: {
-    '\\.tsx?$': 'ts-jest',
+    '.js': 'jest-esm-transformer',
   },
-  testMatch: ['**/__tests__/**/*.test.*'],
+  testMatch: ['**/*.test.(ts|tsx)'],
   globals: {
     'ts-jest': {
-      tsConfig: 'tsconfig.json',
+      tsconfig: 'tsconfig.test.json',
     },
   },
-  moduleNameMapper: {
-    '@app/(.*)$': '<rootDir>/packages/$1',
-  },
-  transformIgnorePatterns: ['node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)'],
 };

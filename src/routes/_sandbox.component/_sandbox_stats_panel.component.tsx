@@ -1,0 +1,68 @@
+import React from 'react';
+import styled from 'styled-components';
+import { KiraPropType, Text } from 'one-atom';
+
+export namespace StatsPanel {
+  export type Props = KiraPropType & {};
+
+  const elements = {
+    container: styled.div`
+      --kira-text-p-size: 0.8125rem;
+      font-size: var(--kira-text-p-size);
+
+      background: var(--global-foreground);
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100%;
+
+      border-top: 1px solid var(--sandbox-border);
+      border-bottom: 1px solid var(--sandbox-border);
+    `,
+    row: styled.div`
+      display: flex;
+      align-items: center;
+      height: 40px;
+    `,
+    label: styled.div`
+      text-overflow: ellipsis;
+      flex: 1;
+      padding-left: 14px;
+    `,
+  };
+
+  const Row: React.FC<{ title: string }> = function StatsPanel_Row({ title }) {
+    return (
+      <elements.row>
+        <elements.label>
+          <Text.body>{title}</Text.body>
+        </elements.label>
+
+        <elements.label>
+          <div>{Math.round(Math.random() * 1500)}</div>
+        </elements.label>
+      </elements.row>
+    );
+  };
+
+  export const h: React.FC<Props> = function StatsPanel() {
+    return (
+      <elements.container>
+        <Row title={'Average Damage'} />
+        <Row title={'Total DPS'} />
+        <Row title={'Mana Cost'} />
+
+        <Row title={'Life'} />
+        <Row title={'Mana'} />
+
+        <Row title={'Energy Shield'} />
+        <Row title={'Evasion Rating'} />
+
+        <Row title={'Strength'} />
+        <Row title={'Intelligence'} />
+        <Row title={'Dexterity'} />
+      </elements.container>
+    );
+  };
+}

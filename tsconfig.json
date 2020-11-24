@@ -1,20 +1,20 @@
 {
-  "exclude": ["node_modules", "dist", "lib"],
+  "exclude": ["node_modules", "dist"],
 	"compilerOptions": {
 		"jsx": "react",
-		"target": "es2019", /* Jest does not work with anything above this right now */
     "module": "esnext",
-    "rootDir": ".",
-    "baseUrl": ".",
-		"moduleResolution": "node",
+    "rootDir": "./src",
+    "types": ["react", "jest"],
+    "lib": ["esnext", "DOM"],
+		"moduleResolution": "Node",
 		"strict": true,
 		"sourceMap": true,
 		"composite": true,
 		"declaration": true,
 		"skipLibCheck": true,
 		"stripInternal": true,
-		"noUnusedLocals": true,
 		"declarationMap": true,
+		"noUnusedLocals": false,
 		"removeComments": false,
 		"esModuleInterop": true,
 		"noImplicitReturns": true,
@@ -25,13 +25,5 @@
 		"noFallthroughCasesInSwitch": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
-		"paths": {
-			"@app/*": ["packages/*/src"]
-		},
-	},
-	"references": [
-    { "path": "packages/app-desktop" },
-    { "path": "packages/skill-tree" },
-    { "path": "packages/preproceess-passive-nodes" },
-	],
+	}
 }

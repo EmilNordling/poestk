@@ -1,16 +1,17 @@
-//@ts-check
-'use strict';
-const { argv } = require('yargs');
-const { run } = require('./run');
+/* eslint-disable */
+// @ts-check
+const { Run } = require('one-atom/run');
 
-// For automation
-const { pkg } = argv;
-if (pkg === undefined) {
-  console.log('"pkg" needs to be specified');
-  process.exit(1);
-}
-
-run(pkg, 'prod').then(() => {
-  console.log('success');
-  process.exit(0);
-});
+Run.production({
+  useBundleAnalyzer: true,
+  root: process.cwd(),
+  customEnv: 'dev_env',
+  loadConfigPathToFile: `${process.cwd()}/env.json`,
+})
+  .then(() => {
+    console.log('bundled worked');
+  })
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });

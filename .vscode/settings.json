@@ -1,7 +1,6 @@
 {
 	"files.exclude": {
 		"node_modules": true,
-		".npm-offline-cache": true
 	},
 	"editor.formatOnSave": false,
 	// Enable per-language
@@ -27,9 +26,9 @@
 		"editor.formatOnSave": true
 	},
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"typescript.tsdk": "node_modules/typescript/lib",
-	"cSpell.words": [
-		"Anguact",
-		"kira"
-	]
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "deno.enable": false,
 }
