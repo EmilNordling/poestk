@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Routes as RRoutes, Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
+import { CharacterSkeleton } from './_character.component/character_skeleton.component';
+import { SandboxSkeleton } from './_sandbox.component/sandbox_skeleton.component';
+
+export { CharacterSkeleton, SandboxSkeleton };
 
 export namespace Routes {
   function lazyLoadCharacter(): JSX.Element {
-    const LazyComponent = React.lazy(() =>
-      import('./_character.component/mod').then((module) => ({ default: module['Character']['h'] })),
-    );
+    const LazyComponent = lazy(() => import('./_character.component/mod').then((module) => ({ default: module['Character']['h'] })));
 
     return (
-      <React.Suspense fallback={null}>
+      <Suspense fallback={<CharacterSkeleton.h />}>
         <LazyComponent />
-      </React.Suspense>
+      </Suspense>
     );
   }
 
   function lazyLoadHome(): JSX.Element {
-    const LazyComponent = React.lazy(() => import('./_home.component/mod').then((module) => ({ default: module['Home']['h'] })));
+    const LazyComponent = lazy(() => import('./_home.component/mod').then((module) => ({ default: module['Home']['h'] })));
 
     return (
-      <React.Suspense fallback={null}>
+      <Suspense fallback={null}>
         <LazyComponent />
-      </React.Suspense>
+      </Suspense>
     );
   }
 
   function lazyLoadSandbox(): JSX.Element {
-    const LazyComponent = React.lazy(() => import('./_sandbox.component/mod').then((module) => ({ default: module['Sandbox']['h'] })));
+    const LazyComponent = lazy(() => import('./_sandbox.component/mod').then((module) => ({ default: module['Sandbox']['h'] })));
 
     return (
-      <React.Suspense fallback={null}>
+      <Suspense fallback={<SandboxSkeleton.h />}>
         <LazyComponent />
-      </React.Suspense>
+      </Suspense>
     );
   }
 

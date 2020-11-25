@@ -6,7 +6,7 @@ export namespace Icon {
 
   type PropsEva = Props & {};
 
-  export const logo_text: React.FC<Props> = function icon_logo_text({ ...rest }) {
+  export const logo_text: FC<Props> = function icon_logo_text({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 1024.41 416.95" {...rest}>
         <path d="M285.41,400.45,138.06,253c-40.68-44.85-9.28-86,28.1-118.26L285.41,15.45c12.86-15.56,51-23,72.14,0h0a51.07,51.07,0,0,1,0,72.19l-111.89,112a11.81,11.81,0,0,0,0,16.68l111.89,112C404.18,376.53,333.61,447,285.41,400.45ZM57.25,162.29c32-29.06,65.82-65.73,63.52-112.07C122.81-2.31,81.38-1,41.72.5A41.71,41.71,0,0,0,0,42.21V374.77c2.4,45.93,44.8,42.72,79.06,41.72a41.71,41.71,0,0,0,41.71-41.72c1.6-33.68-10.2-67-34.31-90.83C48.06,250.67,15.32,208.55,57.25,162.29Z" />
@@ -14,7 +14,7 @@ export namespace Icon {
       </BaseIcon.h>
     );
   };
-  export const logo: React.FC<Props> = function icon_logo({ ...rest }) {
+  export const logo: FC<Props> = function icon_logo({ ...rest }) {
     return (
       <BaseIcon.h {...rest}>
         <path d="M374.56,485.76,197.87,309c-48.79-53.78-11.14-103.11,33.69-141.81l143-143.11c15.43-18.66,61.21-27.58,86.51,0h0a61.25,61.25,0,0,1,0,86.58L326.91,244.92a14.13,14.13,0,0,0,0,20L461.08,399.19C517,457.08,432.37,541.64,374.56,485.76ZM101,200.17c38.34-34.85,78.93-78.82,76.17-134.4,2.45-63-47.24-61.46-94.8-59.63a50,50,0,0,0-50,50V455c2.88,55.09,53.72,51.23,94.8,50a50,50,0,0,0,50-50c1.92-40.39-12.24-80.34-41.15-108.92C89.94,306.15,50.68,255.64,101,200.17Z" />
@@ -22,7 +22,7 @@ export namespace Icon {
     );
   };
 
-  export const logo_core: React.FC<Props> = function logo_core({ ...rest }) {
+  export const logo_core: FC<Props> = function logo_core({ ...rest }) {
     return (
       <BaseIcon.h {...rest}>
         <defs>
@@ -61,7 +61,7 @@ export namespace Icon {
     );
   };
 
-  export const arrow: React.FC<Props> = function icon_arrow({ ...rest }) {
+  export const arrow: FC<Props> = function icon_arrow({ ...rest }) {
     return (
       <BaseIcon.h {...rest} viewBox="0 0 335 335">
         <path d="M259.12,109.05c-51.61,56.81-11.31,108.54,36,149.4C316.29,279.38,329.76,306.26,335,335V0C325.73,43.68,291.64,79.56,259.12,109.05Z" />
@@ -71,7 +71,7 @@ export namespace Icon {
 
   // The following icons are from eva-icons https://akveo.github.io/eva-icons/
   // It's MIT license can be found here: https://github.com/akveo/eva-icons/blob/master/LICENSE.txt
-  export const eva_person: React.FC<PropsEva> = function icon_eva_person({ ...rest }) {
+  export const eva_person: FC<PropsEva> = function icon_eva_person({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <path d="M12 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" />
@@ -80,7 +80,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_alert_triangle: React.FC<PropsEva> = function icon_eva_alert_triangle({ ...rest }) {
+  export const eva_alert_triangle: FC<PropsEva> = function icon_eva_alert_triangle({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(90 12 12)" opacity="0" />
@@ -89,7 +89,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_alert: React.FC<PropsEva> = function icon_eva_alert({ ...rest }) {
+  export const eva_alert: FC<PropsEva> = function icon_eva_alert({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" opacity="0" />
@@ -98,7 +98,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_external_link: React.FC<PropsEva> = function eva_external_link({ ...rest }) {
+  export const eva_external_link: FC<PropsEva> = function eva_external_link({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" opacity="0" />
@@ -108,7 +108,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_arrow_down: React.FC<PropsEva> = function eva_arrow_down({ ...rest }) {
+  export const eva_arrow_down: FC<PropsEva> = function eva_arrow_down({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(-90 12 12)" opacity="0" />
@@ -117,7 +117,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_arrow_forward: React.FC<PropsEva> = function eva_arrow_forward({ ...rest }) {
+  export const eva_arrow_forward: FC<PropsEva> = function eva_arrow_forward({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(-90 12 12)" opacity="0" />
@@ -126,7 +126,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_menu: React.FC<PropsEva> = function eva_menu({ ...rest }) {
+  export const eva_menu: FC<PropsEva> = function eva_menu({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect x="3" y="3" width="18" height="2" />
@@ -136,7 +136,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_expand: React.FC<PropsEva> = function eva_expand({ ...rest }) {
+  export const eva_expand: FC<PropsEva> = function eva_expand({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0" />
@@ -146,7 +146,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_close: React.FC<PropsEva> = function icon_eva_close({ ...rest }) {
+  export const eva_close: FC<PropsEva> = function icon_eva_close({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0" />
@@ -155,7 +155,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_eye: React.FC<PropsEva> = function icon_eva_eye({ ...rest }) {
+  export const eva_eye: FC<PropsEva> = function icon_eva_eye({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <circle cx="12" cy="12" r="1.5" />
@@ -164,7 +164,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_eye_off: React.FC<PropsEva> = function icon_eva_eye_off({ ...rest }) {
+  export const eva_eye_off: FC<PropsEva> = function icon_eva_eye_off({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" opacity="0" />
@@ -176,7 +176,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_trending: React.FC<PropsEva> = function icon_eva_trending({ ...rest }) {
+  export const eva_trending: FC<PropsEva> = function icon_eva_trending({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(-90 12 12)" opacity="0" />
@@ -185,7 +185,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_wifi_off: React.FC<PropsEva> = function icon_eva_wifi_off({ ...rest }) {
+  export const eva_wifi_off: FC<PropsEva> = function icon_eva_wifi_off({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" opacity="0" />
@@ -200,7 +200,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_sync: React.FC<PropsEva> = function icon_eva_sync({ ...rest }) {
+  export const eva_sync: FC<PropsEva> = function icon_eva_sync({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" opacity="0" />
@@ -210,7 +210,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_swap: React.FC<PropsEva> = function icon_eva_swap({ ...rest }) {
+  export const eva_swap: FC<PropsEva> = function icon_eva_swap({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(-90 12 12)" opacity="0" />
@@ -220,7 +220,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_search: React.FC<PropsEva> = function icon_eva_search({ ...rest }) {
+  export const eva_search: FC<PropsEva> = function icon_eva_search({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" opacity="0" />
@@ -229,7 +229,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_plus: React.FC<PropsEva> = function icon_eva_search({ ...rest }) {
+  export const eva_plus: FC<PropsEva> = function icon_eva_search({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0" />
@@ -238,7 +238,7 @@ export namespace Icon {
     );
   };
 
-  export const eva_more: React.FC<PropsEva> = function icon_eva_more({ ...rest }) {
+  export const eva_more: FC<PropsEva> = function icon_eva_more({ ...rest }) {
     return (
       <BaseIcon.h viewBox="0 0 24 24" {...rest}>
         <rect width="24" height="24" transform="rotate(-90 12 12)" opacity="0" />

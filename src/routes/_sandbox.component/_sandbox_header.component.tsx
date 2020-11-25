@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from '../../components/icon.component';
 import { KiraPropType, Button, AnchorPoint, useService } from 'one-atom';
-import { MenuService } from '../../backend/menu_service';
+import { MenuItem, MenuSeparator, MenuService } from '../../backend/menu_service';
+import { useNavigate } from 'react-router';
 
-export namespace Header {
-  export type Props = KiraPropType & {};
+export namespace SandboxHeader {
+  export type Props = KiraPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.header`
@@ -21,8 +22,9 @@ export namespace Header {
     section: styled.div``,
   };
 
-  export const h: FC<Props> = function Header() {
+  export const h: FC<Props> = function SandboxHeader() {
     const menuService = useService(MenuService);
+    const navigate = useNavigate();
 
     function handleClick(): void {
       if (menuService.isOpen()) {
@@ -31,22 +33,26 @@ export namespace Header {
         menuService.setMenu({
           attachTo: 'test',
           builder: [
-            {
-              label: 'yee',
+            new MenuItem({
               key: '1',
-            },
-            {
-              label: 'x',
-              key: '2',
-            },
-            {
-              label: 'ee',
+              label: 'Go To Characters',
+              click() {
+                navigate('../');
+              },
+            }),
+            new MenuSeparator({ key: '2' }),
+            new MenuItem({
               key: '3',
-            },
-            {
-              label: 'asdasd',
+              label: 'Build',
+            }),
+            new MenuItem({
               key: '4',
-            },
+              label: 'Edit',
+            }),
+            new MenuItem({
+              key: '5',
+              label: 'View',
+            }),
           ],
         });
       }
@@ -62,9 +68,7 @@ export namespace Header {
           </Button.alt>
         </elements.section>
         <elements.section></elements.section>
-        <elements.section>
-          <Button.action label="a11y_todo">Create</Button.action>
-        </elements.section>
+        <elements.section></elements.section>
       </elements.container>
     );
   };

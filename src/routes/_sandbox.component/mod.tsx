@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { KiraPropType } from 'one-atom';
-import { Header } from './_sandbox_header.component';
-import { CharacterPanel } from './_sandbox_character_panel.component';
-import { StatsPanel } from './_sandbox_stats_panel.component';
-import { Tree } from './_sandbox_tree.component';
+import { SandboxHeader } from './_sandbox_header.component';
+import { SandboxCharacterPanel } from './_sandbox_character_panel.component';
+import { SandboxStatsPanel } from './_sandbox_stats_panel.component';
+import { SandboxTree } from './_sandbox_tree.component';
 
 /**
  * change this
  */
 export namespace Sandbox {
-  export type Props = KiraPropType & {};
+  export type Props = KiraPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.div`
@@ -19,7 +19,8 @@ export namespace Sandbox {
       width: 100%;
       flex-direction: column;
       color: rgb(153, 153, 153);
-      --sandbox-border: #191919;
+      --sandbox-border: #171717;
+      --kira-text-p-size: 0.8125rem;
     `,
     main: styled.main`
       display: flex;
@@ -34,14 +35,14 @@ export namespace Sandbox {
     `,
   };
 
-  export const h: React.FC<Props> = function Sandbox() {
+  export const h: FC<Props> = function Sandbox() {
     return (
       <elements.container>
-        <Header.h />
+        <SandboxHeader.h />
         <elements.main>
-          <CharacterPanel.h />
-          <Tree.h />
-          <StatsPanel.h />
+          <SandboxCharacterPanel.h />
+          <SandboxTree.h />
+          <SandboxStatsPanel.h />
         </elements.main>
         <elements.bottomBar></elements.bottomBar>
       </elements.container>

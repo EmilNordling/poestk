@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { HeadLessPopover, useApplicationState, useService } from 'one-atom';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { MenuService } from '../backend/menu_service';
+import { MenuItem, MenuSeparator, MenuService } from '../backend/menu_service';
 
 export namespace Menu {
   export type Props = {
@@ -18,16 +18,17 @@ export namespace Menu {
       position: absolute;
       transform-origin: 50% 0%;
       width: 280px;
-      font-size: 12px;
+      font-size: 0.6875rem; // 11px
+      font-weight: 500;
       line-height: 1.2;
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 6px 0;
       background-color: #2b2b2b;
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.3);
 
       li {
         .inner {
-          border-radius: 5px;
+          border-radius: 4px;
           margin: 0 5px;
           display: flex;
           flex-direction: row;
@@ -50,17 +51,13 @@ export namespace Menu {
     const [state] = useApplicationState(menuService.state);
     const ref = useRef<HTMLUListElement>(null);
 
-    function handleClick(callback?: () => void): void {
-      if (callback) {
-        callback();
-      }
-
+    function handleClick(menuItem: MenuItem): void {
+      menuItem.click();
       menuService.clearMenu();
     }
 
     function handleAnimationStart(): void {
-      console.log(state.menu);
-      if (ref.current && state.menu) {
+      if (ref.current && menuService.state.peekState().menu) {
         ref.current.focus();
       }
     }
@@ -78,19 +75,26 @@ export namespace Menu {
                   tabIndex={0}
                   initial={{ opacity: 0.5, y: -10 }}
                   animate={{ opacity: 1, transition: { duration: 0.15 }, y: 0 }}
-                  exit={{ opacity: 0, transition: { duration: 0.25 } }}
+                  exit={{ opacity: 0, transition: { duration: 0.15 }, y: 10 }}
                   onAnimationStart={handleAnimationStart}
                 >
-                  {state.menu?.builder.map((x) => {
+                  {state.menu?.builder.map((item) => {
+                    if (item instanceof MenuSeparator) {
+                      return (
+                        <li key={item.key}>
+                          <div className="inner"></div>
+                        </li>
+                      );
+                    }
+
                     return (
                       <li
-                        key={x.key}
-                        tabIndex={0}
+                        key={item.key}
                         onClick={() => {
-                          handleClick(x.click);
+                          handleClick(item);
                         }}
                       >
-                        <div className="inner">{x.label}</div>
+                        <div className="inner">{item.label}</div>
                       </li>
                     );
                   })}

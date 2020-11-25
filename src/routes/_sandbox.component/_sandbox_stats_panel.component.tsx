@@ -2,14 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { KiraPropType, Text } from 'one-atom';
 
-export namespace StatsPanel {
-  export type Props = KiraPropType & {};
+export namespace SandboxStatsPanel {
+  export type Props = KiraPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.div`
       --kira-text-p-size: 0.8125rem;
       font-size: var(--kira-text-p-size);
-
       background: var(--global-foreground);
       width: 300px;
       display: flex;
@@ -32,7 +31,7 @@ export namespace StatsPanel {
     `,
   };
 
-  const Row: React.FC<{ title: string }> = function StatsPanel_Row({ title }) {
+  const Row: FC<{ title: string }> = function SandboxStatsPanel_Row({ title }) {
     return (
       <elements.row>
         <elements.label>
@@ -46,13 +45,9 @@ export namespace StatsPanel {
     );
   };
 
-  export const h: React.FC<Props> = function StatsPanel() {
+  export const h: FC<Props> = function SandboxStatsPanel() {
     return (
       <elements.container>
-        <Row title={'Average Damage'} />
-        <Row title={'Total DPS'} />
-        <Row title={'Mana Cost'} />
-
         <Row title={'Life'} />
         <Row title={'Mana'} />
 

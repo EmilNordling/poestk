@@ -3,14 +3,21 @@ import styled from 'styled-components';
 import { KiraPropType } from 'one-atom';
 import { SkillTreeScene } from '../../components/skill_tree/mod';
 
-export namespace Tree {
-  export type Props = KiraPropType & {};
+export namespace SandboxTree {
+  export type Props = KiraPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.div`
       position: relative;
       flex: 1;
       background-color: var(--sandbox-background);
+    `,
+    treeWrapper: styled.div`
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     `,
     shadow: styled.div`
       position: absolute;
@@ -23,10 +30,12 @@ export namespace Tree {
     `,
   };
 
-  export const h: React.FC<Props> = function Tree() {
+  export const h: FC<Props> = function SandboxTree() {
     return (
       <elements.container>
-        <SkillTreeScene.h />
+        <elements.treeWrapper>
+          <SkillTreeScene.h />
+        </elements.treeWrapper>
         <elements.shadow></elements.shadow>
       </elements.container>
     );

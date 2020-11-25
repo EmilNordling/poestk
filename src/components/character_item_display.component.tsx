@@ -10,8 +10,9 @@ export namespace CharacterItemDisplay {
 
   const elements = {
     content: styled.div`
-      width: 250px;
-      height: 250px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
     `,
     itemContainer: styled.div`
       display: grid;
@@ -19,8 +20,8 @@ export namespace CharacterItemDisplay {
       grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
       grid-column-gap: 10px;
       grid-row-gap: 10px;
-      height: 100%;
-      width: 100%;
+      width: 230px;
+      height: 230px;
 
       .helmet {
         grid-area: 1 / 4 / 3 / 6;
@@ -76,7 +77,7 @@ export namespace CharacterItemDisplay {
     `,
   };
 
-  const Skeleton: React.FC = function CharacterItemDisplay() {
+  const Skeleton: FC = function CharacterItemDisplay() {
     return (
       <elements.content>
         <elements.itemContainer>
@@ -118,7 +119,7 @@ export namespace CharacterItemDisplay {
     );
   };
 
-  export const h: React.FC<Props> = function CharacterItemDisplay() {
+  export const h: FC<Props> = function CharacterItemDisplay() {
     const [isLoading] = useState(false);
 
     return (
