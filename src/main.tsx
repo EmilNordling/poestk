@@ -1,5 +1,4 @@
 import { Instantiation } from 'one-atom';
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApplicationService } from './backend/application_service';
 import App from './components/app.component';

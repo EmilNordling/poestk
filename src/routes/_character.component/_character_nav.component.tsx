@@ -1,5 +1,4 @@
 import { View, Text } from 'one-atom';
-import React from 'react';
 
 export namespace Nav {
   export const h: FC = function Character_Nav() {

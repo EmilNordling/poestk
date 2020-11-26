@@ -1,5 +1,5 @@
 import { View, Text, useService } from 'one-atom';
-import React, { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import styled from 'styled-components';
 import { ApplicationService } from '../backend/application_service';
 
@@ -7,14 +7,14 @@ export namespace Dev {
   const elements = {
     theme: styled.div`
       display: contents;
-      --kira-text-h3-size: 0.9rem;
-      --kira-text-h3-weight: 700;
-      --kira-text-h3-line-height: 0.9rem;
+      --oa-text-h3-size: 0.9rem;
+      --oa-text-h3-weight: 700;
+      --oa-text-h3-line-height: 0.9rem;
     `,
     searchBarTheme: styled.div`
       display: contents;
       color: #666666;
-      --kira_separator_bg: #252525;
+      --oa_separator_bg: #252525;
     `,
     center: styled.div`
       flex: 1;

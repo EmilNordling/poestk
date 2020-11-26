@@ -1,12 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import styled from 'styled-components';
-import { KiraPropType, Shimmer } from 'one-atom';
+import { OneAtomCommonPropType, Shimmer } from 'one-atom';
 
 /**
  * change this
  */
 export namespace CharacterItemDisplay {
-  export type Props = KiraPropType & {};
+  export type Props = OneAtomCommonPropType & {};
 
   const elements = {
     content: styled.div`

@@ -1,5 +1,4 @@
 import { View, Text, useService, VSpacing, Button, HSpacing, BaseInput, Separator } from 'one-atom';
-import React from 'react';
 import styled from 'styled-components';
 import { Nav } from './_character_nav.component';
 import { Icon } from '../../components/icon.component';
@@ -10,13 +9,13 @@ export namespace Character {
   const elements = {
     theme: styled.div`
       display: contents;
-      --kira-text-h3-size: 1.25rem;
-      --kira-text-h3-weight: 700;
+      --oa-text-h3-size: 1.25rem;
+      --oa-text-h3-weight: 700;
     `,
     searchBarTheme: styled.div`
       display: contents;
       color: #666666;
-      --kira_separator_bg: #252525;
+      --oa_separator_bg: #252525;
     `,
   };
 

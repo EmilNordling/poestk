@@ -1,8 +1,7 @@
-import React from 'react';
-import { BaseIcon, KiraPropType } from 'one-atom';
+import { BaseIcon, OneAtomCommonPropType } from 'one-atom';
 
 export namespace Icon {
-  export type Props = KiraPropType & Omit<BaseIcon.Props, 'viewBox'> & {};
+  export type Props = OneAtomCommonPropType & Omit<BaseIcon.Props, 'viewBox'> & {};
 
   type PropsEva = Props & {};
 

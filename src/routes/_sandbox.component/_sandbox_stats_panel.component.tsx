@@ -1,14 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
-import { KiraPropType, Text } from 'one-atom';
+import { OneAtomCommonPropType, Text } from 'one-atom';
 
 export namespace SandboxStatsPanel {
-  export type Props = KiraPropType & Record<string, unknown>;
+  export type Props = OneAtomCommonPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.div`
-      --kira-text-p-size: 0.8125rem;
-      font-size: var(--kira-text-p-size);
+      --oa-text-p-size: 0.8125rem;
+      font-size: var(--oa-text-p-size);
       background: var(--global-foreground);
       width: 300px;
       display: flex;

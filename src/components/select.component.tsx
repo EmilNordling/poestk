@@ -1,5 +1,4 @@
-import { KiraPropType } from 'one-atom';
-import React, { FC } from 'react';
+import { OneAtomCommonPropType } from 'one-atom';
 import styled from 'styled-components';
 
 export namespace Select {
@@ -8,7 +7,7 @@ export namespace Select {
     label: string;
   }
 
-  export type Props = KiraPropType & {
+  export type Props = OneAtomCommonPropType & {
     onChange?(): void;
     options: Option[];
   };

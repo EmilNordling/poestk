@@ -1,5 +1,5 @@
 import { ResetCss } from 'one-atom';
-import React, { FC, Fragment } from 'react';
+import { Fragment } from 'react';
 import { Routes } from '../routes/mod';
 import { Menu } from './menu.component';
 

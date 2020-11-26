@@ -1,5 +1,4 @@
 import { View } from 'one-atom';
-import React from 'react';
 
 export namespace SandboxSkeleton {
   export const h: FC = function SandboxSkeleton() {

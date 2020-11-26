@@ -1,12 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Icon } from '../../components/icon.component';
-import { KiraPropType, Button, AnchorPoint, useService } from 'one-atom';
+import { OneAtomCommonPropType, Button, AnchorPoint, useService } from 'one-atom';
 import { MenuItem, MenuSeparator, MenuService } from '../../backend/menu_service';
 import { useNavigate } from 'react-router';
 
 export namespace SandboxHeader {
-  export type Props = KiraPropType & Record<string, unknown>;
+  export type Props = OneAtomCommonPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.header`

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { Routes as RRoutes, Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { CharacterSkeleton } from './_character.component/character_skeleton.component';

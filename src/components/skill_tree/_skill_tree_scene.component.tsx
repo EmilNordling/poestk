@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
 import { MapControls } from '@react-three/drei/MapControls';
 import { useService } from 'one-atom';

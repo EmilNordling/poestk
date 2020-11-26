@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { HeadLessPopover, useApplicationState, useService } from 'one-atom';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import { MenuItem, MenuSeparator, MenuService } from '../backend/menu_service';
 

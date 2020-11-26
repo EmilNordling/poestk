@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import styled from 'styled-components';
 import { CharacterItemDisplay } from '../../components/character_item_display.component';
-import { KiraPropType, Text } from 'one-atom';
+import { OneAtomCommonPropType, Text } from 'one-atom';
 import { Select } from '../../components/select.component';
 
 export namespace SandboxCharacterPanel {
-  export type Props = KiraPropType & Record<string, unknown>;
+  export type Props = OneAtomCommonPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.div`

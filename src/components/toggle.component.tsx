@@ -1,5 +1,4 @@
 import { Text } from 'one-atom';
-import React, { FC } from 'react';
 
 export namespace Toggle {
   export const h: FC = function Toggle() {

@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { KiraPropType } from 'one-atom';
+import { OneAtomCommonPropType } from 'one-atom';
 import { SandboxHeader } from './_sandbox_header.component';
 import { SandboxCharacterPanel } from './_sandbox_character_panel.component';
 import { SandboxStatsPanel } from './_sandbox_stats_panel.component';
@@ -10,7 +9,7 @@ import { SandboxTree } from './_sandbox_tree.component';
  * change this
  */
 export namespace Sandbox {
-  export type Props = KiraPropType & Record<string, unknown>;
+  export type Props = OneAtomCommonPropType & Record<string, unknown>;
 
   const elements = {
     container: styled.div`
@@ -20,7 +19,7 @@ export namespace Sandbox {
       flex-direction: column;
       color: rgb(153, 153, 153);
       --sandbox-border: #171717;
-      --kira-text-p-size: 0.8125rem;
+      --oa-text-p-size: 0.8125rem;
     `,
     main: styled.main`
       display: flex;
