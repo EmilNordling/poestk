@@ -2,6 +2,7 @@ node_modules/
 .node_modules/
 built/*
 target/*
+**/frontend_artifact/*
 **/dist/*
 **/.DS_Store
 coverage/

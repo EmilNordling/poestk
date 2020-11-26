@@ -4,6 +4,7 @@
 		"jsx": "react-jsx",
     "module": "esnext",
     "rootDir": "./src",
+    "outDir": "./www/frontend_artifact",
     "types": ["react", "jest"],
     "lib": ["esnext", "DOM"],
 		"moduleResolution": "Node",
