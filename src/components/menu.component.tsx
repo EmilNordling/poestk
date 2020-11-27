@@ -22,18 +22,37 @@ export namespace Menu {
       font-weight: 500;
       line-height: 1.2;
       border-radius: 8px;
-      padding: 6px 0;
+      padding: 5px;
       background-color: #2b2b2b;
       box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.3);
 
       li {
+        .separator {
+          height: 19px;
+          display: flex;
+          width: 100%;
+          position: relative;
+          align-items: center;
+          padding: 0 10px;
+
+          &::after {
+            content: '';
+            width: 100%;
+            background: #666;
+            height: 1px;
+          }
+        }
+
         .inner {
           border-radius: 4px;
-          margin: 0 5px;
           display: flex;
           flex-direction: row;
           justify-content: space-between;
-          padding: 6px 7px 6px 17px;
+          padding: 6px 10px;
+          pointer-events: none;
+        }
+
+        &.noPointerEvents {
           pointer-events: none;
         }
 
@@ -82,7 +101,7 @@ export namespace Menu {
                     if (item instanceof MenuSeparator) {
                       return (
                         <li key={item.key}>
-                          <div className="inner"></div>
+                          <div className="separator"></div>
                         </li>
                       );
                     }
@@ -90,7 +109,11 @@ export namespace Menu {
                     return (
                       <li
                         key={item.key}
-                        onClick={() => {
+                        onClick={(): void => {
+                          if (item.subMenu && item.subMenu.length > 0) {
+                            return;
+                          }
+
                           handleClick(item);
                         }}
                       >
