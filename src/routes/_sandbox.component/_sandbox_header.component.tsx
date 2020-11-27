@@ -3,6 +3,7 @@ import { Icon } from '../../components/icon.component';
 import { OneAtomCommonPropType, Button, AnchorPoint, useService } from 'one-atom';
 import { MenuItem, MenuSeparator, MenuService } from '../../backend/menu_service';
 import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 export namespace SandboxHeader {
   export type Props = OneAtomCommonPropType & Record<string, unknown>;
@@ -24,6 +25,12 @@ export namespace SandboxHeader {
   export const h: FC<Props> = function SandboxHeader() {
     const menuService = useService(MenuService);
     const navigate = useNavigate();
+
+    useEffect(() => {
+      return () => {
+        menuService.clearMenu();
+      };
+    }, []);
 
     function handleClick(): void {
       if (menuService.isOpen()) {
