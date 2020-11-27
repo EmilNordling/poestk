@@ -33,24 +33,40 @@ export namespace SandboxHeader {
           attachTo: 'test',
           builder: [
             new MenuItem({
-              key: '1',
+              key: 'char',
               label: 'Go To Characters',
               click() {
                 navigate('../');
               },
             }),
-            new MenuSeparator({ key: '2' }),
+            new MenuSeparator({ key: 'sep' }),
             new MenuItem({
-              key: '3',
+              key: 'build',
               label: 'Build',
+              subMenu: [
+                new MenuItem({
+                  key: 'new',
+                  label: 'new character',
+                }),
+                new MenuItem({
+                  key: 'open',
+                  label: 'open character',
+                }),
+              ],
             }),
             new MenuItem({
-              key: '4',
+              key: 'edit',
               label: 'Edit',
-            }),
-            new MenuItem({
-              key: '5',
-              label: 'View',
+              subMenu: [
+                new MenuItem({
+                  key: 'undo',
+                  label: 'undo',
+                }),
+                new MenuItem({
+                  key: 'redo',
+                  label: 'redo',
+                }),
+              ],
             }),
           ],
         });
