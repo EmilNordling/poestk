@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import styled from 'styled-components';
-import { CharacterItemDisplay } from '../../components/character_item_display.component';
 import { OneAtomCommonPropType, Text } from 'one-atom';
 import { Select } from '../../components/select.component';
 
@@ -150,12 +149,12 @@ export namespace SandboxCharacterPanel {
             ]}
           />
         </Section>
-        <elements.divider />
+        {/* <elements.divider />
         <Section label={'Items'}>
           <CharacterItemDisplay.h />
         </Section>
         <elements.divider />
-        <Section label={'Gems'}>...</Section>
+        <Section label={'Gems'}>...</Section> */}
       </elements.container>
     );
   };

@@ -4,6 +4,8 @@ import { Nav } from './_character_nav.component';
 import { Icon } from '../../components/icon.component';
 import { Category } from './_character_category.component';
 import { CharacterController } from './_character.controller';
+import { useEffect } from 'react';
+import { addDashboardStyle } from '../../modules/add_dashboard_style';
 
 export namespace Character {
   const elements = {
@@ -41,15 +43,16 @@ export namespace Character {
   export const h: FC = function Character() {
     const _ = useService(CharacterController);
 
+    useEffect(() => {
+      return addDashboardStyle();
+    }, []);
+
     return (
       <elements.theme>
         <Nav.h />
 
-        {/* main */}
         <View.h grow padding="0 40px" clip="y" alignment="center">
-          {/* main_container */}
           <View.h width={[800]} shrink={false}>
-            {/* main_container_header */}
             <View.h height={60} direction="row" padding="60px 0 0" box="outer" alignment="spaceCenter" shrink={false}>
               <Text.h3>Characters</Text.h3>
               <View.h direction="row" width={[null]}>
@@ -63,19 +66,11 @@ export namespace Character {
               </View.h>
             </View.h>
 
-            <SearchBar />
-
-            {/* main_container_header_end */}
-
-            {/* main_container_body */}
             <View.h height={[null]} shrink={false}>
               <Category.h />
             </View.h>
-            {/* main_container_body_end */}
           </View.h>
-          {/* main_container_end */}
         </View.h>
-        {/* main_end */}
       </elements.theme>
     );
   };

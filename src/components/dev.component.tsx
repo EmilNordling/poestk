@@ -16,6 +16,35 @@ export namespace Dev {
       color: #666666;
       --oa_separator_bg: #252525;
     `,
+    header: styled.div`
+      height: 40px;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: var(--global-foreground);
+      box-shadow: 0 1px 5px rgb(0 0 0 / 15%), 0 1px 1px rgb(0 0 0 / 10%);
+    `,
+    asideWrapper: styled.div`
+      width: 200px;
+    `,
+    aside: styled.div<{ alignment: 'left' | 'right' }>`
+      position: fixed;
+      z-index: 1;
+      top: 40px;
+      ${({ alignment }) => {
+        if (alignment === 'left') {
+          return 'left: 0;';
+        }
+
+        return 'right: 0;';
+      }}
+      height: calc(100vh - 40px);
+      width: inherit;
+      background: var(--global-foreground);
+      padding: 10px;
+      box-shadow: 1px 0 5px rgb(0 0 0 / 15%), 1px 0 1px rgb(0 0 0 / 10%);
+    `,
     center: styled.div`
       flex: 1;
       padding: 20px;
@@ -27,6 +56,8 @@ export namespace Dev {
       height: 100%;
       width: 100%;
       box-shadow: 0px 0 15px 10px rgb(0 0 0 / 15%);
+      border-radius: 10px;
+      overflow: hidden;
     `,
   };
 
@@ -35,26 +66,21 @@ export namespace Dev {
 
     if (process.env.NODE_ENV === 'development' && applicationService.debug) {
       return (
-        <View.h alignment="topLeading">
+        <View.h alignment="topLeading" padding="40px 0 0 0">
           <elements.theme>
-            <View.h height={40} background="var(--global-foreground)" shadow="0 1px 5px rgb(0 0 0 / 15%), 0 1px 1px rgb(0 0 0 / 10%)">
+            <elements.header>
               <Text.h3>Desktop</Text.h3>
-            </View.h>
+            </elements.header>
           </elements.theme>
           <View.h direction="row" alignment="topLeading">
             <elements.theme>
-              <View.h
-                width={200}
-                background="var(--global-foreground)"
-                padding="10px"
-                alignment="topLeading"
-                shadow="1px 0 5px rgb(0 0 0 / 15%), 1px 0 1px rgb(0 0 0 / 10%)"
-                shrink={false}
-              >
-                <View.h alignment="topLeading">
-                  <Text.h3>State</Text.h3>
-                </View.h>
-              </View.h>
+              <elements.asideWrapper>
+                <elements.aside alignment="left">
+                  <View.h alignment="topLeading">
+                    <Text.h3>State</Text.h3>
+                  </View.h>
+                </elements.aside>
+              </elements.asideWrapper>
             </elements.theme>
 
             <elements.center>
@@ -62,18 +88,13 @@ export namespace Dev {
             </elements.center>
 
             <elements.theme>
-              <View.h
-                width={200}
-                background="var(--global-foreground)"
-                padding="10px"
-                alignment="topLeading"
-                shadow="-1px 0 5px rgb(0 0 0 / 15%), -1px 0 1px rgb(0 0 0 / 10%)"
-                shrink={false}
-              >
-                <View.h alignment="topLeading">
-                  <Text.h3>Theme</Text.h3>
-                </View.h>
-              </View.h>
+              <elements.asideWrapper>
+                <elements.aside alignment="right">
+                  <View.h alignment="topLeading">
+                    <Text.h3>Theme</Text.h3>
+                  </View.h>
+                </elements.aside>
+              </elements.asideWrapper>
             </elements.theme>
           </View.h>
         </View.h>

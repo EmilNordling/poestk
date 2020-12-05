@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Canvas } from 'react-three-fiber';
 import { MapControls } from '@react-three/drei/MapControls';
 import { useService } from 'one-atom';
-import { PassivesTreeCoreService } from './_skill_tree_core_service';
+import { SkillTreeKit } from '../../modules/skill_tree_kit/mod';
 
 export namespace SkillTreeScene {
   const Box: FC<any> = function Box(props) {
@@ -29,10 +29,10 @@ export namespace SkillTreeScene {
   };
 
   export const h: FC = function Scene() {
-    const passivesTreeCoreService = useService(PassivesTreeCoreService);
+    const skillTreeKit = useService(SkillTreeKit);
 
     useEffect(() => {
-      passivesTreeCoreService.skillTreeDataService.load();
+      skillTreeKit.staticSTParser.retrieveAndParse();
     }, []);
 
     return (

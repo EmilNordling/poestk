@@ -1,12 +1,15 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Text, View } from 'one-atom';
 
 export namespace Home {
   const elements = {
-    theme: styled.div`
-      display: contents;
+    content: styled.div`
+      display: flex;
+      flex-direction: column;
       --oa-text-h3-size: 1.25rem;
       --oa-text-h3-weight: 700;
+      background: #000;
+      width: 100%;
     `,
     searchBarTheme: styled.div`
       display: contents;
@@ -17,9 +20,12 @@ export namespace Home {
 
   export const h: FC = function Home() {
     return (
-      <elements.theme>
-        <Link to="./c">to here</Link>
-      </elements.theme>
+      <elements.content>
+        <View.h height="95vh" shrink={false} alignment="center">
+          <Text.h1_plus>poestk</Text.h1_plus>
+        </View.h>
+        <View.h height="95vh" shrink={false}></View.h>
+      </elements.content>
     );
   };
 }

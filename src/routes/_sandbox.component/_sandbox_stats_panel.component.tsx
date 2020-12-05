@@ -14,7 +14,6 @@ export namespace SandboxStatsPanel {
       flex-direction: column;
       flex-shrink: 0;
       height: 100%;
-
       border-top: 1px solid var(--sandbox-border);
       border-bottom: 1px solid var(--sandbox-border);
     `,

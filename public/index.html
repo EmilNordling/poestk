@@ -30,6 +30,13 @@
         --oa-text-color-heading: var(--global-text);
       }
 
+      .dashBoard body {
+        height: 100vh;
+      }
+      .dashBoard #root {
+        height: 100%;
+      }
+
       html {
         overflow-x: hidden;
         overflow-y: initial;
@@ -40,13 +47,6 @@
 
       html[data-wait-for-action='true'] {
         cursor: wait;
-      }
-
-      html,
-      body,
-      #root {
-        height: 100%;
-        width: 100%;
       }
 
       #root {

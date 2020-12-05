@@ -1,7 +1,13 @@
 import { View } from 'one-atom';
+import { useEffect } from 'react';
+import { addDashboardStyle } from '../../modules/add_dashboard_style';
 
 export namespace SandboxSkeleton {
   export const h: FC = function SandboxSkeleton() {
+    useEffect(() => {
+      return addDashboardStyle();
+    }, []);
+
     return (
       <View.h background="var(--global-background)">
         <View.h height={50} shrink={false} background="var(--global-foreground)"></View.h>

@@ -4,6 +4,8 @@ import { SandboxHeader } from './_sandbox_header.component';
 import { SandboxCharacterPanel } from './_sandbox_character_panel.component';
 import { SandboxStatsPanel } from './_sandbox_stats_panel.component';
 import { SandboxTree } from './_sandbox_tree.component';
+import { useEffect } from 'react';
+import { addDashboardStyle } from '../../modules/add_dashboard_style';
 
 /**
  * change this
@@ -35,6 +37,10 @@ export namespace Sandbox {
   };
 
   export const h: FC<Props> = function Sandbox() {
+    useEffect(() => {
+      return addDashboardStyle();
+    }, []);
+
     return (
       <elements.container>
         <SandboxHeader.h />
