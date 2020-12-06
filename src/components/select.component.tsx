@@ -50,7 +50,11 @@ export namespace Select {
       <elements.wrapper>
         <elements.select onChange={handleChange}>
           {options.map((option) => {
-            return <elements.option value={option.value}>{option.label}</elements.option>;
+            return (
+              <elements.option value={option.value} key={option.value}>
+                {option.label}
+              </elements.option>
+            );
           })}
         </elements.select>
       </elements.wrapper>
