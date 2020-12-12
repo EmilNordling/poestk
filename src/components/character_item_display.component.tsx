@@ -6,7 +6,7 @@ import { OneAtomCommonPropType, Shimmer } from 'one-atom';
  * change this
  */
 export namespace CharacterItemDisplay {
-  export type Props = OneAtomCommonPropType & {};
+  export interface Props extends OneAtomCommonPropType {}
 
   const elements = {
     content: styled.div`

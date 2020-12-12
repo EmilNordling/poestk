@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 
 export namespace SandboxHeader {
-  export type Props = OneAtomCommonPropType & Record<string, unknown>;
+  export interface Props extends OneAtomCommonPropType {}
 
   const elements = {
     container: styled.header`

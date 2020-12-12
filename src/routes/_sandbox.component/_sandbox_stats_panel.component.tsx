@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { OneAtomCommonPropType, Text } from 'one-atom';
 
 export namespace SandboxStatsPanel {
-  export type Props = OneAtomCommonPropType & Record<string, unknown>;
+  export interface Props extends OneAtomCommonPropType {}
 
   const elements = {
     container: styled.div`

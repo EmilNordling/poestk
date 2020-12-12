@@ -4,7 +4,7 @@ import { OneAtomCommonPropType, Text } from 'one-atom';
 import { Select } from '../../components/select.component';
 
 export namespace SandboxCharacterPanel {
-  export type Props = OneAtomCommonPropType & Record<string, unknown>;
+  export interface Props extends OneAtomCommonPropType {}
 
   const elements = {
     container: styled.div`

@@ -85,13 +85,13 @@ export class StaticSTParser {
     Object.values(data.nodes).forEach((node) => {
       if (node.skill) {
         if (!node.group) {
-          console.log(node);
+          // console.log(node);
         }
 
         const id = node.skill.toString();
         map.set(id, new STNode(id));
       } else {
-        console.log(node);
+        // console.log(node);
       }
     });
 

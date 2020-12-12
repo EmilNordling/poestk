@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Text, View } from 'one-atom';
 
 export namespace Home {
+  export interface Props {}
+
   const elements = {
     content: styled.div`
       display: flex;
@@ -18,7 +20,7 @@ export namespace Home {
     `,
   };
 
-  export const h: FC = function Home() {
+  export const h: FC<Props> = function Home() {
     return (
       <elements.content>
         <View.h height="95vh" shrink={false} alignment="center">

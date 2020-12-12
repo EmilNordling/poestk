@@ -1,9 +1,9 @@
 import { BaseIcon, OneAtomCommonPropType } from 'one-atom';
 
 export namespace Icon {
-  export type Props = OneAtomCommonPropType & Omit<BaseIcon.Props, 'viewBox'> & {};
+  export interface Props extends OneAtomCommonPropType, Omit<BaseIcon.Props, 'viewBox'> {}
 
-  type PropsEva = Props & {};
+  interface PropsEva extends Props {}
 
   export const logo_text: FC<Props> = function icon_logo_text({ ...rest }) {
     return (

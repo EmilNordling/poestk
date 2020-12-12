@@ -2,15 +2,15 @@ import { OneAtomCommonPropType } from 'one-atom';
 import styled from 'styled-components';
 
 export namespace Select {
+  export interface Props extends OneAtomCommonPropType {
+    onChange?(): void;
+    options: Option[];
+  }
+
   export interface Option {
     value: string;
     label: string;
   }
-
-  export type Props = OneAtomCommonPropType & {
-    onChange?(): void;
-    options: Option[];
-  };
 
   const elements = {
     wrapper: styled.div`

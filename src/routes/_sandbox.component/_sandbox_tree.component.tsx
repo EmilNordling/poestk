@@ -3,7 +3,7 @@ import { OneAtomCommonPropType } from 'one-atom';
 import { SkillTreeScene } from '../../components/skill_tree/mod';
 
 export namespace SandboxTree {
-  export type Props = OneAtomCommonPropType & Record<string, unknown>;
+  export interface Props extends OneAtomCommonPropType {}
 
   const elements = {
     container: styled.div`

@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import { MenuItem, MenuSeparator, MenuService } from '../backend/menu_service';
 
 export namespace Menu {
-  export type Props = {
+  export interface Props {
     attachTo: string;
     visible: boolean;
-  };
+  }
 
   const elements = {
     popover: styled(motion.ul)<{ xPos: number; yPos: number }>`

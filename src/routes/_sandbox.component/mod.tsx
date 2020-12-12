@@ -11,7 +11,7 @@ import { addDashboardStyle } from '../../modules/add_dashboard_style';
  * change this
  */
 export namespace Sandbox {
-  export type Props = OneAtomCommonPropType & Record<string, unknown>;
+  export interface Props extends OneAtomCommonPropType {}
 
   const elements = {
     container: styled.div`

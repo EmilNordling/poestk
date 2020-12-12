@@ -1,9 +1,11 @@
 import { View, Text, useService } from 'one-atom';
-import { Fragment } from 'react';
+import { StrictMode } from 'react';
 import styled from 'styled-components';
 import { ApplicationService } from '../backend/application_service';
 
 export namespace Dev {
+  export interface Props {}
+
   const elements = {
     theme: styled.div`
       display: contents;
@@ -61,7 +63,7 @@ export namespace Dev {
     `,
   };
 
-  export const h: FC = function Home({ children }) {
+  export const h: FC<Props> = function Home({ children }) {
     const applicationService = useService(ApplicationService);
 
     if (process.env.NODE_ENV === 'development' && applicationService.debug) {
@@ -84,7 +86,9 @@ export namespace Dev {
             </elements.theme>
 
             <elements.center>
-              <elements.inner>{children}</elements.inner>
+              <elements.inner>
+                <StrictMode>{children}</StrictMode>
+              </elements.inner>
             </elements.center>
 
             <elements.theme>
@@ -101,6 +105,6 @@ export namespace Dev {
       );
     }
 
-    return <Fragment>{children}</Fragment>;
+    return <StrictMode>{children}</StrictMode>;
   };
 }

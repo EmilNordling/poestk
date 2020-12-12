@@ -1,8 +1,21 @@
+import * as THREE from 'three';
 import { useEffect, useRef, useState } from 'react';
-import { Canvas } from 'react-three-fiber';
+import { extend, Canvas, useThree } from 'react-three-fiber';
+// @ts-ignore
+import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
 import { MapControls } from '@react-three/drei/MapControls';
 import { useService } from 'one-atom';
 import { SkillTreeKit } from '../../modules/skill_tree_kit/mod';
+
+extend({ MeshLine, MeshLineMaterial });
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      meshLine: any;
+      meshLineMaterial: any;
+    }
+  }
+}
 
 export namespace SkillTreeScene {
   const Box: FC<any> = function Box(props) {
@@ -28,6 +41,24 @@ export namespace SkillTreeScene {
     );
   };
 
+  const Line: FC = function Scene_Line() {
+    const { size } = useThree();
+
+    return (
+      <mesh raycast={MeshLineRaycast}>
+        <meshLine attach="geometry" position={[0, 1, 0]} />
+        <meshLineMaterial
+          attach="material"
+          depthTest={false}
+          lineWidth={10}
+          color={'#A2CCB6'}
+          transparent
+          resolution={new THREE.Vector2(size.width, size.height)}
+        />
+      </mesh>
+    );
+  };
+
   export const h: FC = function Scene() {
     const skillTreeKit = useService(SkillTreeKit);
 
@@ -47,6 +78,11 @@ export namespace SkillTreeScene {
         <Box position={[-1.2, 0, 0]} />
         <Box position={[1.2, 0, 0]} />
         <Box position={[2.4, 0, 0]} />
+
+        <group>
+          <Line />
+        </group>
+
         <MapControls enableDamping={false} enableRotate={false} />
       </Canvas>
     );

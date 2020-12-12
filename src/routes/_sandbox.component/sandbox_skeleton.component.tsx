@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import { addDashboardStyle } from '../../modules/add_dashboard_style';
 
 export namespace SandboxSkeleton {
-  export const h: FC = function SandboxSkeleton() {
+  export interface Props {}
+
+  export const h: FC<Props> = function SandboxSkeleton() {
     useEffect(() => {
       return addDashboardStyle();
     }, []);

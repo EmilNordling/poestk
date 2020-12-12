@@ -4,9 +4,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { CharacterSkeleton } from './_character.component/character_skeleton.component';
 import { SandboxSkeleton } from './_sandbox.component/sandbox_skeleton.component';
 
+// Exports all skeleton views for external SSR
 export { CharacterSkeleton, SandboxSkeleton };
 
 export namespace Routes {
+  export interface Props {}
+
   function lazyLoadCharacter(): JSX.Element {
     const LazyComponent = lazy(() => import('./_character.component/mod').then((module) => ({ default: module['Character']['h'] })));
 
@@ -37,7 +40,7 @@ export namespace Routes {
     );
   }
 
-  export const h: FC = function Home() {
+  export const h: FC<Props> = function Home() {
     return (
       <BrowserRouter>
         <RRoutes>
