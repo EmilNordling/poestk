@@ -1,5 +1,5 @@
 import { Singleton } from 'one-atom';
-import { AuthApiService } from './api/auth_api_service';
+import { AuthApiService } from './api/auth_api.service';
 import { UserModel } from './api/models/user_model';
 
 @Singleton()
