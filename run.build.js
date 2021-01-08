@@ -5,8 +5,8 @@ const { Run } = require('one-atom/run');
 Run.production({
   useBundleAnalyzer: true,
   root: process.cwd(),
-  customEnv: 'dev_env',
-  loadConfigPathToFile: `${process.cwd()}/env.json`,
+  customConfig: `${process.cwd()}/env.json`,
+  configFile: 'tsconfig.prod.json',
 })
   .then(() => {
     console.log('bundled worked');

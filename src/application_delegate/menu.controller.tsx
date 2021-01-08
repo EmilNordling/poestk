@@ -1,4 +1,4 @@
-import { FlowState, newApplicationState, Singleton } from 'one-atom';
+import { createApplicationState, Singleton } from 'one-atom';
 
 interface MenuSeparatorSpec {
   key: string;
@@ -16,11 +16,11 @@ interface MenuItemSpec {
   click?(): void;
   subMenu?: (MenuItem | MenuSeparator)[];
 }
+
 export class MenuItem {
   public readonly label: string;
   public readonly key: string;
   public readonly subMenu: (MenuItem | MenuSeparator)[] | null;
-
   private readonly proxyClick: (() => void) | null;
 
   constructor({ key, label, click, subMenu }: MenuItemSpec) {
@@ -47,34 +47,30 @@ type State = {
 };
 
 @Singleton()
-export class MenuService {
-  public readonly state = newApplicationState<State>({
+export class MenuController {
+  public readonly state = createApplicationState<State>({
     menu: null,
   });
 
   constructor() {
-    this.state.inFlow(FlowState.ACCESSIBLE);
+    // Empty
   }
 
   public isOpen(): boolean {
-    const [state] = this.state.read();
+    const state = this.state.read();
 
     return !!state.menu;
   }
 
   public setMenu(menu: Menu): void {
-    this.state.mutate(() => {
-      return {
-        menu,
-      };
-    });
+    this.state.write(() => ({
+      menu,
+    }));
   }
 
   public clearMenu(): void {
-    this.state.mutate(() => {
-      return {
-        menu: null,
-      };
-    });
+    this.state.write(() => ({
+      menu: null,
+    }));
   }
 }
